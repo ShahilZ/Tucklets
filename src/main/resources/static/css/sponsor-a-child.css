@@ -9,3 +9,17 @@
     width:375px;
     height:125px;
 }
+
+.children-container {
+}
+
+.children-container .btn-primary {
+    background-color: #3e2763;
+    border-color: #3e2763;
+}
+
+.children-container .card {
+    display: inline-block;
+    width: 18rem;
+}
+

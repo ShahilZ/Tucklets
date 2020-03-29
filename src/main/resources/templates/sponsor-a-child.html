@@ -28,18 +28,24 @@
         that are in the school, or sponsor one or more child from the list below or sponsor a
         teacher.  Children list below is a partial list and will be updated on regular basis.</p>
     </div>
-    <div id="children" class="container" >
-
+    <div class="container children-container" >
+      <div class="card mt-3 mr-3 ml-3 mb-3" th:each="child: ${children}">
+        <img class="card-img-top" th:src="@{/images/sample-kid.png}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title" th:text="|${child.firstName} ${child.lastName}|" />
+          <p class="card-text"><b>Age: </b> <span th:text="|${child.age} years old|"/></p>
+          <p class="card-text"><b>Grade: </b><span th:text="${child.grade}"/></p>
+          <p class="card-text"><b>Aspirations: </b><span th:text="${child.desiredOccupation}"/></p>
+          <a href="/sponsor-info/" class="btn btn-primary" onClick=""> Sponsor me </a>
+        </div>
+      </div>
     </div>
-
-
-
-
   </div>
 
-
-
   <script type="text/javascript" th:inline="javascript" th:src="@{/js/sponsor.js}"></script>
+ <script>
+
+ </script>
 
 
 
