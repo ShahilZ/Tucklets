@@ -1,15 +1,9 @@
 package com.tucklets.app.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import com.tucklets.app.entities.enums.DonationFrequency;
+import com.tucklets.app.entities.enums.PaymentMethod;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -43,10 +37,18 @@ public class Sponsor {
     private long donationAmount;
 
     @Column(name = "donation_frequency", nullable = false)
+    @Basic
+    private int donationFrequencyValue;
+
+    @Transient
     private DonationFrequency donationFrequency;
 
     @Column(name = "payment_method", nullable = false)
-    private long paymentMethod;
+    @Basic
+    private int paymentMethodValue;
+
+    @Transient
+    private PaymentMethod paymentMethod;
 
     @Column(name = "creation_date", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -61,6 +63,22 @@ public class Sponsor {
         Date today = new Date();
         this.setCreationDate(today);
         this.setLastUpdateDate(today);
+        if (donationFrequency != null) {
+            this.donationFrequencyValue = donationFrequency.getDonationFrequency();
+        }
+        if (paymentMethod != null) {
+            this.paymentMethodValue = paymentMethod.getPaymentMethodValue();
+        }
+    }
+
+    @PostLoad
+    void fillTransient() {
+        if (donationFrequencyValue > 0) {
+            this.donationFrequency = DonationFrequency.of(donationFrequencyValue);
+        }
+        if (paymentMethodValue > 0) {
+            this.paymentMethod = PaymentMethod.of(paymentMethodValue);
+        }
     }
 
     @PreUpdate
@@ -132,11 +150,11 @@ public class Sponsor {
         this.donationFrequency = donationFrequency;
     }
 
-    public long getPaymentMethod() {
+    public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(long paymentMethod) {
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

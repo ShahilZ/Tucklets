@@ -26,7 +26,7 @@ CREATE TABLE sponsor(
    address VARCHAR(250),
    donation_amount DECIMAL(12, 2) NOT NULL,
    donation_frequency SMALLINT NOT NULL,
-   payment_method INT NOT NULL,
+   payment_method SMALLINT NOT NULL,
    creation_date TIMESTAMP NOT NULL,
    last_update_date TIMESTAMP NOT NULL
 
