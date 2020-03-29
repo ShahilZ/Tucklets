@@ -13,7 +13,7 @@ Make sure you have the following downloaded:
 Running locally: 
 1. Open build.grade as a project in Intellij 
 2. Add application with the following: 
-![Image of build/run Configurations](https://github.com/ShahilZ/Tucklets/src/main/resources/static/images/readme/run-debug-configurations.JPG)
+![Image of build/run Configurations](https://github.com/ShahilZ/Tucklets/blob/master/src/main/resources/static/images/readme/run-debug-configurations.JPG)
 3. Build the project 
 4. Check if application is running on http://localhost:8080/sponsor/
 
