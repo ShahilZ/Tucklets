@@ -1,6 +1,11 @@
-.jumbotron {
+.jumbotron-sponsor-landing-page {
 }
 
 .navbar-custom {
     background-color: white;
+}
+
+.tucklets-logo {
+    width:375px;
+    height:125px;
 }
