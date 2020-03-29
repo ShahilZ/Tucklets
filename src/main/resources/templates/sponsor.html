@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title> Tuckets</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" th:href="@{/css/sponsor.css}">
+</head>
+
+<body>
+  <div>
+    <div>
+      <nav class="navbar navbar-light navbar-custom">
+        <a class="navbar-brand" href="#">
+          <img width="350" height="110"  class="d-inline-block align-top" alt="" th:src="@{/images/tucklets-icon.PNG}"/>
+        </a>
+      </nav>
+    </div>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Sponsor a child</h1>
+        <p class="lead">Your donation will keep one child in school and provide education, food, health services, and clothing.</p>
+      </div>
+    </div>
+    <div class="container">
+      <p> You can donate in any capacity, or sponsor one or more children out of close to 1000 children
+        that are in the school, or sponsor one or more child from the list below or sponsor a
+        teacher.  Children list below is a partial list and will be updated on regular basis.</p>
+    </div>
+    <div id="children" class="container" >
+
+    </div>
+
+
+
+
+  </div>
+
+
+
+  <script type="text/javascript" th:inline="javascript" th:src="@{/js/sponsor.js}"></script>
+
+
+
+</body>
+</html>
