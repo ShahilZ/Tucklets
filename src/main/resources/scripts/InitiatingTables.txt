@@ -29,5 +29,4 @@ CREATE TABLE sponsor(
    payment_method SMALLINT NOT NULL,
    creation_date TIMESTAMP NOT NULL,
    last_update_date TIMESTAMP NOT NULL
-
 );
