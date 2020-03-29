@@ -9,6 +9,7 @@ Live website here: [insert-link]
 Make sure you have the following downloaded: 
 - JDK 11 
 - IntelliJ 
+- Postgres - https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 
 Running locally: 
 1. Open build.grade as a project in Intellij 
