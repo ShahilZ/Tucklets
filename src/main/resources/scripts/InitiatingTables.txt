@@ -1,0 +1,33 @@
+CREATE TABLE child(
+   child_id serial PRIMARY KEY,
+   first_name VARCHAR (50) NOT NULL,
+   last_name VARCHAR (50) NOT NULL,
+   age SMALLINT CHECK (age > 0),
+   grade SMALLINT CHECK (grade > 0),
+   is_sponsored boolean,
+   desired_occupation VARCHAR (250),
+   creation_date TIMESTAMP NOT NULL,
+   last_update_date TIMESTAMP NOT NULL
+);
+
+CREATE TABLE child_sponsor_assoc(
+   child_sponsor_assoc_id serial PRIMARY KEY,
+   child_id serial NOT NULL,
+   sponsor_id serial NOT NULL,
+   sponsored_date TIMESTAMP NOT NULL
+);
+
+CREATE TABLE sponsor(
+   sponsor_id serial PRIMARY KEY,
+   first_name VARCHAR (50) NOT NULL,
+   last_name VARCHAR (50) NOT NULL,
+   church_name VARCHAR (50),
+   email VARCHAR (250),
+   address VARCHAR(250),
+   donation_amount DECIMAL(12, 2) NOT NULL,
+   donation_frequency SMALLINT NOT NULL,
+   payment_method INT NOT NULL,
+   creation_date TIMESTAMP NOT NULL,
+   last_update_date TIMESTAMP NOT NULL
+
+);
