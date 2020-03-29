@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title> Tuckets</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/sponsor-info.css}">
+</head>
+
+<body>
+<div>
+    <div>
+        <nav class="navbar navbar-light navbar-custom">
+            <a class="navbar-brand" href="#">
+                <img class="d-inline-block align-top tucklets-logo" alt="" th:src="@{/images/tucklets-icon.PNG}"/>
+            </a>
+        </nav>
+    </div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Sponsor Information</h1>
+            <p class="lead">Thank you for your support!</p>
+        </div>
+    </div>
+
+    <div class="sponsor-info-div">
+        <form class="sponsor-info-form" th:action="@{/sponsor-info/submit}" th:object="${sponsor}" method="post">
+            <fieldset>
+                <legend><span class="sponsor-info-section-number">1</span> Personal Information</legend>
+                <label> </label>
+                <label for="sponsor-first-name">First Name:</label>
+                <input type="text" id="sponsor-first-name" th:field="*{firstName}" placeholder="Your First Name *"/>
+                <label for="sponsor-last-name">Last Name:</label>
+                <input type="text" id="sponsor-last-name"  th:field="*{lastName}" placeholder="Your Last Name *"/>
+                <label for="sponsor-email">Email:</label>
+                <input type="email" id="sponsor-email"  th:field="*{email}" placeholder="Your Email "/>
+                <label for="sponsor-address">Address:</label>
+                <input type="text" id="sponsor-address"  th:field="*{address}" placeholder="ex. 1234 A Street "/>
+                <label for="sponsor-church-name">Church Name:</label>
+                <input type="text" id="sponsor-church-name" th:field="*{churchName}" placeholder="Church Name"/>
+
+            </fieldset>
+            <fieldset>
+                <legend><span class="sponsor-info-section-number">2</span> Donation Info</legend>
+                <label for="donation-amount">Amount:</label>
+                <input type="number" id="donation-amount" th:field="*{donationAmount}" value="1000" readonly/>
+                <select th:field="*{donationFrequency}">
+                    <option th:each="donationFreq : ${donationFrequencies}" th:value="${donationFreq}" th:text="${donationFreq.displayText}">
+                    </option>
+                </select>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input name="cmd" type="hidden" value="_s-xclick">Setup recurring or one-time donation using credit or debit card by clicking "Donate" button below.</input>
+                    <input name="hosted_button_id" type="hidden" value="6KJ6UZG3FDURE"/><br>
+                    <input title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" type="image"/><br>
+                    <img src="https://www.paypal.com/en_US/i/scr/pixel.gif" alt="" width="1" height="1" border="0">
+                </form>
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+
+</div>
+
+
+</body>
+</html>
