@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Objects;
 
 @Service
 public class ChildService {
@@ -17,8 +18,18 @@ public class ChildService {
     /**
      * Adds a child to the database.
      */
-    public void addChild(Child child) {
-        childRepository.save(child);
+    public void addChild(Child child) { childRepository.save(child); }
+
+    /**
+     * Sets isSponsored on Child table
+     */
+    public void setSponsoredChildren(List<Child> children) {
+        if (Objects.nonNull(children)) {
+            for (Child child : children) {
+                child.setSponsored(true);
+                childRepository.save(child);
+            }
+        }
     }
 
     /**

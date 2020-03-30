@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "ChildAndSponsorAssoc")
+@Table(name = "child_sponsor_assoc")
 /**
  * Class representing the association of a child to his or her sponsor. The ids mentioned are the unique ids for each entity.
  */
