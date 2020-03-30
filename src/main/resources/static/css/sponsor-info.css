@@ -61,3 +61,27 @@
 {
 	background-color: #3e2763;
 }
+
+
+.child-div {
+    position:relative;
+    display:flex;
+    min-width:0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border:1px solid rgba(0,0,0,.125);
+    border-radius:.25rem;
+    flex-direction: row!important;
+    flex-wrap: wrap!important;
+}
+
+.child-image-div {
+    border:0!important;
+    background-color: rgba(0,0,0,.03);
+
+
+}
+
+.child-detail-div {
+}

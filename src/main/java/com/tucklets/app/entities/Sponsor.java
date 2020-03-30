@@ -14,7 +14,8 @@ import java.util.Date;
 public class Sponsor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "sponsor_generator", initialValue = 4000, allocationSize = 1)
+    @GeneratedValue(generator = "sponsor_generator")
     @Column(name = "sponsor_id", updatable = false, nullable = false)
     private Long sponsorId;
 
