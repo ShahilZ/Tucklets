@@ -1,6 +1,6 @@
 
 .sponsor-info-div {
-	background: #f4f7f8;
+	background-color: #f4f7f8;
 	margin: 0 15%;
 	border-radius: 8px;
 	font-family: Georgia, "Times New Roman", Times, serif;
@@ -34,7 +34,7 @@
 }
 
 .sponsor-info-form .sponsor-info-section-number {
-    background: #3e2763;
+    background-color: #3e2763;
     color: #fff;
     height: 30px;
     width: 30px;
@@ -52,12 +52,12 @@
 }
 
 .sponsor-info-div input:focus {
-	background: #d2d9dd;
+	background-color: #d2d9dd;
 }
 
 
 .sponsor-info-div input[type="submit"]:hover,
 .sponsor-info-div input[type="button"]:hover
 {
-	background: #3e2763;
+	background-color: #3e2763;
 }

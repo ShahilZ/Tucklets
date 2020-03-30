@@ -21,7 +21,9 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.11'}
+	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.11'
+
+}
 
 test {
 	useJUnitPlatform()

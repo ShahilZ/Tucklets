@@ -6,14 +6,12 @@ import com.tucklets.app.entities.enums.DonationFrequency;
 import com.tucklets.app.entities.enums.PaymentMethod;
 import com.tucklets.app.services.ChildService;
 import com.tucklets.app.services.SponsorService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,17 +26,7 @@ public class SponsorChildrenController {
 
     @GetMapping(value = "/")
     public String fetchAvailableChildren(Model model) {
-        List<Child> children = new ArrayList<>();
-        for (int i=0; i < 10; i++) {
-            var child = new Child();
-            child.setAge(i);
-            child.setDesiredOccupation("Magician");
-            child.setFirstName(String.format("Phil %d", i));
-            child.setLastName("Dunphy");
-            child.setGrade(i);
-            children.add(child);
-        }
-
+        List<Child> children = childService.fetchAvailableChildren();
         model.addAttribute("children", children);
         return "sponsor-a-child";
     }

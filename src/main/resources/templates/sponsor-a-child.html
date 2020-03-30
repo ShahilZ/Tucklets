@@ -1,8 +1,10 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <div th:replace="header :: header"></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <link rel="stylesheet" th:href="@{/css/sponsor-a-child.css}">
+  <script type="text/javascript" th:src="@{/js/sponsor-a-child.js}"></script>
 </head>
 
 <body>
@@ -18,21 +20,21 @@
         that are in the school, or sponsor one or more child from the list below or sponsor a
         teacher.  Children list below is a partial list and will be updated on regular basis.</p>
     </div>
-    <div class="container children-div" >
-      <div class="card child-div" th:each="child: ${children}">
-        <img class="card-img-top" th:src="@{/images/sample-kid.png}" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title" th:text="|${child.firstName} ${child.lastName}|" />
-          <p class="card-text"><b>Age: </b> <span th:text="|${child.age} years old|"/></p>
-          <p class="card-text"><b>Grade: </b><span th:text="${child.grade}"/></p>
-          <p class="card-text"><b>Aspirations: </b><span th:text="${child.desiredOccupation}"/></p>
-          <a href="/sponsor-info/" class="btn btn-primary" onClick=""> Sponsor me </a>
-        </div>
+    <form class="select-child-form container" th:action="@{/sponsor-info/}" method="get">
+      <div class="container children-div">
+        <label  th:for="checkbox- + ${child.childId}" class="card child-div" th:id="child-id + ${child.childId}" th:each="child : ${children}" th:onchange="'onChildSelection(\'' + ${child.childId} + '\');'">
+          <img class="card-img-top" th:src="@{/images/sample-kid.png}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title" th:text="|${child.firstName} ${child.lastName}|" />
+            <p class="card-text"><b>Age: </b> <span th:text="|${child.age} years old|"/></p>
+            <p class="card-text"><b>Grade: </b><span th:text="${child.grade}"/></p>
+            <p class="card-text"><b>Aspirations: </b><span th:text="${child.desiredOccupation}"/></p>
+            <input type="checkbox" name="childId" th:id="checkbox- + ${child.childId}" th:value="${child.childId}">
+          </div>
+        </label>
       </div>
-    </div>
+      <input type="submit" class="btn btn-primary sponsor-now-button" value="Sponsor Now">
+    </form>
   </div>
-
-  <script type="text/javascript" th:inline="javascript" th:src="@{/js/sponsor.js}"></script>
-
 </body>
 </html>
