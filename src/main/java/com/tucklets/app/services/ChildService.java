@@ -5,13 +5,49 @@ import com.tucklets.app.entities.Child;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ChildService {
 
     @Autowired
     ChildRepository childRepository;
 
+    /**
+     * Adds a child to the database.
+     */
     public void addChild(Child child) {
         childRepository.save(child);
+    }
+
+    /**
+     * Fetches all available children that need to be sponsored.
+     */
+    public List<Child> fetchAvailableChildren() {
+        return childRepository.fetchAvailableChildren();
+    }
+
+    /**
+     * Fetches a single child by the child's id.
+     */
+    public Child fetchChildById(Long childId) {
+        Optional<Child> possibleChild = childRepository.fetchChild(childId);
+        return possibleChild.orElse(null);
+    }
+
+    /**
+     * Fetches all the children from the database.
+     */
+    public List<Child> fetchAllChildren() {
+        return childRepository.fetchAllChildren();
+    }
+
+
+    /**
+     * Removes all children in the db. This should only be used for testing.
+     */
+    public void resetChildDb() {
+        childRepository.deleteAllChildren();
     }
 }

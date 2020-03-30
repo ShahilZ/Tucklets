@@ -1,4 +1,8 @@
-CREATE TABLE child(
+DROP TABLE Child;
+DROP TABLE Sponsor;
+DROP TABLE Child_Sponsor_Assoc;
+
+CREATE TABLE Child(
    child_id serial PRIMARY KEY,
    first_name VARCHAR (50) NOT NULL,
    last_name VARCHAR (50) NOT NULL,
@@ -10,14 +14,14 @@ CREATE TABLE child(
    last_update_date TIMESTAMP NOT NULL
 );
 
-CREATE TABLE child_sponsor_assoc(
+CREATE TABLE Child_Sponsor_Assoc(
    child_sponsor_assoc_id serial PRIMARY KEY,
    child_id serial NOT NULL,
    sponsor_id serial NOT NULL,
    sponsored_date TIMESTAMP NOT NULL
 );
 
-CREATE TABLE sponsor(
+CREATE TABLE Sponsor(
    sponsor_id serial PRIMARY KEY,
    first_name VARCHAR (50) NOT NULL,
    last_name VARCHAR (50) NOT NULL,
@@ -30,3 +34,4 @@ CREATE TABLE sponsor(
    creation_date TIMESTAMP NOT NULL,
    last_update_date TIMESTAMP NOT NULL
 );
+
