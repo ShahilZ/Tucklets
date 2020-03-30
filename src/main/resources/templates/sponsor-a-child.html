@@ -1,22 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title> Tuckets</title>
-
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <div th:replace="header :: header"></div>
   <link rel="stylesheet" th:href="@{/css/sponsor-a-child.css}">
 </head>
 
 <body>
   <div>
-    <div>
-      <nav class="navbar navbar-light navbar-custom">
-        <a class="navbar-brand" href="#">
-          <img class="d-inline-block align-top tucklets-logo" alt="" th:src="@{/images/tucklets-icon.PNG}"/>
-        </a>
-      </nav>
-    </div>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1 class="display-4">Sponsor a child</h1>
@@ -28,8 +18,8 @@
         that are in the school, or sponsor one or more child from the list below or sponsor a
         teacher.  Children list below is a partial list and will be updated on regular basis.</p>
     </div>
-    <div class="container children-container" >
-      <div class="card mt-3 mr-3 ml-3 mb-3" th:each="child: ${children}">
+    <div class="container children-div" >
+      <div class="card child-div" th:each="child: ${children}">
         <img class="card-img-top" th:src="@{/images/sample-kid.png}" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title" th:text="|${child.firstName} ${child.lastName}|" />
@@ -43,11 +33,6 @@
   </div>
 
   <script type="text/javascript" th:inline="javascript" th:src="@{/js/sponsor.js}"></script>
- <script>
-
- </script>
-
-
 
 </body>
 </html>

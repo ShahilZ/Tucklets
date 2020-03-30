@@ -10,16 +10,16 @@
     height:125px;
 }
 
-.children-container {
-}
-
-.children-container .btn-primary {
+.children-div .btn-primary {
     background-color: #3e2763;
     border-color: #3e2763;
 }
 
-.children-container .card {
+.children-div .card {
     display: inline-block;
-    width: 18rem;
+    width: 20rem;
 }
 
+.child-div {
+    margin: 1rem;
+}
