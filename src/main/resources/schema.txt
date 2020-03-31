@@ -5,7 +5,7 @@ DROP TABLE Child_Sponsor_Assoc;
 CREATE TABLE Admin(
    admin_id serial PRIMARY KEY,
    username VARCHAR (50) NOT NULL,
-   password VARCHAR (100) NOT NULL,
+   encrypted_password VARCHAR (100) NOT NULL,
    creation_date TIMESTAMP NOT NULL,
    last_login_date TIMESTAMP NOT NULL
 );
@@ -27,7 +27,7 @@ CREATE TABLE Child_Sponsor_Assoc(
    child_id serial NOT NULL,
    sponsor_id serial NOT NULL,
    sponsored_date TIMESTAMP NOT NULL,
-   donation_duration SMALLINT NOT NULL,
+   donation_duration SMALLINT NOT NULL
 );
 
 CREATE TABLE Sponsor(

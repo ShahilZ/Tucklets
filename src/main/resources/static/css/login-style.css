@@ -1,0 +1,27 @@
+.tucklets-login-background {
+    /**background-image: url(../images/kids.jpg); */
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: static;
+
+    background-repeat: no-repeat;
+}
+
+
+.tucklets-login .login-modal {
+    width: 45%;
+    height: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 20px 20px 20px 20px;
+    opacity: 0.8;
+    background-color: #e6eaef;
+}
+
+.tucklets-login .sign-in-title {
+    text-align: center
+}
+
+

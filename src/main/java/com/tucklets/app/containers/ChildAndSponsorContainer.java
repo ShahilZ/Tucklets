@@ -9,11 +9,9 @@ import java.util.List;
 
 public class ChildAndSponsorContainer {
 
-    Sponsor sponsor;
-
-    List<Child> children;
-
-    DonationDuration donationDuration;
+    public Sponsor sponsor;
+    public List<Child> children;
+    public DonationDuration donationDuration;
 
     public List<Child> getChildren() { return children; }
 
