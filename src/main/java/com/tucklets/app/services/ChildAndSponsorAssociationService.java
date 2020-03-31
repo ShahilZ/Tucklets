@@ -4,6 +4,7 @@ import com.tucklets.app.db.repositories.ChildAndSponsorAssociationRepository;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.ChildAndSponsorAssoc;
 import com.tucklets.app.entities.Sponsor;
+import com.tucklets.app.entities.enums.DonationDuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,14 @@ public class ChildAndSponsorAssociationService {
     @Autowired
     ChildAndSponsorAssociationRepository childAndSponsorAssociationRepository;
 
-    public void createAssociation(List<Child> children, Sponsor sponsor) {
+    public void createAssociation(List<Child> children, Sponsor sponsor, DonationDuration donationDuration) {
         if (Objects.nonNull(children) && Objects.nonNull(sponsor)) {
             for (Child child : children) {
                 ChildAndSponsorAssoc childAndSponsorAssoc = new ChildAndSponsorAssoc();
                 childAndSponsorAssoc.setChildId(child.getChildId());
                 childAndSponsorAssoc.setSponsorId(sponsor.getSponsorId());
                 childAndSponsorAssoc.setSponsoredDate(new Date());
+                childAndSponsorAssoc.setDonationDuration(donationDuration);
                 childAndSponsorAssociationRepository.save(childAndSponsorAssoc);
             }
         }

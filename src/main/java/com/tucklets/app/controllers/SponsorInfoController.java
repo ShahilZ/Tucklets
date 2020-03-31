@@ -1,9 +1,11 @@
 package com.tucklets.app.controllers;
 
+import com.tucklets.app.db.repositories.ChildRepository;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
-import com.tucklets.app.entities.enums.DonationFrequency;
-import com.tucklets.app.containers.ChildAndSponsor;
+import com.tucklets.app.entities.enums.DonationDuration;
+import com.tucklets.app.containers.ChildAndSponsorContainer;
+import com.tucklets.app.services.AmountService;
 import com.tucklets.app.services.ChildAndSponsorAssociationService;
 import com.tucklets.app.services.ChildService;
 import com.tucklets.app.services.SponsorService;
@@ -33,48 +35,47 @@ public class SponsorInfoController {
     @Autowired
     ChildService childService;
 
+    @Autowired
+    AmountService amountService;
+    
     @GetMapping(value = "/")
     public ModelAndView handleChildSelection(@RequestParam(value = "childId") String[] childrenIds) {
 
         ModelAndView modelAndView = new ModelAndView("sponsor-info");
-        List<Child> selectedChildren = new ArrayList<>();
 
-        // If ids exist in the Child table, retrieve the objects.
-        for (String id : childrenIds) {
-            Long childId = Long.valueOf(id);
-            Child child = childService.fetchChildById(childId);
-            if (Objects.nonNull(child)) {
-                selectedChildren.add(child);
-            }
-        }
+        var selectedChildren = childService.fetchChildByIds(childrenIds);
+        ChildAndSponsorContainer childAndSponsor =
+                createChildAndSponsorContainer(selectedChildren, new Sponsor());
 
-        modelAndView.addObject("donationFrequencies", DonationFrequency.getAllDonationFrequencies());
-
-        ChildAndSponsor childAndSponsor = new ChildAndSponsor();
-        childAndSponsor.setChildren(selectedChildren);
-        childAndSponsor.setSponsor(new Sponsor());
+        modelAndView.addObject("donationDuration", DonationDuration.getAllDonationDurations());
         modelAndView.addObject("childAndSponsor", childAndSponsor);
-
         return modelAndView;
     }
 
     @PostMapping(value = "/submit")
-    public String handleSponsorSubmission(@ModelAttribute ChildAndSponsor childAndSponsor) {
+    public String handleSponsorSubmission(@ModelAttribute ChildAndSponsorContainer childAndSponsorContainer) {
 
         // TODO: Validate form.
 
-        List<Child> selectedChildren = childAndSponsor.getChildren();
-        Sponsor sponsor = childAndSponsor.getSponsor();
+        List<Child> selectedChildren = childAndSponsorContainer.getChildren();
+        Sponsor sponsor = childAndSponsorContainer.getSponsor();
+        DonationDuration donationDuration = childAndSponsorContainer.getDonationDuration();
 
-        // Add sponsor information to the Sponsor table
         sponsorService.addSponsor(sponsor);
-
-        // Create entry in childAndSponsorAssoc table
-        childAndSponsorAssociationService.createAssociation(selectedChildren, sponsor);
-
-        //Set isSponsored = true for each child
+        childAndSponsorAssociationService.createAssociation(selectedChildren, sponsor, donationDuration);
         childService.setSponsoredChildren(selectedChildren);
 
         return "success";
+    }
+
+    private ChildAndSponsorContainer createChildAndSponsorContainer(List<Child> children, Sponsor sponsor) {
+        ChildAndSponsorContainer childAndSponsorContainer = new ChildAndSponsorContainer();
+
+        var totalDonationAmount = amountService.computeTotalDonationAmount(children);
+        sponsor.setDonationAmount(totalDonationAmount);
+
+        childAndSponsorContainer.setSponsor(sponsor);
+        childAndSponsorContainer.setChildren(children);
+        return childAndSponsorContainer;
     }
 }

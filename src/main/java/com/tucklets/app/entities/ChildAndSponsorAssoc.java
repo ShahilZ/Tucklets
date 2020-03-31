@@ -1,11 +1,9 @@
 package com.tucklets.app.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.tucklets.app.entities.enums.DonationDuration;
+import com.tucklets.app.entities.enums.PaymentMethod;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -28,6 +26,29 @@ public class ChildAndSponsorAssoc {
 
     @Column(name = "sponsored_date", updatable = false, nullable = false)
     private Date sponsoredDate;
+
+    @Column(name = "donation_duration", nullable = false)
+    @Basic
+    private int donationDurationValue;
+
+
+
+    @Transient
+    private DonationDuration donationDuration;
+
+    @PrePersist
+    void onCreate() {
+        if (donationDuration != null) {
+            this.donationDurationValue = donationDuration.getDonationDuration();
+        }
+    }
+
+    @PostLoad
+    void fillTransient() {
+        if (donationDurationValue > 0) {
+            this.donationDuration = DonationDuration.of(donationDurationValue);
+        }
+    }
 
     public Long getChildSponsorAssocId() {
         return childSponsorAssocId;
@@ -60,4 +81,8 @@ public class ChildAndSponsorAssoc {
     public void setSponsoredDate(Date sponsoredDate) {
         this.sponsoredDate = sponsoredDate;
     }
+
+    public DonationDuration getDonationDuration() { return donationDuration; }
+
+    public void setDonationDuration(DonationDuration donationDuration) { this.donationDuration = donationDuration; }
 }
