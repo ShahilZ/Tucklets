@@ -33,7 +33,6 @@ public class SponsorInfoController {
     @Autowired
     ChildService childService;
 
-
     @GetMapping(value = "/")
     public ModelAndView handleChildSelection(@RequestParam(value = "childId") String[] childrenIds) {
 

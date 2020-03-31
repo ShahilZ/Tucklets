@@ -54,7 +54,6 @@ public class ChildService {
         return childRepository.fetchAllChildren();
     }
 
-
     /**
      * Removes all children in the db. This should only be used for testing.
      */

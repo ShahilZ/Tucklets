@@ -21,7 +21,6 @@ public class BasicController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-
     @RequestMapping("/")
     public String init() {
         childService.resetChildDb();

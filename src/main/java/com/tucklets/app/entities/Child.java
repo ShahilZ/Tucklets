@@ -50,7 +50,6 @@ public class Child {
     @Temporal(TemporalType.DATE)
     private Date lastUpdateDate;
 
-
     @PrePersist
     void onCreate() {
         Date today = new Date();

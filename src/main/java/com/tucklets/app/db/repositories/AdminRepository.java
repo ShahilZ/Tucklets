@@ -21,6 +21,4 @@ public interface AdminRepository extends CrudRepository<Admin, Long>, JpaReposit
     @Modifying
     @Query("delete from Admin")
     void deleteAllAdmins();
-
-
 }

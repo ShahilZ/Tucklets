@@ -35,14 +35,12 @@ public class Admin {
     @Temporal(TemporalType.DATE)
     private Date lastLoginDate;
 
-
     @PrePersist
     void onCreate() {
         Date today = new Date();
         this.setCreationDate(today);
         this.setLastLoginDate(today);
     }
-
 
     public String getUsername() {
         return username;
