@@ -1,9 +1,9 @@
 package com.tucklets.app.entities;
 
-import com.tucklets.app.entities.enums.DonationFrequency;
 import com.tucklets.app.entities.enums.PaymentMethod;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -35,14 +35,7 @@ public class Sponsor {
     private String address;
 
     @Column(name = "donation_amount", nullable = false)
-    private long donationAmount;
-
-    @Column(name = "donation_frequency", nullable = false)
-    @Basic
-    private int donationFrequencyValue;
-
-    @Transient
-    private DonationFrequency donationFrequency;
+    private BigDecimal donationAmount;
 
     @Column(name = "payment_method", nullable = false)
     @Basic
@@ -64,9 +57,7 @@ public class Sponsor {
         Date today = new Date();
         this.setCreationDate(today);
         this.setLastUpdateDate(today);
-        if (donationFrequency != null) {
-            this.donationFrequencyValue = donationFrequency.getDonationFrequency();
-        }
+
         if (paymentMethod != null) {
             this.paymentMethodValue = paymentMethod.getPaymentMethodValue();
         }
@@ -74,9 +65,6 @@ public class Sponsor {
 
     @PostLoad
     void fillTransient() {
-        if (donationFrequencyValue > 0) {
-            this.donationFrequency = DonationFrequency.of(donationFrequencyValue);
-        }
         if (paymentMethodValue > 0) {
             this.paymentMethod = PaymentMethod.of(paymentMethodValue);
         }
@@ -135,20 +123,12 @@ public class Sponsor {
         this.address = address;
     }
 
-    public long getDonationAmount() {
+    public BigDecimal getDonationAmount() {
         return donationAmount;
     }
 
-    public void setDonationAmount(long donationAmount) {
+    public void setDonationAmount(BigDecimal donationAmount) {
         this.donationAmount = donationAmount;
-    }
-
-    public DonationFrequency getDonationFrequency() {
-        return donationFrequency;
-    }
-
-    public void setDonationFrequency(DonationFrequency donationFrequency) {
-        this.donationFrequency = donationFrequency;
     }
 
     public PaymentMethod getPaymentMethod() {

@@ -14,7 +14,7 @@ CREATE TABLE Child(
    child_id serial PRIMARY KEY,
    first_name VARCHAR (50) NOT NULL,
    last_name VARCHAR (50) NOT NULL,
-   age SMALLINT CHECK (age > 0),
+   birth_year SMALLINT CHECK (birth_year > 0),
    grade SMALLINT CHECK (grade > 0),
    is_sponsored boolean,
    desired_occupation VARCHAR (250),
@@ -26,7 +26,8 @@ CREATE TABLE Child_Sponsor_Assoc(
    child_sponsor_assoc_id serial PRIMARY KEY,
    child_id serial NOT NULL,
    sponsor_id serial NOT NULL,
-   sponsored_date TIMESTAMP NOT NULL
+   sponsored_date TIMESTAMP NOT NULL,
+   donation_duration SMALLINT NOT NULL,
 );
 
 CREATE TABLE Sponsor(
@@ -37,7 +38,6 @@ CREATE TABLE Sponsor(
    email VARCHAR (250),
    address VARCHAR(250),
    donation_amount DECIMAL(12, 2) NOT NULL,
-   donation_frequency SMALLINT NOT NULL,
    payment_method SMALLINT NOT NULL,
    creation_date TIMESTAMP NOT NULL,
    last_update_date TIMESTAMP NOT NULL

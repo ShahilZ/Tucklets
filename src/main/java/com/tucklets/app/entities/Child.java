@@ -30,8 +30,8 @@ public class Child {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "age", nullable = false)
-    private int age;
+    @Column(name = "birth_year", nullable = false)
+    private int birthYear;
 
     @Column(name = "grade", nullable = false)
     private int grade;
@@ -86,13 +86,9 @@ public class Child {
         this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
-    }
+    public int getBirthYear() { return birthYear; }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+    public void setBirthYear(int birthYear) {  this.birthYear = birthYear; }
 
     public int getGrade() {
         return grade;

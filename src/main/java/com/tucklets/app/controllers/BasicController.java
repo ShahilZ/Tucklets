@@ -27,7 +27,7 @@ public class BasicController {
         adminService.resetAdmins();
         for (int i=0; i < 10; i++) {
             var child = new Child();
-            child.setAge(i + 2);
+            child.setBirthYear(i + 2007);
             child.setDesiredOccupation(i % 2 == 0 ? "Magician" : "Software Engineer");
             child.setFirstName(String.format("Phil %d", i));
             child.setLastName("Dunphy");
