@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div class="tucklets-login" th:fragment="login">
+    <div class="login-modal">
+        <div class="sign-in-title">
+            <span>Sign In </span>
+        </div>
+        <form th:action="@{/admin/login}" class="login-form">
+            <label for="login-username">Username</label>
+            <input id="login-username" class="form-control" type="text" name="username" placeholder="Username">
+            <label for="login-password">Password</label>
+            <input id="login-password" class="form-control" type="password" name="password" placeholder="******">
+            <input type="submit" class="btn btn-primary" value="Login">
+        </form>
+    </div>
+</div>
+</html>
+
+

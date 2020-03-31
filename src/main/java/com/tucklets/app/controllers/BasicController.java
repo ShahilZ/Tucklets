@@ -25,6 +25,6 @@ public class BasicController {
             childService.addChild(child);
         }
 
-        return "success";
+        return "main";
     }
 }
