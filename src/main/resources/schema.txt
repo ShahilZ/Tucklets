@@ -6,7 +6,7 @@ DROP TABLE Admin;
 
 CREATE TABLE Admin(
    admin_id serial PRIMARY KEY,
-   username VARCHAR PRIMARY KEY,
+   username VARCHAR (50) NOT NULL,
    encrypted_password VARCHAR (150) NOT NULL,
    enabled BOOLEAN NOT NULL,
    creation_date TIMESTAMP NOT NULL,
