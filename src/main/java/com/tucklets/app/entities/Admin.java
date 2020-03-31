@@ -31,9 +31,13 @@ public class Admin {
     @Temporal(TemporalType.DATE)
     private Date creationDate;
 
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled = true;
+
     @Column(name = "last_login_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date lastLoginDate;
+
 
     @PrePersist
     void onCreate() {

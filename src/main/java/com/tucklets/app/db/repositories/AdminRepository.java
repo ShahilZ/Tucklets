@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface AdminRepository extends CrudRepository<Admin, Long>, JpaRepository<Admin, Long> {
 
     @Query("select a from Admin a where a.username = :username")
-    Optional<Admin> fetchAdmin(@Param("username") String username);
+    Optional<Admin> fetchAdminByUsername(@Param("username") String username);
 
     @Transactional
     @Modifying

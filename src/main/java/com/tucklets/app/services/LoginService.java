@@ -19,7 +19,7 @@ public class LoginService {
      */
     public boolean isValidAdmin(String username, String password) {
         // Check if username exists in db.
-        Admin admin = adminService.fetchAdmin(username);
+        Admin admin = adminService.fetchAdminByUsername(username);
         if (admin != null) {
             return passwordEncoder.matches(password, admin.getEncryptedPassword());
         }
