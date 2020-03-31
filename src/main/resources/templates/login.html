@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="common-head :: common-head" />
-<div class="tucklets-login tucklets-login-background" th:fragment="login">
+<head>
+    <div th:replace="common-head :: common-head"></div>
+    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+</head>
+
+<div class="tucklets-login tucklets-login-background">
     <div th:if="${param.error}">
         Invalid username and password.
     </div>

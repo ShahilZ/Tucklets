@@ -31,8 +31,6 @@ public class ChildAndSponsorAssoc {
     @Basic
     private int donationDurationValue;
 
-
-
     @Transient
     private DonationDuration donationDuration;
 

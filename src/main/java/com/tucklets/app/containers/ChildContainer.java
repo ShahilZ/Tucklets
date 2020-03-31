@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ChildContainer {
 
-    Child child;
-    int age;
+    public Child child;
+    public int age;
 
     public Child getChild() { return child; }
 

@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class AmountService {
 
-
     public BigDecimal computeTotalDonationAmount(List<Child> children) {
         return new BigDecimal(Constants.CHILD_DONATION_AMOUNT * children.size()).setScale(2, RoundingMode.CEILING);
     }

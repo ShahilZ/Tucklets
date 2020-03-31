@@ -35,15 +35,9 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and().csrf().disable();
     }
 
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
         return passwordEncoder;
     }
-
-
-
-
-
 }

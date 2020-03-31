@@ -40,7 +40,7 @@ public class BasicController {
 
         // Initialize admin.
         Admin admin = new Admin();
-        admin.setPassword(hashedPassword);
+        admin.setEncryptedPassword(hashedPassword);
         admin.setUsername("admin");
         adminService.saveAdmin(admin);
         return "redirect:/admin/dashboard";

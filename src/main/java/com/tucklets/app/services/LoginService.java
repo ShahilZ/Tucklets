@@ -21,7 +21,7 @@ public class LoginService {
         // Check if username exists in db.
         Admin admin = adminService.fetchAdmin(username);
         if (admin != null) {
-            return passwordEncoder.matches(password, admin.getPassword());
+            return passwordEncoder.matches(password, admin.getEncryptedPassword());
         }
         return false;
     }

@@ -24,8 +24,8 @@ public class Admin {
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "encrypted_password", nullable = false)
+    private String encryptedPassword;
 
     @Column(name = "creation_date", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -50,12 +50,12 @@ public class Admin {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 
     public Date getCreationDate() {
