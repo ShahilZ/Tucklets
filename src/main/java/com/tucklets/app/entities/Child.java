@@ -21,7 +21,7 @@ public class Child {
     @Id
     @SequenceGenerator(name = "child_generator", initialValue = 2000, allocationSize = 1)
     @GeneratedValue(generator = "child_generator")
-    @Column(name = "childId", updatable = false, nullable = false)
+    @Column(name = "child_id", updatable = false, nullable = false)
     private Long childId;
 
     @Column(name = "first_name", nullable = false)
