@@ -1,11 +1,13 @@
 DROP TABLE Child;
 DROP TABLE Sponsor;
 DROP TABLE Child_Sponsor_Assoc;
+DROP TABLE Admin;
+
 
 CREATE TABLE Admin(
    admin_id serial PRIMARY KEY,
-   username VARCHAR (50) NOT NULL,
-   encrypted_password VARCHAR (100) NOT NULL,
+   encrypted_password VARCHAR (150) NOT NULL,
+   enabled BOOLEAN NOT NULL,
    creation_date TIMESTAMP NOT NULL,
    last_login_date TIMESTAMP NOT NULL
 );

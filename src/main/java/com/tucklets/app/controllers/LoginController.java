@@ -25,7 +25,7 @@ public class LoginController {
 
     @PostMapping(path = "/verify-login")
     public String verifyLogin(@RequestParam String username, @RequestParam String password) {
-        return loginService.isValidAdmin(username, password) ? "success" : "unauthorized";
+        return loginService.isValidAdmin(username, password) ? "redirect:admin/dashboard" : "unauthorized";
     }
 }
 

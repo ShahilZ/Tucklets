@@ -21,8 +21,8 @@ public class AdminService {
     /**
      * Fetches the admin from the db with the given username.
      */
-    public Admin fetchAdmin(String username) {
-        return adminRepository.fetchAdmin(username).orElse(null);
+    public Admin fetchAdminByUsername(String username) {
+        return adminRepository.fetchAdminByUsername(username).orElse(null);
     }
 
     /**
