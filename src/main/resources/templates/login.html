@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
-<div class="tucklets-login" th:fragment="login">
+<head th:replace="common-head :: common-head" />
+<div class="tucklets-login tucklets-login-background" th:fragment="login">
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
     <div class="login-modal">
         <div class="sign-in-title">
             <span>Sign In </span>
         </div>
-        <form th:action="@{/admin/login}" class="login-form">
+        <form th:action="@{/verify-login}" class="login-form" method="post">
             <label for="login-username">Username</label>
             <input id="login-username" class="form-control" type="text" name="username" placeholder="Username">
             <label for="login-password">Password</label>

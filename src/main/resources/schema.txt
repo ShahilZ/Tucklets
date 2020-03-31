@@ -2,6 +2,14 @@ DROP TABLE Child;
 DROP TABLE Sponsor;
 DROP TABLE Child_Sponsor_Assoc;
 
+CREATE TABLE Admin(
+   admin_id serial PRIMARY KEY,
+   username VARCHAR (50) NOT NULL,
+   password VARCHAR (100) NOT NULL,
+   creation_date TIMESTAMP NOT NULL,
+   last_login_date TIMESTAMP NOT NULL
+);
+
 CREATE TABLE Child(
    child_id serial PRIMARY KEY,
    first_name VARCHAR (50) NOT NULL,

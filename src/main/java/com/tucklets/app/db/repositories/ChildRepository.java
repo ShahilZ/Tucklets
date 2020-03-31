@@ -18,7 +18,6 @@ public interface ChildRepository extends CrudRepository<Child, Long>, JpaReposit
     @Query("select c from Child c where c.isSponsored = false")
     List<Child> fetchAvailableChildren();
 
-
     @Query("select c from Child c where c.childId = :childId")
     Optional<Child> fetchChild(@Param("childId") Long childId);
 

@@ -1,6 +1,5 @@
 package com.tucklets.app.controllers;
 
-import com.tucklets.app.utils.Constants;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +20,8 @@ public class GeneralErrorController implements ErrorController {
     public ModelAndView handlerError(HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView();
         if (response.getStatus() == HttpStatus.NOT_FOUND.value()) {
-            modelAndView.setViewName(String.format("redirect:%s", Constants.TUCKLETS_URL));
-
+            System.out.println(response);
+//            modelAndView.setViewName(String.format("redirect:%s", Constants.TUCKLETS_URL));
         }
         else {
             modelAndView.setViewName("/error");

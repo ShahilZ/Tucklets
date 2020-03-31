@@ -1,9 +1,10 @@
 .tucklets-login-background {
-    background-image: url(../images/kids.jpg);
+    /**background-image: url(../images/kids.jpg); */
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    position: static;
 
     background-repeat: no-repeat;
 }
