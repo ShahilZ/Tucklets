@@ -54,7 +54,7 @@ public class AdminController {
             childService.addMultipleChildren(children);
         }
 
-        ModelAndView modelAndView = new ModelAndView("/admin/upload-success");
+        ModelAndView modelAndView = new ModelAndView("admin/upload-success");
         modelAndView.addObject("numAddedChildren", importChildrenContainer.getNumChildrenAdded());
         return modelAndView;
     }
