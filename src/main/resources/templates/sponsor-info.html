@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:insert="common-head :: common-head">
-    <div th:replace="header :: header"></div>
+<head>
+    <div th:replace="common-head :: common-head"></div>
     <link rel="stylesheet" th:href="@{/css/sponsor-info.css}">
 </head>
 
 <body>
 <div>
+    <div th:replace="header :: header"></div>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Sponsor Information</h1>

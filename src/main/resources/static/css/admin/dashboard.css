@@ -1,0 +1,18 @@
+
+.children-table {
+    padding: 5%;
+}
+
+.children-table tr:hover {
+    background-color: #c9bbfb26;
+}
+
+.admin-tools-div {
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.upload-children-data-button {
+    border: 0;
+    cursor: pointer;
+}

@@ -1,13 +1,14 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:insert="common-head :: common-head">
-    <div th:replace="header :: header"></div>
-
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+<head>
+    <div th:replace="common-head :: common-head"></div>
+    <link rel="stylesheet" th:href="@{/css/admin/dashboard.css}">
 </head>
 
 <body>
 <div>
+    <div th:replace="header :: header"></div>
+
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Admin Dashboard</h1>
@@ -27,7 +28,7 @@
                 <th scope="col">Grade</th>
                 <th scope="col">Is Sponsored?</th>
                 <th scope="col">Desired Occupation</th>
-                <th scope="col">Upload Date</th>
+                <th scope="col">Created</th>
                 <th scope="col">Last Updated</th>
             </tr>
             </thead>
@@ -47,7 +48,9 @@
         </table>
     </div>
 
-    <a href="upload" class="btn btn-primary">Upload Children Data</a>
+    <div class="admin-tools-div">
+        <a th:href="@{/admin/dashboard/upload}" class="btn btn-primary upload-children-data-button">Upload Children Data</a>
+    </div>
 
 
 </div>

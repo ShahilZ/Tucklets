@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <div th:replace="common-head :: common-head"></div>
-    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 
 <div class="tucklets-login tucklets-login-background">
@@ -21,7 +21,9 @@
             <input id="login-username" class="form-control" type="text" name="username" placeholder="Username">
             <label for="login-password">Password</label>
             <input id="login-password" class="form-control" type="password" name="password" placeholder="******">
-            <input type="submit" class="btn btn-primary" value="Login">
+            <div class="login-submission-div">
+                <input type="submit" class="btn btn-primary" value="Login">
+            </div>
         </form>
     </div>
 </div>

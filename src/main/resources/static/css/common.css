@@ -1,0 +1,16 @@
+/** Overwrite Bootstrap buttons in favor of more thematic ones. */
+.btn.btn-primary {
+    background-color: #3e2763;
+    border-radius: 20px;
+    border: 0;
+    padding: 5px 30px;
+    margin: 15px;
+}
+
+.btn.btn-primary:hover {
+    background-color: #9576c8;
+}
+
+.center-button-container {
+    text-align: center;
+}

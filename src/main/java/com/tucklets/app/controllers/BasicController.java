@@ -1,7 +1,6 @@
 package com.tucklets.app.controllers;
 
 import com.tucklets.app.entities.Admin;
-import com.tucklets.app.entities.Child;
 import com.tucklets.app.services.AdminService;
 import com.tucklets.app.services.ChildService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +22,7 @@ public class BasicController {
 
     @RequestMapping("/")
     public String init() {
-        childService.resetChildDb();
         adminService.resetAdmins();
-        for (int i=0; i < 10; i++) {
-            var child = new Child();
-            child.setBirthYear(i + 2007);
-            child.setDesiredOccupation(i % 2 == 0 ? "Magician" : "Software Engineer");
-            child.setFirstName(String.format("Phil %d", i));
-            child.setLastName("Dunphy");
-            child.setGrade(i + 1);
-            childService.addChild(child);
-        }
         // Encrypt password
         String hashedPassword = passwordEncoder.encode("password");
         System.out.println(hashedPassword);

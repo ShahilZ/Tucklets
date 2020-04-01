@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ChildService {
@@ -22,6 +22,13 @@ public class ChildService {
      * Adds a child to the database.
      */
     public void addChild(Child child) { childRepository.save(child); }
+
+    /**
+     * Adds a list of children to the db.
+     */
+    public void addMultipleChildren(List<Child> children) {
+        childRepository.saveAll(children);
+    }
 
     /**
      * Sets isSponsored on Child table
@@ -91,6 +98,15 @@ public class ChildService {
     public List<Child> fetchAllChildren() {
         return childRepository.fetchAllChildren();
     }
+
+    /**
+     * Returns the child with the given name and birth year if one exists in the database.
+     * This will check the child's first and last names, along with the child's birth year.
+     */
+    public Child fetchChildByNameAndBirthYear(String firstName, String lastName, int birthYear) {
+        return childRepository.fetchChildByNameAndBirthYear(firstName, lastName, birthYear).orElse(null);
+    }
+
 
     /**
      * Removes all children in the db. This should only be used for testing.

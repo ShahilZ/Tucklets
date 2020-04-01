@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="common-head :: common-head"></div>
+    <link rel="stylesheet" th:href="@{/css/admin/upload.css}">
+</head>
+
+<body>
+<div th:replace="header :: header"></div>
+<div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Success!</h1>
+            <p class="lead">Your upload was successful.</p>
+            <p>Successfully added <span class="successful-import-text" th:text="${numAddedChildren}" /> children!</p>
+        </div>
+    </div>
+    <a th:href="@{dashboard/}" class="btn btn-primary">Back to Dashboard</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+.upload-children-form {
+    padding: 2%;
+}
+
+.upload-area-div {
+    text-align: center;
+    border: 2px solid #9576c8;
+}
+
+.successful-import-text {
+    color: #4BB543;
+    font-weight: bold;
+}
+
+.import-directions-div {
+    text-align:center;
+}
+
+.download-template-button {
+    margin-bottom: 10px;
+}
