@@ -43,6 +43,13 @@ public class ChildService {
     }
 
     /**
+     * Updates child entry
+     */
+//    public void updateChild(Child child) {
+//        childRepository.update(child);
+//    }
+
+    /**
      * Fetches all available children that needs sponsorship and calculates the age.
      * Returns as a List<ChildContainer>().
      */
