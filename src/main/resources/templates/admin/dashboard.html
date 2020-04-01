@@ -30,6 +30,7 @@
                 <th scope="col">Desired Occupation</th>
                 <th scope="col">Created</th>
                 <th scope="col">Last Updated</th>
+                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -43,6 +44,9 @@
                 <td th:text="${child.desiredOccupation}"/>
                 <td th:text="${child.creationDate}"/>
                 <td th:text="${child.lastUpdateDate}"/>
+                <td>
+                    <input type="button" class="btn btn-primary" value="Edit" th:attr="onclick=|fetchChildInfo('${child.childId}')|" />
+                </td>
             </tr>
             </tbody>
         </table>
@@ -52,7 +56,55 @@
         <a th:href="@{/admin/dashboard/upload}" class="btn btn-primary upload-children-data-button">Upload Children Data</a>
     </div>
 
+    <div class="">
+        <form class="edit-child-form" th:action="@{/admin/dashboard/edit-child}" th:object="${child}" method="post">
+            <fieldset>
+                <input type="hidden" id="child-id" th:field="*{childId}" />
+                <label for="child-first-name">First Name:</label>
+                <input type="text" id="child-first-name" th:field="*{firstName}" />
+                <label for="child-last-name">Last Name:</label>
+                <input type="text" id="child-last-name" th:field="*{lastName}"/>
+                <label for="child-birth-year">Birth year:</label>
+                <input type="text" id="child-birth-year" th:field="*{birthYear}"/>
+                <label for="child-desired-occupation">Desired Occupation:</label>
+                <input type="text" id="child-desired-occupation" th:field="*{desiredOccupation}" />
+                <label for="child-grade">Grade:</label>
+                <input type="text" id="child-grade" th:field="*{grade}" />
+                <label for="child-is-sponsored">Sponsored:</label>
+                <input type="text" id="child-is-sponsored" th:field="*{sponsored}"/>
+            </fieldset>
+            <input type="submit" class="btn btn-primary" value="Update" />
+        </form>
+    </div>
 
 </div>
+
+<script>
+
+    function fetchChildInfo(childId) {
+        console.log(childId);
+        $.ajax({
+            url: '/admin/retrieve-child/',
+            type: 'GET',
+            data: {"childId": childId},
+            success : function(childInfoResponse) {
+                $('#child-id').val(childInfoResponse.childId);
+                $('#child-first-name').val(childInfoResponse.firstName);
+                $('#child-last-name').val(childInfoResponse.lastName);
+                $('#child-birth-year').val(childInfoResponse.birthYear);
+                $('#child-grade').val(childInfoResponse.grade);
+                $('#child-is-sponsored').val(childInfoResponse.sponsored);
+                $('#child-desired-occupation').val(childInfoResponse.desiredOccupation);
+                $('.edit-child-form').show();
+            },
+            error : function() {
+
+            }
+        });
+    }
+
+</script>
+
 </body>
 </html>
+

@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -35,12 +37,34 @@ public class AdminController {
     public String viewDashboard(Model model) {
         List<Child> children = childService.fetchAllChildren();
         model.addAttribute("children", children);
+        model.addAttribute("child", new Child());
         return "admin/dashboard";
     }
 
     @GetMapping("/dashboard/upload")
     public String upload() {
         return "admin/upload-children-data";
+    }
+
+
+    @GetMapping(value = "/retrieve-child/")
+    public @ResponseBody Child retrieveChildInfo(@RequestParam(value = "childId") String id, Model model) {
+        Long childId = Long.valueOf(id);
+        Child child = childService.fetchChildById(childId);
+        model.addAttribute("child", child);
+        return child;
+    }
+
+    @PostMapping(value = "/dashboard/edit-child")
+    public String editChild(@ModelAttribute Child child) {
+        Child existingChild = childService.fetchChildById(child.getChildId());
+        boolean isSponsored = child.isSponsored();
+        addExistingFieldsToChild(child, existingChild);
+        // Resetting to user provided value
+        child.setSponsored(isSponsored);
+
+        childService.addChild(child);
+        return "redirect:/admin/dashboard";
     }
 
     @PostMapping(value = "/upload-children-data")
@@ -131,6 +155,4 @@ public class AdminController {
         // TODO: Validation.
         return true;
     }
-
-
 }
