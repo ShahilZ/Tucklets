@@ -61,7 +61,7 @@ public class AdminController {
     @PostMapping(value = "/dashboard/edit-child")
     public String editChild(@ModelAttribute Child child) {
         Child existingChild = childService.fetchChildById(child.getChildId());
-        boolean isSponsored = child.isSponsored();
+        boolean isSponsored = child.getSponsored();
         addExistingFieldsToChild(child, existingChild);
         // Resetting to user provided value
         child.setSponsored(isSponsored);
@@ -145,7 +145,7 @@ public class AdminController {
     private void addExistingFieldsToChild(Child child, Child existingChild) {
         child.setChildId(existingChild.getChildId());
         child.setCreationDate(existingChild.getCreationDate());
-        child.setSponsored(existingChild.isSponsored());
+        child.setSponsored(existingChild.getSponsored());
     }
 
     /**
