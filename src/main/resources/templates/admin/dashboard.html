@@ -19,9 +19,10 @@
 
     <div class="children-table">
         <h4>Children Information</h4>
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered children-data-table">
             <thead>
             <tr>
+                <th></th>
                 <th scope="col">Child Id</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
@@ -35,16 +36,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="child : ${children}">
-                <td th:text="${child.childId}"/>
-                <td th:text="${child.firstName}"/>
-                <td th:text="${child.lastName}"/>
-                <td th:text="${child.birthYear}"/>
-                <td th:text="${child.grade}"/>
-                <td th:text="${child.sponsored}"/>
-                <td th:text="${child.desiredOccupation}"/>
-                <td th:text="${child.creationDate}"/>
-                <td th:text="${child.lastUpdateDate}"/>
+            <tr th:each="child : ${children}" th:id="child-row + ${child.childId}">
+                <td><input type="image" class="delete-child-button" src="/images/red-x.jpg" th:onclick="|handleDeleteChild('${child.childId}')|" /> </td>
+                <td th:text="*{child.childId}"/>
+                <td th:text="*{child.firstName}"/>
+                <td th:text="*{child.lastName}"/>
+                <td th:text="*{child.birthYear}"/>
+                <td th:text="*{child.grade}"/>
+                <td th:text="*{child.sponsored}"/>
+                <td th:text="*{child.desiredOccupation}"/>
+                <td th:text="*{child.creationDate}"/>
+                <td th:text="*{child.lastUpdateDate}"/>
                 <td>
                     <input type="button" class="btn btn-primary" value="Edit" th:attr="onclick=|handleChildEdit('${child.childId}')|" />
                 </td>
@@ -105,9 +107,25 @@
         modal.hide()
     }
 
+    function handleDeleteChild(childId) {
+        console.log(childId);
+        let childRow = $('#child-row' + childId);
+        $.ajax({
+            url: '/admin/remove-child/',
+            type: 'DELETE',
+            data: {"childId": childId},
+            success: function(childInfoResponse) {
+                childRow.addClass("deleted-row-styling");
+            },
+            error : function() {
+            // TODO: Error handling.
+                console.log("error");
+            }
+        });
+    }
+
 
     function handleChildEdit(childId) {
-        console.log(childId);
         $.ajax({
             url: '/admin/retrieve-child/',
             type: 'GET',

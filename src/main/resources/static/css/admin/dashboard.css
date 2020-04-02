@@ -56,3 +56,16 @@
   overflow: auto; /* Enable scroll if needed */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+
+.delete-child-button {
+    height: 20px;
+    width: 20px;
+}
+
+.children-data-table tbody tr.deleted-row-styling {
+    visibility: collapse;
+}
+
+.children-data-table th, .children-data-table td {
+    vertical-align: middle;
+}
