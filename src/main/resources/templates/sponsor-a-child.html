@@ -22,7 +22,12 @@
     </div>
     <form class="select-child-form container" th:action="@{/sponsor-info/}" method="get">
       <div class="container children-div">
-        <label  th:each="childContainer : ${children}" th:for="checkbox- + ${childContainer.child.childId}" class="card child-div" th:id="child-id + ${childContainer.child.childId}" th:onchange="'onChildSelection(\'' + ${childContainer.child.childId} + '\');'">
+        <label
+                th:each="childContainer : ${children}"
+                th:id="child-id + ${childContainer.child.childId}"
+                th:for="checkbox- + ${childContainer.child.childId}"
+                class="card child-div"
+                th:onchange="'onChildSelection(\'' + ${childContainer.child.childId} + '\');'">
           <img class="card-img-top" th:src="@{/images/sample-kid.png}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title" th:text="|${childContainer.child.firstName} ${childContainer.child.lastName}|" />

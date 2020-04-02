@@ -114,6 +114,13 @@ public class ChildService {
         return childRepository.fetchChildByNameAndBirthYear(firstName, lastName, birthYear).orElse(null);
     }
 
+    /**
+     * Removes the Child with childId from the database.
+     */
+    public void removeChild(long childId) {
+        childRepository.deleteById(childId);
+    }
+
 
     /**
      * Removes all children in the db. This should only be used for testing.

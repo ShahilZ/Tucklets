@@ -11,7 +11,7 @@
     <div th:replace="logout-button :: logout-button"/>
     <div class="jumbotron jumbotron-fluid">
         <div th:if="${importChildrenContainer.importStatus.hasErrors}" class="container">
-            <h1 class="display-4"><span class="error-import-text">Oops! Something went wrong.</span></h1>
+            <h1 class="display-4"><span>Oops! Something went wrong.</span></h1>
             <p class="lead">Issue: <span class="error-import-text" th:text="${importChildrenContainer.importStatus.statusMessage}" /></p>
         </div>
         <div th:unless="${importChildrenContainer.importStatus.hasErrors}" class="container">
