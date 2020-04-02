@@ -50,8 +50,7 @@ public class AdminController {
 
 
     @GetMapping(value = "/retrieve-child/")
-    public @ResponseBody
-    Child retrieveChildInfo(@RequestParam(value = "childId") String id, Model model) {
+    public @ResponseBody Child retrieveChildInfo(@RequestParam(value = "childId") String id, Model model) {
         Long childId = Long.valueOf(id);
         Child child = childService.fetchChildById(childId);
         model.addAttribute("child", child);

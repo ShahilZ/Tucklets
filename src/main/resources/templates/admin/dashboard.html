@@ -93,7 +93,6 @@
 </div>
 
 <script>
-
     var modal = $(".modal-container");
 
     $(window).click(function(e) {
@@ -114,7 +113,6 @@
             type: 'GET',
             data: {"childId": childId},
             success : function(childInfoResponse) {
-                console.log(childInfoResponse);
                 $('#child-id').val(childInfoResponse.childId);
                 $('#child-first-name').val(childInfoResponse.firstName);
                 $('#child-last-name').val(childInfoResponse.lastName);
@@ -123,15 +121,11 @@
                 $('#child-is-sponsored').val(childInfoResponse.sponsored);
                 $('#child-desired-occupation').val(childInfoResponse.desiredOccupation);
                 modal.show();
-
             },
             error : function() {
-
             }
         });
     }
-
-
 </script>
 
 </body>
