@@ -31,6 +31,7 @@ public class BasicController {
         Admin admin = new Admin();
         admin.setEncryptedPassword(hashedPassword);
         admin.setUsername("admin");
+        admin.setEnabled(true);
         adminService.saveAdmin(admin);
         return "redirect:/admin/dashboard";
     }

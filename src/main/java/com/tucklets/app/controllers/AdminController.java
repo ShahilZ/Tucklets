@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
 @RequestMapping(value = "/admin")
@@ -37,12 +39,34 @@ public class AdminController {
     public String viewDashboard(Model model) {
         List<Child> children = childService.fetchAllChildren();
         model.addAttribute("children", children);
+        model.addAttribute("child", new Child());
         return "admin/dashboard";
     }
 
     @GetMapping("/dashboard/upload")
     public String upload() {
         return "admin/upload-children-data";
+    }
+
+
+    @GetMapping(value = "/retrieve-child/")
+    public @ResponseBody Child retrieveChildInfo(@RequestParam(value = "childId") String id, Model model) {
+        Long childId = Long.valueOf(id);
+        Child child = childService.fetchChildById(childId);
+        model.addAttribute("child", child);
+        return child;
+    }
+
+    @PostMapping(value = "/dashboard/edit-child")
+    public String editChild(@ModelAttribute Child child) {
+        Child existingChild = childService.fetchChildById(child.getChildId());
+        boolean isSponsored = child.getSponsored();
+        addExistingFieldsToChild(child, existingChild);
+        // Resetting to user provided value
+        child.setSponsored(isSponsored);
+
+        childService.addChild(child);
+        return "redirect:/admin/dashboard";
     }
 
     @PostMapping(value = "/upload-children-data")
@@ -76,7 +100,7 @@ public class AdminController {
 
         // Process header row.
         Map<UploadChildrenDataHeader, Integer> indexesToProcessMap = ExcelUtils.fetchMatchingHeaderIndexValues(
-            worksheet.getRow(0), UploadChildrenDataHeader.HEADER_TO_UPLOAD_CHILDREN_DATA_HEADER_MAP);
+                worksheet.getRow(0), UploadChildrenDataHeader.HEADER_TO_UPLOAD_CHILDREN_DATA_HEADER_MAP);
 
         // Validate that we have found matching headers for all required headers.
         if (indexesToProcessMap.size() != UploadChildrenDataHeader.HEADER_TO_UPLOAD_CHILDREN_DATA_HEADER_MAP.size()) {
@@ -84,25 +108,24 @@ public class AdminController {
         }
 
         // Skip initial header row.
-        for(int rowIndex = 1; rowIndex < excelRowCount; rowIndex++) {
+        for (int rowIndex = 1; rowIndex < excelRowCount; rowIndex++) {
             Map<UploadChildrenDataHeader, String> importChild = new HashMap<>();
             UploadChildrenDataHeader[] uploadChildrenDataHeaders = UploadChildrenDataHeader.values();
 
             XSSFRow row = worksheet.getRow(rowIndex);
             // Skip if empty
             if (row != null) {
-                for (Map.Entry<UploadChildrenDataHeader, Integer> header: indexesToProcessMap.entrySet()) {
+                for (Map.Entry<UploadChildrenDataHeader, Integer> header : indexesToProcessMap.entrySet()) {
                     importChild.put(header.getKey(), ExcelUtils.fetchCellValueAtIndex(row, header.getValue()));
                 }
             }
             if (validateExtractedChild(importChild)) {
                 // Create Child object from excelChild
                 Child child = convertExcelChild(importChild);
-                    Child existingChild = childService.fetchChildByNameAndBirthYear(child.getFirstName(), child.getLastName(), child.getBirthYear());
+                Child existingChild = childService.fetchChildByNameAndBirthYear(child.getFirstName(), child.getLastName(), child.getBirthYear());
                 if (existingChild == null) {
                     numChildrenAdded++;
-                }
-                else {
+                } else {
                     // Child already exists, update childId so object can be updated.
                     addExistingFieldsToChild(child, existingChild);
                     numChildrenUpdated++;
@@ -121,7 +144,7 @@ public class AdminController {
     private void addExistingFieldsToChild(Child child, Child existingChild) {
         child.setChildId(existingChild.getChildId());
         child.setCreationDate(existingChild.getCreationDate());
-        child.setSponsored(existingChild.isSponsored());
+        child.setSponsored(existingChild.getSponsored());
     }
 
     /**
@@ -149,5 +172,4 @@ public class AdminController {
         // TODO: More in-depth validation.
         return true;
     }
-
 }

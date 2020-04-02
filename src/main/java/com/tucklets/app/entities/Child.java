@@ -37,7 +37,7 @@ public class Child {
     private int grade;
 
     @Column(name = "is_sponsored")
-    private boolean isSponsored;
+    private boolean sponsored;
 
     @Column(name = "desired_occupation", nullable = false)
     private String desiredOccupation;
@@ -98,12 +98,12 @@ public class Child {
         this.grade = grade;
     }
 
-    public boolean isSponsored() {
-        return isSponsored;
+    public boolean getSponsored() {
+        return sponsored;
     }
 
     public void setSponsored(boolean sponsored) {
-        isSponsored = sponsored;
+        this.sponsored = sponsored;
     }
 
     public String getDesiredOccupation() {
