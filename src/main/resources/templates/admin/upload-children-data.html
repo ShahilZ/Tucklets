@@ -3,12 +3,15 @@
 <head>
     <div th:replace="common-head :: common-head"></div>
     <link rel="stylesheet" th:href="@{/css/admin/upload.css}">
+    <script type="text/javascript" th:src="@{/js/upload-children-data.js}"></script>
+
 </head>
 <body>
 <div th:replace="header :: header"></div>
 
 <div>
     <div class="jumbotron jumbotron-fluid">
+        <div th:replace="logout-button :: logout-button"/>
         <div class="container">
             <h1 class="display-4">Upload Children Data</h1>
         </div>
@@ -26,10 +29,11 @@
             </div>
             <div class="upload-area-div">
                 <span>Please upload a file (.xls or .xlsx)</span>
-                <input class="form-control" type="file" name="file" accept=".xls,.xlsx">
+                <input class="form-control upload-file-button" type="file" name="file" accept=".xls,.xlsx" onchange="handleUploadFile()">
             </div>
-            <div class="center-button-container">
-                <input class="btn btn-primary" type="submit" value="Upload">
+            <div >
+                <input class="btn btn-primary upload-button" type="submit" value="Upload" disabled>
+                <a th:href="@{/admin/dashboard}" class="btn btn-primary back-to-dashboard-button">Back to Dashboard</a>
             </div>
         </form>
     </div>

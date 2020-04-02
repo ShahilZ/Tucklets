@@ -7,10 +7,18 @@
     margin: 15px;
 }
 
-.btn.btn-primary:hover {
+.btn.btn-primary:active:hover:not([disabled]) {
     background-color: #9576c8;
 }
 
 .center-button-container {
     text-align: center;
+}
+
+.back-to-dashboard-button {
+    float: left;
+}
+
+.logout-button {
+    float: right;
 }
