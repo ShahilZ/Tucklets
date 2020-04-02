@@ -1,5 +1,6 @@
 package com.tucklets.app.containers;
 
+import com.tucklets.app.containers.enums.ImportStatus;
 import com.tucklets.app.entities.Child;
 
 import java.util.List;
@@ -21,12 +22,17 @@ public class ImportChildrenContainer {
      */
     private int numChildrenAdded;
 
-    public ImportChildrenContainer(List<Child> children, int numChildrenUpdated, int numChildrenAdded) {
+    /**
+     * ImportStatus indicating the status of the import.
+     */
+    ImportStatus importStatus;
+
+    public ImportChildrenContainer(List<Child> children, int numChildrenUpdated, int numChildrenAdded, ImportStatus importStatus) {
         this.children = children;
         this.numChildrenUpdated = numChildrenUpdated;
         this.numChildrenAdded = numChildrenAdded;
+        this.importStatus = importStatus;
     }
-
 
     public List<Child> getChildren() {
         return children;
@@ -50,5 +56,13 @@ public class ImportChildrenContainer {
 
     public void setNumChildrenAdded(int numChildrenAdded) {
         this.numChildrenAdded = numChildrenAdded;
+    }
+
+    public ImportStatus getImportStatus() {
+        return importStatus;
+    }
+
+    public void setImportStatus(ImportStatus importStatus) {
+        this.importStatus = importStatus;
     }
 }

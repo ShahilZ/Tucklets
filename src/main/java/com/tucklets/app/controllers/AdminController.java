@@ -1,10 +1,12 @@
 package com.tucklets.app.controllers;
 
 import com.tucklets.app.containers.ImportChildrenContainer;
+import com.tucklets.app.containers.enums.ImportStatus;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.services.ChildService;
 import com.tucklets.app.utils.ExcelUtils;
 import com.tucklets.app.utils.UploadChildrenDataHeader;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -54,8 +56,9 @@ public class AdminController {
             childService.addMultipleChildren(children);
         }
 
-        ModelAndView modelAndView = new ModelAndView("admin/upload-success");
-        modelAndView.addObject("numAddedChildren", importChildrenContainer.getNumChildrenAdded());
+        ModelAndView modelAndView = new ModelAndView("admin/upload-result");
+        modelAndView.addObject("importChildrenContainer", importChildrenContainer);
+
         return modelAndView;
     }
 
@@ -71,22 +74,31 @@ public class AdminController {
         XSSFSheet worksheet = workbook.getSheetAt(0);
         int excelRowCount = worksheet.getPhysicalNumberOfRows();
 
+        // Process header row.
+        Map<UploadChildrenDataHeader, Integer> indexesToProcessMap = ExcelUtils.fetchMatchingHeaderIndexValues(
+            worksheet.getRow(0), UploadChildrenDataHeader.HEADER_TO_UPLOAD_CHILDREN_DATA_HEADER_MAP);
+
+        // Validate that we have found matching headers for all required headers.
+        if (indexesToProcessMap.size() != UploadChildrenDataHeader.HEADER_TO_UPLOAD_CHILDREN_DATA_HEADER_MAP.size()) {
+            return new ImportChildrenContainer(new ArrayList<>(), 0, 0, ImportStatus.MISMATCHING_HEADERS);
+        }
+
         // Skip initial header row.
         for(int rowIndex = 1; rowIndex < excelRowCount; rowIndex++) {
-            Map<UploadChildrenDataHeader, String> excelChild = new HashMap<>();
+            Map<UploadChildrenDataHeader, String> importChild = new HashMap<>();
             UploadChildrenDataHeader[] uploadChildrenDataHeaders = UploadChildrenDataHeader.values();
 
             XSSFRow row = worksheet.getRow(rowIndex);
             // Skip if empty
             if (row != null) {
-                for (int headerIndex = 0; headerIndex < uploadChildrenDataHeaders.length; headerIndex++) {
-                    excelChild.put(uploadChildrenDataHeaders[headerIndex], ExcelUtils.fetchCellValueAtIndex(row, headerIndex));
+                for (Map.Entry<UploadChildrenDataHeader, Integer> header: indexesToProcessMap.entrySet()) {
+                    importChild.put(header.getKey(), ExcelUtils.fetchCellValueAtIndex(row, header.getValue()));
                 }
             }
-            // Create Child object from excelChild
-            Child child = convertExcelChild(excelChild);
-            if (validateExtractedChild(child)) {
-                Child existingChild = childService.fetchChildByNameAndBirthYear(child.getFirstName(), child.getLastName(), child.getBirthYear());
+            if (validateExtractedChild(importChild)) {
+                // Create Child object from excelChild
+                Child child = convertExcelChild(importChild);
+                    Child existingChild = childService.fetchChildByNameAndBirthYear(child.getFirstName(), child.getLastName(), child.getBirthYear());
                 if (existingChild == null) {
                     numChildrenAdded++;
                 }
@@ -96,9 +108,10 @@ public class AdminController {
                     numChildrenUpdated++;
                 }
                 children.add(child);
+
             }
         }
-        return new ImportChildrenContainer(children, numChildrenUpdated, numChildrenAdded);
+        return new ImportChildrenContainer(children, numChildrenUpdated, numChildrenAdded, ImportStatus.SUCCESS);
     }
 
     /**
@@ -114,23 +127,27 @@ public class AdminController {
     /**
      * Converts the Map of Excel headers to excel values to a Child object.
      */
-    private Child convertExcelChild(Map<UploadChildrenDataHeader, String> excelChild) {
+    private Child convertExcelChild(Map<UploadChildrenDataHeader, String> importChild) {
         Child child = new Child();
-        child.setFirstName(excelChild.get(UploadChildrenDataHeader.FIRST_NAME));
-        child.setLastName(excelChild.get(UploadChildrenDataHeader.LAST_NAME));
-        child.setBirthYear(Integer.parseInt(excelChild.get(UploadChildrenDataHeader.BIRTH_YEAR)));
-        child.setGrade(Integer.parseInt(excelChild.get(UploadChildrenDataHeader.GRADE)));
-        child.setDesiredOccupation(excelChild.get(UploadChildrenDataHeader.ASPIRATIONS));
+        child.setFirstName(importChild.get(UploadChildrenDataHeader.FIRST_NAME));
+        child.setLastName(importChild.get(UploadChildrenDataHeader.LAST_NAME));
+        child.setBirthYear(Integer.parseInt(importChild.get(UploadChildrenDataHeader.BIRTH_YEAR)));
+        child.setGrade(Integer.parseInt(importChild.get(UploadChildrenDataHeader.GRADE)));
+        child.setDesiredOccupation(importChild.get(UploadChildrenDataHeader.ASPIRATIONS));
         return child;
     }
 
     /**
      * Validates the extracted Child object is valid.
      */
-    private boolean validateExtractedChild(Child child) {
-        // TODO: Validation.
+    private boolean validateExtractedChild(Map<UploadChildrenDataHeader, String> importChild) {
+        for (Map.Entry<UploadChildrenDataHeader, String> header : importChild.entrySet()) {
+            if (StringUtils.isBlank(header.getValue())) {
+                return false;
+            }
+        }
+        // TODO: More in-depth validation.
         return true;
     }
-
 
 }

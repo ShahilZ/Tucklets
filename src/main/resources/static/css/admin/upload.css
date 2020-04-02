@@ -12,10 +12,18 @@
     font-weight: bold;
 }
 
+.error-import-text {
+    color: #FF0000;
+}
+
 .import-directions-div {
     text-align:center;
 }
 
 .download-template-button {
     margin-bottom: 10px;
+}
+
+.upload-button {
+    float: right;
 }
