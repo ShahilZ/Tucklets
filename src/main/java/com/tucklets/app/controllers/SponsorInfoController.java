@@ -1,10 +1,9 @@
 package com.tucklets.app.controllers;
 
-import com.tucklets.app.db.repositories.ChildRepository;
+import com.tucklets.app.containers.ChildAndSponsorContainer;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.DonationDuration;
-import com.tucklets.app.containers.ChildAndSponsorContainer;
 import com.tucklets.app.services.AmountService;
 import com.tucklets.app.services.ChildAndSponsorAssociationService;
 import com.tucklets.app.services.ChildService;
@@ -18,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/sponsor-info")
@@ -68,6 +65,9 @@ public class SponsorInfoController {
         return "success";
     }
 
+    /**
+     * Creates the container of Children and Sponsor info for the frontend (sponsor-info page).
+     */
     private ChildAndSponsorContainer createChildAndSponsorContainer(List<Child> children, Sponsor sponsor) {
         ChildAndSponsorContainer childAndSponsorContainer = new ChildAndSponsorContainer();
 
@@ -76,6 +76,7 @@ public class SponsorInfoController {
 
         childAndSponsorContainer.setSponsor(sponsor);
         childAndSponsorContainer.setChildren(children);
+        childAndSponsorContainer.setNumChildren(children.size());
         return childAndSponsorContainer;
     }
 }

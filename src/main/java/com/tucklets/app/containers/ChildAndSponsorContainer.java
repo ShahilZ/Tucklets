@@ -4,14 +4,15 @@ import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.DonationDuration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChildAndSponsorContainer {
 
-    public Sponsor sponsor;
-    public List<Child> children;
-    public DonationDuration donationDuration;
+    private Sponsor sponsor;
+    private List<Child> children;
+    private DonationDuration donationDuration;
+    private int numChildren;
+
 
     public List<Child> getChildren() { return children; }
 
@@ -28,4 +29,12 @@ public class ChildAndSponsorContainer {
     public DonationDuration getDonationDuration() {  return donationDuration;  }
 
     public void setDonationDuration(DonationDuration donationDuration) { this.donationDuration = donationDuration; }
+
+    public int getNumChildren() {
+        return numChildren;
+    }
+
+    public void setNumChildren(int numChildren) {
+        this.numChildren = numChildren;
+    }
 }
