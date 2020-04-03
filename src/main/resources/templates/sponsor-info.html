@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <div th:replace="common-head :: common-head"></div>
     <link rel="stylesheet" th:href="@{/css/sponsor-info.css}">
+    <script src="https://www.paypal.com/sdk/js?client-id=AZkukKiW5JhZ8TZlegq1Y3GCUw1xzdQZL5LdchpjvPtHZHz7KJtaUXu45oJURfdKce-JGN98OEIfSjkA&vault=true"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.</script>
+    <script th:src="@{/js/sponsor-info.js}"></script>
 </head>
 
 <body>
@@ -31,7 +35,8 @@
     </div>
 
     <div class="sponsor-info-div">
-        <form class="sponsor-info-form" th:action="@{/sponsor-info/submit}" th:object="${childAndSponsor}" method="post">
+        <form id="sponsor-info-form" class="sponsor-info-form" th:action="@{/sponsor-info/submit}" th:object="${childAndSponsor}" method="post">
+            <input id="num-selected-children" type="hidden" th:field="*{numChildren}">
             <fieldset>
                 <input type="hidden" id="children" th:field="*{children}" th:value="*{children}"/>
                 <legend><span class="sponsor-info-section-number">1</span> Personal Information</legend>
@@ -57,9 +62,7 @@
                     </option>
                 </select>
             </fieldset>
-<!--            <a class="btn btn-primary" href="https://www.paypal.com/donate?token=HDDDOArxM62YgvVgcLgaZLKOYs2zDXiAolEmm_suy3n_0Q_Ckn-cM3h8r0O7wvyjAvAu_W&country.x=US&locale.x=US&Z3JncnB0="/>-->
-
-            <input type="submit" value="Submit" />
+            <div id="paypal-button-container"></div>
         </form>
     </div>
 
