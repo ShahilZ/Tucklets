@@ -14,60 +14,62 @@
     <div th:replace="header :: header"></div>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Sponsor Information</h1>
-            <p class="lead">Thank you for your support!</p>
+            <h1 class="display-4" th:text="#{sponsor-info.title}" />
+            <p class="lead" th:text="#{sponsor-info.subtitle}" />
         </div>
     </div>
     
     <div class="container selected-children-div">
-        <div class="child-div" th:each="child: ${childAndSponsor.children}">
+        <div class="child-div" th:each="child: ${sponsorInfoContainer.children}">
             <div class="child-image-div">
                 <img class="" th:src="@{/images/sample-kid.png}" alt="Card image cap" width="142" height="162">
             </div>
             <div class="card-block px-2">
                 <h5 class="card-title" th:text="|${child.firstName} ${child.lastName}|" />
-                <p class="card-text"><b>Age: </b> <span th:text="|${child.birthYear} years old|"/></p>
-                <p class="card-text"><b>Grade: </b><span th:text="${child.grade}"/></p>
-                <p class="card-text"><b>Aspirations: </b><span th:text="${child.desiredOccupation}"/></p>
+                <p class="card-text"><b th:text="#{child.age}" /><span th:text="${child.birthYear}"/></p>
+                <p class="card-text"><b th:text="#{child.grade}" /><span th:text="${child.grade}"/></p>
+                <p class="card-text"><b th:text="#{child.info}" /><span th:text="${child.desiredOccupation}"/></p>
             </div>
             <div class="w-100"></div>
         </div>
     </div>
 
     <div class="sponsor-info-div">
-        <form id="sponsor-info-form" class="sponsor-info-form" th:action="@{/sponsor-info/submit}" th:object="${childAndSponsor}" method="post">
+        <form id="sponsor-info-form" class="sponsor-info-form" th:action="@{/sponsor-info/submit}" th:object="${sponsorInfoContainer}" method="post">
             <input id="num-selected-children" type="hidden" th:field="*{numChildren}">
             <fieldset>
                 <input type="hidden" id="children" th:field="*{children}" th:value="*{children}"/>
-                <legend><span class="sponsor-info-section-number">1</span> Personal Information</legend>
-                <label> </label>
-                <label for="sponsor-first-name">First Name:</label>
-                <input type="text" id="sponsor-first-name" th:field="*{sponsor.firstName}" placeholder="Your First Name *">
-                <label for="sponsor-last-name">Last Name:</label>
-                <input type="text" id="sponsor-last-name"  th:field="*{sponsor.lastName}" placeholder="Your Last Name *">
-                <label for="sponsor-email">Email:</label>
-                <input type="email" id="sponsor-email"  th:field="*{sponsor.email}" placeholder="Your Email ">
-                <label for="sponsor-address">Address:</label>
-                <input type="text" id="sponsor-address"  th:field="*{sponsor.address}" placeholder="ex. 1234 A Street ">
-                <label for="sponsor-church-name">Church Name:</label>
-                <input type="text" id="sponsor-church-name" th:field="*{sponsor.churchName}" placeholder="Church Name">
+                <legend><span class="sponsor-info-section-number">1</span><span th:text="#{sponsor-info.form.header.personal}"/></legend>
+                <label for="sponsor-first-name" th:text="#{sponsor-info.form.firstName}" />
+                <input type="text" id="sponsor-first-name" th:field="*{sponsor.firstName}" th:placeholder="#{sponsor-info.form.placeholder.firstName}">
+                <label for="sponsor-last-name" th:text="#{sponsor-info.form.lastName}"/>
+                <input type="text" id="sponsor-last-name"  th:field="*{sponsor.lastName}" th:placeholder="#{sponsor-info.form.placeholder.lastName}">
+                <label for="sponsor-email" th:text="#{sponsor-info.form.email}" />
+                <input type="email" id="sponsor-email"  th:field="*{sponsor.email}" th:placeholder="#{sponsor-info.form.placeholder.email}">
+                <label for="sponsor-address" th:text="#{sponsor-info.form.address}" />
+                <input type="text" id="sponsor-address"  th:field="*{sponsor.address}" th:placeholder="#{sponsor-info.form.placeholder.address}">
+                <label for="sponsor-church-name" th:text="#{sponsor-info.form.churchName}" />
+                <input type="text" id="sponsor-church-name" th:field="*{sponsor.churchName}" th:placeholder="#{sponsor-info.form.placeholder.churchName}">
             </fieldset>
             <fieldset>
-                <legend><span class="sponsor-info-section-number">2</span> Donation Info</legend>
-                <label for="donation-amount">Amount:</label>
+                <legend><span class="sponsor-info-section-number">2</span><span th:text="#{sponsor-info.form.header.donationInfo}" /></legend>
+                <label for="donation-amount" th:text="#{sponsor-info.form.amount}" />
 
                 <input type="text" id="donation-amount" th:field="*{sponsor.donationAmount}" readonly/>
-                <select th:field="*{donationDuration}">
-                    <option th:each="donationDur : ${donationDuration}" th:value="${donationDur}" th:text="${donationDur.displayText}">
+                <select th:field="*{selectedDonationDuration}">
+                    <option th:each="donationDur : ${sponsorInfoContainer.donationDurations}" th:value="${donationDur}" th:text="#{${donationDur.displayText}}">
                     </option>
                 </select>
             </fieldset>
             <div id="paypal-button-container"></div>
         </form>
+        <form id="selected-children-ids" th:action="@{/sponsor-info/}" method="get">
+            <div th:each="selectedChildId : ${sponsorInfoContainer.selectedChildIds}">
+                <input type="hidden" name="childId" th:value="${selectedChildId}">
+            </div>
+        </form>
     </div>
 
 </div>
-
-
 </body>
 </html>

@@ -11,19 +11,17 @@
   <div>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
-        <h1 class="display-4">Sponsor a child</h1>
-        <p class="lead">Your donation will keep one child in school and provide education, food, health services, and clothing.</p>
+        <h1 class="display-4" th:text="#{sponsor-a-child.title}"/>
+        <p class="lead" th:text="#{sponsor-a-child.subtitle}" />
       </div>
     </div>
     <div class="container">
-      <p> You can donate in any capacity, or sponsor one or more children out of close to 1000 children
-        that are in the school, or sponsor one or more child from the list below or sponsor a
-        teacher.  Children list below is a partial list and will be updated on regular basis.</p>
+      <p th:text="#{sponsor-a-child.description}">
     </div>
     <form class="select-child-form container" th:action="@{/sponsor-info/}" method="get">
       <div class="container children-div">
         <label
-                th:each="childContainer : ${children}"
+                th:each="childContainer : ${sponsorChildrenContainer.children}"
                 th:id="child-id + ${childContainer.child.childId}"
                 th:for="checkbox- + ${childContainer.child.childId}"
                 class="card child-div"
@@ -31,14 +29,14 @@
           <img class="card-img-top" th:src="@{/images/sample-kid.png}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title" th:text="|${childContainer.child.firstName} ${childContainer.child.lastName}|" />
-            <p class="card-text"><b>Age: </b> <span th:text="|${childContainer.age} years old|"/></p>
-            <p class="card-text"><b>Grade: </b><span th:text="${childContainer.child.grade}"/></p>
-            <p class="card-text"><b>Aspirations: </b><span th:text="${childContainer.child.desiredOccupation}"/></p>
+            <p class="card-text"><b th:text="#{child.age}" /><span th:text="${childContainer.age}"/></p>
+            <p class="card-text"><b th:text="#{child.grade}" /><span th:text="${childContainer.child.grade}"/></p>
+            <p class="card-text"><b th:text="#{child.info}" /><span th:text="${childContainer.child.desiredOccupation}"/></p>
             <input type="checkbox" name="childId" th:id="checkbox- + ${childContainer.child.childId}" th:value="${childContainer.child.childId}">
           </div>
         </label>
       </div>
-      <input type="submit" class="btn btn-primary sponsor-now-button" value="Sponsor Now">
+      <input type="submit" class="btn btn-primary sponsor-now-button" th:value="#{sponsor-a-child.submit}">
     </form>
   </div>
 </body>
