@@ -7,10 +7,10 @@ import java.util.stream.Stream;
 
 public enum DonationDuration
 {
-    SIX_MONTHS(0, "sponsor-info.donationDuration.SIX_MONTHS"),
     ONE_YEAR(1, "sponsor-info.donationDuration.ONE_YEAR"),
     THREE_YEAR(2, "sponsor-info.donationDuration.THREE_YEARS"),
-    INDEFINITE(3, "sponsor-info.donationDuration.INDEFINITE");
+    INDEFINITE(3, "sponsor-info.donationDuration.INDEFINITE"),
+    SIX_MONTHS(0, "sponsor-info.donationDuration.SIX_MONTHS");
 
     private int donationDurationValue;
     private String displayText;

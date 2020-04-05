@@ -20,13 +20,13 @@
     </div>
     
     <div class="container selected-children-div">
-        <div class="child-div" th:each="child: ${childAndSponsor.children}">
+        <div class="child-div" th:each="child: ${sponsorInfoContainer.children}">
             <div class="child-image-div">
                 <img class="" th:src="@{/images/sample-kid.png}" alt="Card image cap" width="142" height="162">
             </div>
             <div class="card-block px-2">
                 <h5 class="card-title" th:text="|${child.firstName} ${child.lastName}|" />
-                <p class="card-text"><b th:text="#{child.age}" /><span th:text="|${child.birthYear} years old|"/></p>
+                <p class="card-text"><b th:text="#{child.age}" /><span th:text="${child.birthYear}"/></p>
                 <p class="card-text"><b th:text="#{child.grade}" /><span th:text="${child.grade}"/></p>
                 <p class="card-text"><b th:text="#{child.info}" /><span th:text="${child.desiredOccupation}"/></p>
             </div>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="sponsor-info-div">
-        <form id="sponsor-info-form" class="sponsor-info-form" th:action="@{/sponsor-info/submit}" th:object="${childAndSponsor}" method="post">
+        <form id="sponsor-info-form" class="sponsor-info-form" th:action="@{/sponsor-info/submit}" th:object="${sponsorInfoContainer}" method="post">
             <input id="num-selected-children" type="hidden" th:field="*{numChildren}">
             <fieldset>
                 <input type="hidden" id="children" th:field="*{children}" th:value="*{children}"/>
@@ -56,17 +56,20 @@
                 <label for="donation-amount" th:text="#{sponsor-info.form.amount}" />
 
                 <input type="text" id="donation-amount" th:field="*{sponsor.donationAmount}" readonly/>
-                <select th:field="*{donationDuration}">
-                    <option th:each="donationDur : ${donationDuration}" th:value="${donationDur}" th:text="#{${donationDur.displayText}}">
+                <select th:field="*{selectedDonationDuration}">
+                    <option th:each="donationDur : ${sponsorInfoContainer.donationDurations}" th:value="${donationDur}" th:text="#{${donationDur.displayText}}">
                     </option>
                 </select>
             </fieldset>
             <div id="paypal-button-container"></div>
         </form>
+        <form id="selected-children-ids" th:action="@{/sponsor-info/}" method="get">
+            <div th:each="selectedChildId : ${sponsorInfoContainer.selectedChildIds}">
+                <input type="hidden" name="childId" th:value="${selectedChildId}">
+            </div>
+        </form>
     </div>
 
 </div>
-
-
 </body>
 </html>
