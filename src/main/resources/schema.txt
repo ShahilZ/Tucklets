@@ -46,3 +46,9 @@ CREATE TABLE Sponsor(
    last_update_date TIMESTAMP NOT NULL
 );
 
+CREATE TABLE Child_Additional_Detail(
+   child_additional_detail_id serial PRIMARY KEY;
+   child_id SMALLINT NOT NULL;
+   image_location VARCHAR (250) NOT NULL;
+);
+
