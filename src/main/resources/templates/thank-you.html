@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <div th:replace="common-head :: common-head"></div>
+  <link rel="stylesheet" th:href="@{/css/thank-you.css}">
+</head>
+<body>
+  <div class="banner">
+    <div  th:replace="header :: header"></div>
+  </div>
+  <div class="container thank-you-container">
+    <img class="checkmark-image" alt="checkmarx" th:src="@{/images/checkmark.png}"/>
+    <div class="thank-you-text">
+      <p class="">Thank you for your generous gift!</p>
+      <p class="">Your donation has been processed. You should receive a confirmation email shortly.</p>
+      <p class="">Your efforts will ignite a hope for orphaned children in Kenya. Together, we are closer to cultivating brighter futures for each one of them. </p>
+    </div>
+    <br>
+    <br>
+  </div>
+  <div class="group-photo-div">
+    <img class="" alt="group-of-students" th:src="@{/images/group-student-photo.png}"/>
+  </div>
+</body>
+</html>

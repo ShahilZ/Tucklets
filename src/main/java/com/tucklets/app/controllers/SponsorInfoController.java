@@ -10,8 +10,10 @@ import com.tucklets.app.services.ChildAndSponsorAssociationService;
 import com.tucklets.app.services.ChildService;
 import com.tucklets.app.services.SponsorService;
 import com.tucklets.app.utils.Constants;
+import com.tucklets.app.utils.ContainerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import com.tucklets.app.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,17 +41,18 @@ public class SponsorInfoController {
     @Autowired
     AmountService amountService;
 
+    @Autowired
+    EmailService emailService;
+
     @GetMapping(value = "/")
     public ModelAndView handleChildSelection(@RequestParam(value = "childId") String[] childrenIds) {
         ModelAndView modelAndView = new ModelAndView("sponsor-info");
 
         var selectedChildren = childService.fetchChildByIds(childrenIds);
-        Locale locale = LocaleContextHolder.getLocale();
         var totalDonationAmount = amountService.computeTotalDonationAmount(selectedChildren);
         Sponsor sponsor = new Sponsor();
         sponsor.setDonationAmount(totalDonationAmount);
 
-        LocaleContainer localeContainer = new LocaleContainer(Constants.SUPPORTED_LOCALES, locale);
         SponsorInfoContainer sponsorInfoContainer = new SponsorInfoContainer(
             sponsor,
             selectedChildren,
@@ -59,13 +62,13 @@ public class SponsorInfoController {
             selectedChildren.size());
         sponsorInfoContainer.setNumChildren(selectedChildren.size());
 
-        modelAndView.addObject("localeContainer", localeContainer);
+        modelAndView.addObject("localeContainer", ContainerUtils.createLocaleContainer());
         modelAndView.addObject("sponsorInfoContainer", sponsorInfoContainer);
         return modelAndView;
     }
 
     @PostMapping(value = "/submit")
-    public String handleSponsorSubmission(@ModelAttribute SponsorInfoContainer sponsorInfoContainer) {
+    public ModelAndView handleSponsorSubmission(@ModelAttribute SponsorInfoContainer sponsorInfoContainer) {
 
         // TODO: Validate form.
 
@@ -77,6 +80,11 @@ public class SponsorInfoController {
         childAndSponsorAssociationService.createAssociation(selectedChildren, sponsor, donationDuration);
         childService.setSponsoredChildren(selectedChildren);
 
-        return "success";
+        emailService.sendConfirmationEmail(sponsor, selectedChildren);
+
+        ModelAndView modelAndView = new ModelAndView("thank-you");
+        modelAndView.addObject("localeContainer", ContainerUtils.createLocaleContainer());
+
+        return modelAndView;
     }
 }
