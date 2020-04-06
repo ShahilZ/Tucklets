@@ -8,9 +8,8 @@ import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.PaymentMethod;
 import com.tucklets.app.services.ChildService;
 import com.tucklets.app.services.SponsorService;
-import com.tucklets.app.utils.Constants;
+import com.tucklets.app.utils.ContainerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,13 +32,11 @@ public class SponsorChildrenController {
     @GetMapping(value = "/")
     public String fetchAvailableChildren(Model model) {
         List<ChildContainer> children = childService.fetchAvailableChildrenWithAge();
-        Locale locale = LocaleContextHolder.getLocale();
         SponsorChildrenContainer sponsorChildrenContainer =
             new SponsorChildrenContainer(children);
-        LocaleContainer localeContainer = new LocaleContainer(Constants.SUPPORTED_LOCALES, locale);
 
         model.addAttribute("sponsorChildrenContainer", sponsorChildrenContainer);
-        model.addAttribute("localeContainer", localeContainer);
+        model.addAttribute("localeContainer", ContainerUtils.createLocaleContainer());
         return "sponsor-a-child";
     }
 
