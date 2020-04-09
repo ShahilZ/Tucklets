@@ -4,6 +4,7 @@ import com.tucklets.app.containers.ImportChildrenContainer;
 import com.tucklets.app.containers.enums.ImportStatus;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.services.ChildService;
+import com.tucklets.app.utils.ContainerUtils;
 import com.tucklets.app.utils.ExcelUtils;
 import com.tucklets.app.utils.UploadChildrenDataHeader;
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +43,8 @@ public class AdminController {
         List<Child> children = childService.fetchAllChildren();
         model.addAttribute("children", children);
         model.addAttribute("child", new Child());
+        model.addAttribute("localeContainer", ContainerUtils.createLocaleContainer());
+
         return "admin/dashboard";
     }
 
@@ -52,20 +55,29 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard/upload")
-    public String upload() {
+    public String upload(Model model) {
+        model.addAttribute("localeContainer", ContainerUtils.createLocaleContainer());
         return "admin/upload-children-data";
     }
 
 
-    @GetMapping(value = "/retrieve-child/")
-    public @ResponseBody Child retrieveChildInfo(@RequestParam(value = "childId") String id, Model model) {
+    @GetMapping(value = "/retrieve-edit-child/")
+    public String retrieveChildInfo(@RequestParam(value = "childId") String id, @RequestParam(value = "mode") String mode,  Model model) {
         Long childId = Long.valueOf(id);
         Child child = childService.fetchChildById(childId);
         model.addAttribute("child", child);
-        return child;
+        model.addAttribute("mode", mode);
+        return "admin/modify-child-modal :: modify-child-modal";
     }
 
-    @PostMapping(value = "/dashboard/edit-child")
+    @GetMapping(value = "/retrieve-add-child/")
+    public String retrieveChildInfo(@RequestParam(value = "mode") String mode,  Model model) {
+        model.addAttribute("child", new Child());
+        model.addAttribute("mode", mode);
+        return "admin/modify-child-modal :: modify-child-modal";
+    }
+
+    @PostMapping(value = "/dashboard/modify-child")
     public String editChild(@ModelAttribute Child child) {
         Child existingChild = childService.fetchChildById(child.getChildId());
         boolean isSponsored = child.getSponsored();
