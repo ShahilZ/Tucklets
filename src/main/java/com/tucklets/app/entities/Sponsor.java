@@ -52,6 +52,10 @@ public class Sponsor {
     @Temporal(TemporalType.DATE)
     private Date lastUpdateDate;
 
+    @Column(name = "deletion_date")
+    @Temporal(TemporalType.DATE)
+    private Date deletionDate;
+
     @PrePersist
     void onCreate() {
         Date today = new Date();
@@ -153,5 +157,13 @@ public class Sponsor {
 
     public void setLastUpdateDate(Date lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public Date getDeletionDate() {
+        return deletionDate;
+    }
+
+    public void setDeletionDate(Date deletionDate) {
+        this.deletionDate = deletionDate;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -102,8 +103,8 @@ public class ChildService {
     /**
      * Fetches all the children from the database.
      */
-    public List<Child> fetchAllChildren() {
-        return childRepository.fetchAllChildren();
+    public List<Child> fetchAllActiveChildren() {
+        return childRepository.fetchAllActiveChildren();
     }
 
     /**
@@ -112,6 +113,15 @@ public class ChildService {
      */
     public Child fetchChildByNameAndBirthYear(String firstName, String lastName, int birthYear) {
         return childRepository.fetchChildByNameAndBirthYear(firstName, lastName, birthYear).orElse(null);
+    }
+
+    /**
+     * Soft deletes the child with the given id.
+     */
+    public void deleteChild(long childId) {
+        Optional<Child> child = childRepository.fetchChild(childId);
+        child.ifPresent(value -> value.setDeletionDate(new Date()));
+        childRepository.save(child.get());
     }
 
     /**

@@ -1,9 +1,19 @@
 package com.tucklets.app.entities;
 
 import com.tucklets.app.entities.enums.DonationDuration;
-import com.tucklets.app.entities.enums.PaymentMethod;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PostLoad;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import java.util.Date;
 
 @Entity
@@ -33,6 +43,10 @@ public class ChildAndSponsorAssoc {
 
     @Transient
     private DonationDuration donationDuration;
+
+    @Column(name = "deletion_date")
+    @Temporal(TemporalType.DATE)
+    private Date deletionDate;
 
     @PrePersist
     void onCreate() {
@@ -83,4 +97,12 @@ public class ChildAndSponsorAssoc {
     public DonationDuration getDonationDuration() { return donationDuration; }
 
     public void setDonationDuration(DonationDuration donationDuration) { this.donationDuration = donationDuration; }
+
+    public Date getDeletionDate() {
+        return deletionDate;
+    }
+
+    public void setDeletionDate(Date deletionDate) {
+        this.deletionDate = deletionDate;
+    }
 }

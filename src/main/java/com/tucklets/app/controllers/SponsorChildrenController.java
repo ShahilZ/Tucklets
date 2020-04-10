@@ -1,23 +1,30 @@
 package com.tucklets.app.controllers;
 
+import com.google.zxing.WriterException;
 import com.tucklets.app.containers.ChildContainer;
-import com.tucklets.app.containers.LocaleContainer;
 import com.tucklets.app.containers.SponsorChildrenContainer;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.PaymentMethod;
 import com.tucklets.app.services.ChildService;
 import com.tucklets.app.services.SponsorService;
+import com.tucklets.app.utils.CalculationUtils;
+import com.tucklets.app.utils.Constants;
 import com.tucklets.app.utils.ContainerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("/sponsor-a-child")
@@ -68,5 +75,13 @@ public class SponsorChildrenController {
 
         // returns the success.html page
         return "success";
+    }
+
+    @GetMapping(value = "/qr")
+    public ResponseEntity generateQrCode() throws IOException, WriterException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG);
+        BufferedImage qrCode = CalculationUtils.generateQRCode(Constants.CHILD_QR_CODE_BASE + "childId=2069");
+        return new ResponseEntity<>(qrCode, headers, HttpStatus.OK);
     }
 }

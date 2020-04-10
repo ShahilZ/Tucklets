@@ -21,8 +21,8 @@ public interface ChildRepository extends CrudRepository<Child, Long>, JpaReposit
     @Query("select c from Child c where c.childId = :childId")
     Optional<Child> fetchChild(@Param("childId") Long childId);
 
-    @Query("select c from Child c")
-    List<Child> fetchAllChildren();
+    @Query("select c from Child c where c.deletionDate is null")
+    List<Child> fetchAllActiveChildren();
 
     @Query("select c from Child c where c.firstName = :firstName and c.lastName = :lastName and c.birthYear = :birthYear")
     Optional<Child> fetchChildByNameAndBirthYear(String firstName, String lastName, int birthYear);
