@@ -76,12 +76,4 @@ public class SponsorChildrenController {
         // returns the success.html page
         return "success";
     }
-
-    @GetMapping(value = "/qr")
-    public ResponseEntity generateQrCode() throws IOException, WriterException {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_PNG);
-        BufferedImage qrCode = CalculationUtils.generateQRCode(Constants.CHILD_QR_CODE_BASE + "childId=2069");
-        return new ResponseEntity<>(qrCode, headers, HttpStatus.OK);
-    }
 }
