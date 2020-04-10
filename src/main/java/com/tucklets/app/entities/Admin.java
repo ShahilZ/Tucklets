@@ -38,6 +38,10 @@ public class Admin {
     @Temporal(TemporalType.DATE)
     private Date lastLoginDate;
 
+    @Column(name = "deletion_date")
+    @Temporal(TemporalType.DATE)
+    private Date deletionDate;
+
 
     @PrePersist
     void onCreate() {
@@ -81,4 +85,12 @@ public class Admin {
     public boolean isEnabled() { return enabled; }
 
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
+
+    public Date getDeletionDate() {
+        return deletionDate;
+    }
+
+    public void setDeletionDate(Date deletionDate) {
+        this.deletionDate = deletionDate;
+    }
 }

@@ -10,7 +10,8 @@ CREATE TABLE Admin(
    encrypted_password VARCHAR (150) NOT NULL,
    enabled BOOLEAN NOT NULL,
    creation_date TIMESTAMP NOT NULL,
-   last_login_date TIMESTAMP NOT NULL
+   last_login_date TIMESTAMP NOT NULL,
+   deletion_date date
 );
 
 CREATE TABLE Child(
@@ -22,7 +23,8 @@ CREATE TABLE Child(
    sponsored boolean,
    desired_occupation VARCHAR (250),
    creation_date TIMESTAMP NOT NULL,
-   last_update_date TIMESTAMP NOT NULL
+   last_update_date TIMESTAMP NOT NULL,
+   deletion_date date
 );
 
 CREATE TABLE Child_Sponsor_Assoc(
@@ -43,7 +45,8 @@ CREATE TABLE Sponsor(
    donation_amount DECIMAL(12, 2) NOT NULL,
    payment_method SMALLINT NOT NULL,
    creation_date TIMESTAMP NOT NULL,
-   last_update_date TIMESTAMP NOT NULL
+   last_update_date TIMESTAMP NOT NULL,
+   deletion_date date
 );
 
 CREATE TABLE Child_Additional_Detail(

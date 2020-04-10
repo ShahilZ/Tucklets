@@ -1,10 +1,12 @@
 package com.tucklets.app.controllers;
 
+import com.google.zxing.WriterException;
 import com.tucklets.app.containers.ImportChildrenContainer;
 import com.tucklets.app.containers.enums.ImportStatus;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.services.ChildService;
 import com.tucklets.app.utils.ContainerUtils;
+import com.tucklets.app.services.PdfService;
 import com.tucklets.app.utils.ExcelUtils;
 import com.tucklets.app.utils.UploadChildrenDataHeader;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +14,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,12 +25,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,9 +44,12 @@ public class AdminController {
     @Autowired
     ChildService childService;
 
+    @Autowired
+    PdfService pdfService;
+
     @GetMapping("/dashboard")
     public String viewDashboard(Model model) {
-        List<Child> children = childService.fetchAllChildren();
+        List<Child> children = childService.fetchAllActiveChildren();
         model.addAttribute("children", children);
         model.addAttribute("child", new Child());
         model.addAttribute("localeContainer", ContainerUtils.createLocaleContainer());
@@ -50,7 +59,7 @@ public class AdminController {
 
     @DeleteMapping("/remove-child")
     public String removeChild(@RequestParam("childId") Long childId) {
-        childService.removeChild(childId);
+        childService.deleteChild(childId);
         return "success";
     }
 
@@ -87,6 +96,24 @@ public class AdminController {
 
         childService.addChild(child);
         return "redirect:/admin/dashboard";
+    }
+
+    @GetMapping(value = "/dashboard/export-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> exportChildrenPdf() throws WriterException, IOException {
+        ByteArrayOutputStream pdf = pdfService.generateActiveChildrenPdf(childService.fetchAllActiveChildren());
+        byte[] encodedBytes = Base64.getEncoder().encode(pdf.toByteArray());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        headers.setContentDispositionFormData("children-printouts.pdf", "children-printouts.pdf");
+        headers.setContentLength(encodedBytes.length);
+
+        return ResponseEntity
+            .ok()
+            .headers(headers)
+            .contentType(MediaType.APPLICATION_PDF)
+            .contentLength(encodedBytes.length)
+            .body(encodedBytes);
     }
 
     @PostMapping(value = "/upload-children-data")
