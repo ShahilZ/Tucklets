@@ -11,6 +11,7 @@ import com.itextpdf.layout.element.Table;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.utils.CalculationUtils;
 import com.tucklets.app.utils.Constants;
+import com.tucklets.app.utils.PdfUtils;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -49,7 +50,7 @@ public class PdfService {
             doc.add(new Paragraph(Integer.toString(CalculationUtils.calculateAge(child.getBirthYear()))));
             doc.add(new Paragraph(child.getDesiredOccupation()));
 
-            BufferedImage bufferedImage = CalculationUtils.generateQRCode(Constants.CHILD_QR_CODE_BASE.concat(Long.toString(child.getChildId())));
+            BufferedImage bufferedImage = PdfUtils.generateQRCode(Constants.CHILD_QR_CODE_BASE.concat(Long.toString(child.getChildId())));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, "png", baos);
             Image iTextImage = new Image(ImageDataFactory.create(baos.toByteArray()));
