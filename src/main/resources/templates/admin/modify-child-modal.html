@@ -1,0 +1,42 @@
+<div class="modal-container" id="modal-container" th:fragment="modify-child-modal">
+  <div class="modify-child-modal form-group">
+    <div class="modal-header">
+      <div th:switch="${mode}">
+        <h5 class="modal-title" th:case="'edit'">Edit a child</h5>
+        <h5 class="modal-title" th:case="'add'">Add a child</h5>
+      </div>
+      <button type="button" class="close" data-dismiss="modal" onclick="closeModal()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <form class="modify-child-form" th:action="@{/admin/dashboard/modify-child}" th:object="${child}" method="post">
+      <fieldset>
+        <input type="hidden" id="child-id" th:field="*{childId}" />
+        <label for="child-first-name">First Name:</label>
+        <input type="text" id="child-first-name" class="form-control" th:field="*{firstName}" />
+        <label for="child-last-name">Last Name:</label>
+        <input type="text" id="child-last-name" class="form-control" th:field="*{lastName}"/>
+        <label for="child-birth-year">Birth year:</label>
+        <input type="text" id="child-birth-year" class="form-control" th:field="*{birthYear}"/>
+        <label for="child-desired-occupation">Desired Occupation:</label>
+        <textarea  id="child-desired-occupation" class="form-control" th:field="*{desiredOccupation}"></textarea>
+        <label for="child-grade">Grade:</label>
+        <input type="text" id="child-grade" class="form-control" th:field="*{grade}" />
+        <label for="sponsored">Sponsored:</label>
+          <br/>
+          <input type="radio" id="sponsored" th:field="*{sponsored}" th:name="sponsored" th:value="true" th:checked="*{sponsored}">
+          <label for="sponsored">True</label>
+          <input type="radio" id="notSponsored" th:field="*{sponsored}" th:name="sponsored" th:value="false" th:checked="*{sponsored}">
+          <label for="notSponsored">False</label><br>
+      </fieldset>
+
+      <div class="center-button-container">
+        <div th:switch="${mode}">
+          <input th:case="'edit'" type="submit" class="btn btn-primary" value="Update" />
+          <input th:case="'add'" type="submit" class="btn btn-primary" value="Add Child" />
+          <input type="button" class="btn btn-primary" value="Cancel" onclick="closeModal()" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

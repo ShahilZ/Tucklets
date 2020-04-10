@@ -3,6 +3,8 @@
 <head>
     <div th:replace="common-head :: common-head"></div>
     <link rel="stylesheet" th:href="@{/css/admin/dashboard.css}">
+    <script type="text/javascript" th:src="@{/js/dashboard.js}"></script>
+
 </head>
 
 <body>
@@ -48,104 +50,18 @@
                 <td th:text="*{child.creationDate}"/>
                 <td th:text="*{child.lastUpdateDate}"/>
                 <td>
-                    <input type="button" class="btn btn-primary" value="Edit" th:attr="onclick=|handleChildEdit('${child.childId}')|" />
+                    <input type="button" class="btn btn-primary" value="Edit" th:onclick="|handleEditChildClick('${child.childId}', 'edit')|" />
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
-
     <div class="admin-tools-div">
         <a th:href="@{/admin/dashboard/upload}" class="btn btn-primary upload-children-data-button">Upload Children Data</a>
+        <input type="button" class="btn btn-primary" value="Add Child" onclick="handleAddChildClick()" />
     </div>
-
-    <div class="modal-container" id="modal-container">
-        <div class="modify-child-modal form-group">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modify-child-modal-title">Edit a child</h5>
-                <button type="button" class="close" data-dismiss="modal" onclick="closeModal()" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <form class="modify-child-form" th:action="@{/admin/dashboard/edit-child}" th:object="${child}" method="post">
-                <fieldset>
-                    <input type="hidden" id="child-id" th:field="*{childId}" />
-                    <label for="child-first-name">First Name:</label>
-                    <input type="text" id="child-first-name" class="form-control" th:field="*{firstName}" />
-                    <label for="child-last-name">Last Name:</label>
-                    <input type="text" id="child-last-name" class="form-control" th:field="*{lastName}"/>
-                    <label for="child-birth-year">Birth year:</label>
-                    <input type="text" id="child-birth-year" class="form-control" th:field="*{birthYear}"/>
-                    <label for="child-desired-occupation">Desired Occupation:</label>
-                    <textarea  id="child-desired-occupation" class="form-control" th:field="*{desiredOccupation}"></textarea>
-                    <label for="child-grade">Grade:</label>
-                    <input type="text" id="child-grade" class="form-control" th:field="*{grade}" />
-                    <label for="child-is-sponsored">Sponsored:</label>
-                    <input type="checkbox"  id="child-is-sponsored" name="sponsored" value="true"/>
-                </fieldset>
-
-                <div class="center-button-container">
-                    <input type="submit" class="btn btn-primary" value="Update" />
-                    <input type="button" class="btn btn-primary" value="Cancel" onclick="closeModal()" />
-                </div>
-            </form>
-        </div>
-    </div>
-
+    <div id="modify-child-modal-holder"></div>
 </div>
-
-<script>
-    var modal = $(".modal-container");
-
-    $(window).click(function(e) {
-        if (e.target.className == "modal-container") {
-            modal.hide();
-        }
-    });
-
-    function closeModal() {
-        modal.hide()
-    }
-
-    function handleDeleteChild(childId) {
-        console.log(childId);
-        let childRow = $('#child-row' + childId);
-        $.ajax({
-            url: '/admin/remove-child/',
-            type: 'DELETE',
-            data: {"childId": childId},
-            success: function(childInfoResponse) {
-                childRow.addClass("deleted-row-styling");
-            },
-            error : function() {
-            // TODO: Error handling.
-                console.log("error");
-            }
-        });
-    }
-
-
-    function handleChildEdit(childId) {
-        $.ajax({
-            url: '/admin/retrieve-child/',
-            type: 'GET',
-            data: {"childId": childId},
-            success : function(childInfoResponse) {
-                $('#child-id').val(childInfoResponse.childId);
-                $('#child-first-name').val(childInfoResponse.firstName);
-                $('#child-last-name').val(childInfoResponse.lastName);
-                $('#child-birth-year').val(childInfoResponse.birthYear);
-                $('#child-grade').val(childInfoResponse.grade);
-                $('#child-is-sponsored').val(childInfoResponse.sponsored);
-                $('#child-desired-occupation').val(childInfoResponse.desiredOccupation);
-                modal.show();
-            },
-            error : function() {
-            }
-        });
-    }
-</script>
-
 </body>
 </html>
 
