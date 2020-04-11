@@ -49,7 +49,7 @@
                 <td th:text="*{child.creationDate}"/>
                 <td th:text="*{child.lastUpdateDate}"/>
                 <td>
-                    <input type="button" class="btn btn-primary" value="Edit" th:onclick="|handleEditChildClick('${child.childId}', 'edit')|" />
+                    <input type="button" class="btn btn-primary" value="Edit" th:onclick="|handleEditChildClick('${child.childId}')|" />
                 </td>
             </tr>
             </tbody>
@@ -62,83 +62,6 @@
     </div>
     <div id="modify-child-modal-holder"></div>
 </div>
-
-<script>
-    var modal = $(".modal-container");
-
-    $(window).click(function(e) {
-        if (e.target.className == "modal-container") {
-            modal.hide();
-        }
-    });
-
-    function closeModal() {
-        modal.hide()
-    }
-
-    function handleDeleteChild(childId) {
-        console.log(childId);
-        let childRow = $('#child-row' + childId);
-        $.ajax({
-            url: '/admin/remove-child/',
-            type: 'DELETE',
-            data: {"childId": childId},
-            success: function(childInfoResponse) {
-                childRow.addClass("deleted-row-styling");
-            },
-            error : function() {
-            // TODO: Error handling.
-                console.log("error");
-            }
-        });
-    }
-
-
-    function handleChildEdit(childId) {
-        $.ajax({
-            url: '/admin/retrieve-child/',
-            type: 'GET',
-            data: {"childId": childId},
-            success : function(childInfoResponse) {
-                $('#child-id').val(childInfoResponse.childId);
-                $('#child-first-name').val(childInfoResponse.firstName);
-                $('#child-last-name').val(childInfoResponse.lastName);
-                $('#child-birth-year').val(childInfoResponse.birthYear);
-                $('#child-grade').val(childInfoResponse.grade);
-                $('#child-is-sponsored').val(childInfoResponse.sponsored);
-                $('#child-desired-occupation').val(childInfoResponse.desiredOccupation);
-                modal.show();
-            },
-            error : function() {
-            }
-        });
-    }
-
-    function exportChildren() {
-        console.log("Exporting");
-        $.ajax({
-            url: '/admin/dashboard/export-pdf',
-            success: function(data) {
-            let binaryString = window.atob(data);
-            let dataLength = binaryString.length;
-            let dataBytes = new Uint8Array(dataLength);
-
-            for (let i = 0; i < dataLength; i++) {
-                let ascii = binaryString.charCodeAt(i);
-                dataBytes[i] = ascii;
-            }
-            let blob = new Blob([dataBytes], {type: 'application/pdf'});
-            var link=document.createElement('a');
-            link.href=window.URL.createObjectURL(blob);
-            link.download="children-printout.pdf";
-            link.click();
-          }
-        });
-    }
-
-</script>
-
->>>>>>> Initial work for PDF generation
 </body>
 </html>
 

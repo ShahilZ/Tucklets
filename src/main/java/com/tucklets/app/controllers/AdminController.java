@@ -71,29 +71,27 @@ public class AdminController {
 
 
     @GetMapping(value = "/retrieve-edit-child/")
-    public String retrieveChildInfo(@RequestParam(value = "childId") String id, @RequestParam(value = "mode") String mode,  Model model) {
+    public String retrieveEditChildInfo(@RequestParam(value = "childId") String id,  Model model) {
         Long childId = Long.valueOf(id);
         Child child = childService.fetchChildById(childId);
         model.addAttribute("child", child);
-        model.addAttribute("mode", mode);
         return "admin/modify-child-modal :: modify-child-modal";
     }
 
     @GetMapping(value = "/retrieve-add-child/")
-    public String retrieveChildInfo(@RequestParam(value = "mode") String mode,  Model model) {
+    public String retrieveAddChildInfo(Model model) {
+        // just takes in a new Child object for front end to have the child object
         model.addAttribute("child", new Child());
-        model.addAttribute("mode", mode);
         return "admin/modify-child-modal :: modify-child-modal";
     }
 
     @PostMapping(value = "/dashboard/modify-child")
-    public String editChild(@ModelAttribute Child child) {
+    public String modifyChild(@ModelAttribute Child child) {
         Child existingChild = childService.fetchChildById(child.getChildId());
         boolean isSponsored = child.getSponsored();
         addExistingFieldsToChild(child, existingChild);
         // Resetting to user provided value
         child.setSponsored(isSponsored);
-
         childService.addChild(child);
         return "redirect:/admin/dashboard";
     }
