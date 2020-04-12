@@ -20,6 +20,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-test'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
@@ -32,6 +33,9 @@ dependencies {
 	compile group: 'com.itextpdf', name: 'itext7-core', version: '7.1.10', ext: 'pom'
 	compile group: 'com.itextpdf', name: 'pdfa', version: '7.1.10'
 	compile group: 'com.itextpdf', name: 'layout', version: '7.1.10'
+	compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.762'
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
 }
 
 test {

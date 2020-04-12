@@ -1,30 +1,27 @@
 package com.tucklets.app.controllers;
 
-import com.google.zxing.WriterException;
-import com.tucklets.app.containers.ChildContainer;
+import com.tucklets.app.containers.ChildDetailsContainer;
 import com.tucklets.app.containers.SponsorChildrenContainer;
 import com.tucklets.app.entities.Child;
+import com.tucklets.app.entities.ChildAdditionalDetail;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.PaymentMethod;
+import com.tucklets.app.services.ChildAdditionalDetailService;
 import com.tucklets.app.services.ChildService;
 import com.tucklets.app.services.SponsorService;
 import com.tucklets.app.utils.CalculationUtils;
-import com.tucklets.app.utils.Constants;
 import com.tucklets.app.utils.ContainerUtils;
+import com.tucklets.app.utils.S3Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/sponsor-a-child")
@@ -36,9 +33,12 @@ public class SponsorChildrenController {
     @Autowired
     SponsorService sponsorService;
 
+    @Autowired
+    ChildAdditionalDetailService childAdditionalDetailService;
+
     @GetMapping(value = "/")
     public String fetchAvailableChildren(Model model) {
-        List<ChildContainer> children = childService.fetchAvailableChildrenWithAge();
+        List<ChildDetailsContainer> children = fetchChildrenWithDetails();
         SponsorChildrenContainer sponsorChildrenContainer =
             new SponsorChildrenContainer(children);
 
@@ -75,5 +75,29 @@ public class SponsorChildrenController {
 
         // returns the success.html page
         return "success";
+    }
+
+    /**
+     * Fetches all available children that needs sponsorship and calculates the age.
+     * Returns as a List<ChildDetailsContainer>().
+     */
+    public List<ChildDetailsContainer> fetchChildrenWithDetails() {
+        var children = childService.fetchAvailableChildren();
+        List<ChildDetailsContainer> childContainerList = new ArrayList<>();
+
+        if (Objects.nonNull(children)) {
+            for (Child child : children) {
+                ChildDetailsContainer childDetailsContainer = new ChildDetailsContainer();
+                var age = CalculationUtils.calculateAge(child.getBirthYear());
+                childDetailsContainer.setAge(age);
+                childDetailsContainer.setChild(child);
+                // Fetch image location.
+                ChildAdditionalDetail additionalDetails =
+                    childAdditionalDetailService.fetchChildAdditionalDetailById(child.getChildId());
+                childDetailsContainer.setChildImageLocation(S3Utils.computeS3Key(additionalDetails.getImageLocation()));
+                childContainerList.add(childDetailsContainer);
+            }
+        }
+        return childContainerList;
     }
 }

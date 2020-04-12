@@ -69,3 +69,19 @@
 .children-data-table th, .children-data-table td {
     vertical-align: middle;
 }
+
+.icon-image {
+    width: 100px;
+    height: 100px;
+}
+
+.edit-profile {
+    display: block;
+    margin: 0 auto;
+    border: 1px dashed #9576c8;
+    cursor: pointer;
+}
+
+.icon-image-input {
+    display: none;
+}

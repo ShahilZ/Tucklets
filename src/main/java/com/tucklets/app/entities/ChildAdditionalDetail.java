@@ -1,6 +1,14 @@
 package com.tucklets.app.entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 
 
 @Entity
@@ -17,6 +25,10 @@ public class ChildAdditionalDetail {
 
     @Column(name = "image_location", nullable = false)
     private String imageLocation;
+
+    @Column(name = "archived_date")
+    @Temporal(TemporalType.DATE)
+    private Date archivedDate;
 
     public Long getChildAdditionalDetailId() {
         return childAdditionalDetailId;
@@ -40,5 +52,13 @@ public class ChildAdditionalDetail {
 
     public void setImageLocation(String imageLocation) {
         this.imageLocation = imageLocation;
+    }
+
+    public Date getArchivedDate() {
+        return archivedDate;
+    }
+
+    public void setArchivedDate(Date archivedDate) {
+        this.archivedDate = archivedDate;
     }
 }
