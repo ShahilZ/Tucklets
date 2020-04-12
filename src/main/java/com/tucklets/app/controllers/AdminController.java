@@ -1,14 +1,21 @@
 package com.tucklets.app.controllers;
 
 import com.google.zxing.WriterException;
+import com.tucklets.app.containers.ChildDetailsContainer;
 import com.tucklets.app.containers.ImportChildrenContainer;
 import com.tucklets.app.containers.enums.ImportStatus;
 import com.tucklets.app.entities.Child;
+import com.tucklets.app.entities.ChildAdditionalDetail;
+import com.tucklets.app.services.ChildAdditionalDetailService;
 import com.tucklets.app.services.ChildService;
-import com.tucklets.app.utils.ContainerUtils;
 import com.tucklets.app.services.PdfService;
+import com.tucklets.app.services.SimpleS3Service;
+import com.tucklets.app.utils.Constants;
+import com.tucklets.app.utils.ContainerUtils;
 import com.tucklets.app.utils.ExcelUtils;
+import com.tucklets.app.utils.S3Utils;
 import com.tucklets.app.utils.UploadChildrenDataHeader;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -35,6 +42,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -47,10 +55,18 @@ public class AdminController {
     @Autowired
     PdfService pdfService;
 
+    @Autowired
+    ChildAdditionalDetailService childAdditionalDetailService;
+
+    @Autowired
+    SimpleS3Service simpleS3Service;
+
     @GetMapping("/dashboard")
     public String viewDashboard(Model model) {
         List<Child> children = childService.fetchAllActiveChildren();
-        model.addAttribute("children", children);
+        List<ChildDetailsContainer> childrenDetails = createChildDetailsContainers(children);
+
+        model.addAttribute("childrenDetails", childrenDetails);
         model.addAttribute("child", new Child());
         model.addAttribute("localeContainer", ContainerUtils.createLocaleContainer());
 
@@ -74,25 +90,22 @@ public class AdminController {
     public String retrieveEditChildInfo(@RequestParam(value = "childId") String id,  Model model) {
         Long childId = Long.valueOf(id);
         Child child = childService.fetchChildById(childId);
-        model.addAttribute("child", child);
+        model.addAttribute("childDetails", createChildDetails(child));
         return "admin/modify-child-modal :: modify-child-modal";
     }
 
     @GetMapping(value = "/retrieve-add-child/")
     public String retrieveAddChildInfo(Model model) {
         // just takes in a new Child object for front end to have the child object
-        model.addAttribute("child", new Child());
+        ChildDetailsContainer childDetails = new ChildDetailsContainer();
+        childDetails.setChild(new Child());
+        model.addAttribute("childDetails", childDetails);
         return "admin/modify-child-modal :: modify-child-modal";
     }
 
     @PostMapping(value = "/dashboard/modify-child")
-    public String modifyChild(@ModelAttribute Child child) {
-        Child existingChild = childService.fetchChildById(child.getChildId());
-        boolean isSponsored = child.getSponsored();
-        addExistingFieldsToChild(child, existingChild);
-        // Resetting to user provided value
-        child.setSponsored(isSponsored);
-        childService.addChild(child);
+    public String modifyChild(@ModelAttribute ChildDetailsContainer childDetails) throws IOException {
+        updateChildAndDetails(childDetails);
         return "redirect:/admin/dashboard";
     }
 
@@ -131,6 +144,39 @@ public class AdminController {
         return modelAndView;
     }
 
+    /**
+     * Handles the updates to the given childDetails object.
+     */
+    private void updateChildAndDetails(ChildDetailsContainer childDetails) throws IOException {
+        Child child = childDetails.getChild();
+        // TODO: Validate image?
+
+        Child existingChild = childService.fetchChildById(child.getChildId());
+        boolean isSponsored = child.getSponsored();
+        // Only update existing fields if there is an existing child.
+        if (existingChild != null) {
+            addExistingFieldsToChild(child, existingChild);
+        }
+
+        // Resetting to user provided value
+        child.setSponsored(isSponsored);
+
+        // Save updates to child.
+        child = childService.addChild(child);
+
+        // Skip if image is not updated.
+        if (childDetails.getChildImageFile() != null && !childDetails.getChildImageFile().isEmpty()) {
+            // Create image key.
+            String imageKey = String.format(
+                "image-%d.%s",
+                child.getChildId(),
+                FilenameUtils.getExtension(childDetails.getChildImageFile().getOriginalFilename()));
+            // Save image location.
+            childAdditionalDetailService.addImageForChild(imageKey, child.getChildId());
+            simpleS3Service.uploadFile(imageKey, S3Utils.convertMultiPartToFile(childDetails.getChildImageFile()));
+        }
+
+    }
 
     /**
      * Extracts the children information from a given Excel file.
@@ -155,7 +201,6 @@ public class AdminController {
         // Skip initial header row.
         for (int rowIndex = 1; rowIndex < excelRowCount; rowIndex++) {
             Map<UploadChildrenDataHeader, String> importChild = new HashMap<>();
-            UploadChildrenDataHeader[] uploadChildrenDataHeaders = UploadChildrenDataHeader.values();
 
             XSSFRow row = worksheet.getRow(rowIndex);
             // Skip if empty
@@ -180,6 +225,31 @@ public class AdminController {
             }
         }
         return new ImportChildrenContainer(children, numChildrenUpdated, numChildrenAdded, ImportStatus.SUCCESS);
+    }
+
+    /**
+     * Creates a list of ChildDetailsContainer for every child passed into this method.
+     */
+    private List<ChildDetailsContainer> createChildDetailsContainers(List<Child> children) {
+        return children
+            .stream()
+            .map(this::createChildDetails)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Sets the extra details of a child and returns the newly created ChildDetailsContainer.
+     */
+    private ChildDetailsContainer createChildDetails(Child child) {
+        ChildDetailsContainer childDetailsContainer = new ChildDetailsContainer();
+        childDetailsContainer.setChild(child);
+        ChildAdditionalDetail childAdditionalDetail =
+            childAdditionalDetailService.fetchChildAdditionalDetailById(child.getChildId());
+        String imageLocation = childAdditionalDetail == null
+            ? Constants.DEFAULT_IMAGE_LOCATION
+            : childAdditionalDetail.getImageLocation();
+        childDetailsContainer.setChildImageLocation(S3Utils.computeS3Key(imageLocation));
+        return childDetailsContainer;
     }
 
     /**

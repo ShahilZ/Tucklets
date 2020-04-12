@@ -86,3 +86,27 @@ function exportChildren() {
       }
     });
 }
+
+/**
+* Method that helps with uploading a child's image up to the server.
+*/
+function uploadChildImage(childId) {
+    console.log(childId);
+    let reader = new FileReader();
+    let imageElem = $('#child-image-' + childId)[0];
+    let imageInput = $('#upload-image-' + childId)[0];
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+       imageElem.src = e.target.result;
+    };
+    // read the image file as a data URL.
+    reader.readAsDataURL(imageInput.files[0]);
+
+}
+
+/**
+* Handler for changing a child's image. Triggers the file input.
+*/
+function handleChangeChildImage(elementId) {
+    $('#' + elementId).click();
+}

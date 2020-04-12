@@ -7,15 +7,15 @@ public class SponsorChildrenContainer {
     /**
      * List of children that are available for sponsorship.
      */
-    private List<ChildContainer> children;
+    private List<ChildDetailsContainer> children;
 
-    public SponsorChildrenContainer(List<ChildContainer> children)
+    public SponsorChildrenContainer(List<ChildDetailsContainer> children)
     {
         this.children = children;
 
     }
 
-    public List<ChildContainer> getChildren() {
+    public List<ChildDetailsContainer> getChildren() {
         return children;
     }
 
