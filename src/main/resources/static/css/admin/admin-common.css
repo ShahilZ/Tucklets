@@ -1,0 +1,28 @@
+.admin-navigation .nav-bar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #3e2763;
+}
+
+.admin-navigation .nav-element {
+    float: left;
+    border-radius: 5px;
+}
+
+.admin-navigation .nav-element-right {
+     float: right;
+     border-radius: 5px;
+ }
+
+.admin-navigation .nav-bar .nav-link {
+  color: white;
+  text-align: center;
+  padding: 10px 15px;
+  text-decoration: none;
+}
+
+.admin-navigation .nav-bar .nav-element:hover, .nav-element-right:hover {
+  background-color: #b996d7;
+}
