@@ -10,14 +10,15 @@ workflows:
   publish-ecr:
     jobs:
       - build
-      - examine:
-          steps:
-            - run: cd build/libs && ls
+      - examine
       - aws-ecr/build-and-push-image:
           repo: tucklets-app
           tag: ${CIRCLE_SHA1}
 
 jobs:
+  examine:
+      steps:
+        - run: cd build/libs && ls
   build:
     docker:
       # specify the version you desire here
