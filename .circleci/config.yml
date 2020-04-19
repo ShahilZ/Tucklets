@@ -54,6 +54,6 @@ jobs:
           command: |
             gradle bootJar
             ls
-            cd build/lib
+            cd build/libs
             ls
             cd ../..
