@@ -27,7 +27,7 @@ workflows:
       - aws-ecr/build-and-push-image:
           requires:
             - build
-          attach_workspace:
+          attach-workspace:
             at: *workspace_root
           repo: tucklets-app
           tag: ${CIRCLE_SHA1}
