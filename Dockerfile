@@ -1,6 +1,6 @@
 FROM openjdk:11.0.7-slim-buster
 
-COPY /tmp/artifacts/app-0.0.1-SNAPSHOT.jar /usr/app/
+COPY /tmp/workspace/app-0.0.1-SNAPSHOT.jar /usr/app/
 
 WORKDIR /usr/app
 
