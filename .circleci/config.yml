@@ -12,8 +12,7 @@ workflows:
       - build
       - aws-ecr/build-and-push-image:
           pre-steps:
-            - attach_workspace:
-              at: /tmp/workspace
+            - restore-workspace
           requires:
             - build
           repo: tucklets-app
@@ -62,4 +61,8 @@ jobs:
         # Must be relative path from root
           paths:
             - build/libs/app-0.0.1-SNAPSHOT.jar
+
+  restore-workspace:
+    - attach_workspace:
+      at: /tmp/workspace
 
