@@ -2,12 +2,11 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
-version: 2
+version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@6.8.2
 
 workflows:
-  version: 2
   publish-ecr:
     jobs:
       - build
