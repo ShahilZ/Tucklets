@@ -63,6 +63,7 @@ jobs:
             - build/libs/app-0.0.1-SNAPSHOT.jar
 
   restore-workspace:
-    - attach_workspace:
-      at: /tmp/workspace
+    steps:
+      - attach_workspace:
+        at: /tmp/workspace
 
