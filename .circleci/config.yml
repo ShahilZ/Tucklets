@@ -10,9 +10,11 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - build-docker-publish-ecr:
+      - aws-ecr/build-and-push-image:
           requires:
             - build
+          repo: tucklets-app
+          tag: ${CIRCLE_SHA1}
 jobs:
   build:
     docker:
@@ -50,13 +52,16 @@ jobs:
 
       # run build!
       - run: gradle bootJar
-      - persist_to_workspace:
-        # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
-        # taken to be the root directory of the workspace.
-          root: .
-        # Must be relative path from root
-          paths:
-            - build/libs
+      - store_artifacts:
+          path: build/libs/app-0.0.1-SNAPSHOT.jar
+          destination: /tmp/artifacts
+#      - persist_to_workspace:
+#        # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+#        # taken to be the root directory of the workspace.
+#          root: .
+#        # Must be relative path from root
+#          paths:
+#            - build/libs
 
 
   build-docker-publish-ecr:
