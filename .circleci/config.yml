@@ -60,6 +60,9 @@ jobs:
 
 
   build-docker-publish-ecr:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:11-jdk
     steps:
       - attach_to_workspace:
           at: /tmp/workspace
