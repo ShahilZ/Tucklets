@@ -49,7 +49,6 @@ workflows:
   version: 2
   publish-ecr:
     jobs:
-      - build
       - aws-ecr/build_and_push_image:
           account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWS_ACCESS_KEY
