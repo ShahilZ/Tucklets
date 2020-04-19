@@ -9,6 +9,7 @@ orbs:
 workflows:
   publish-ecr:
     jobs:
+      - build
       - aws-ecr/build-and-push-image:
           repo: tucklets-app
           tag: ${CIRCLE_SHA1}
