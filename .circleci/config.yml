@@ -46,6 +46,7 @@ jobs:
 
 
 workflows:
+  version: 2
   publish-ecr:
     jobs:
       - aws-ecr/build_and_push_image:
