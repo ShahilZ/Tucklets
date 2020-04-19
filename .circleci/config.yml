@@ -64,7 +64,7 @@ jobs:
       # specify the version you desire here
       - image: circleci/openjdk:11-jdk
     steps:
-      - attach_to_workspace:
+      - attach_workspace:
           at: /tmp/workspace
       - aws-ecr/build-and-push-image:
           repo: tucklets-app
