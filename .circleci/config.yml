@@ -12,9 +12,7 @@ workflows:
       - build
       - aws-ecr/build-and-push-image:
           pre-steps:
-            - attach_workspace:
-              # Must be absolute path or relative path from working_directory
-              at: /tmp/workspace
+            - attach_workspace: /tmp/workspace
           requires:
             - build
           repo: tucklets-app
