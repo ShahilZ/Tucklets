@@ -51,9 +51,9 @@ jobs:
 
       # run build!
       - run:
-        command: |
-          gradle bootJar
-          ls
-          cd build/lib
-          ls
-          cd ../..
+          command: |
+            gradle bootJar
+            ls
+            cd build/lib
+            ls
+            cd ../..
