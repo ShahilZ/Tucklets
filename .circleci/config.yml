@@ -6,21 +6,21 @@ version: 2
 orbs:
   aws-ecr: circleci/aws-ecr@6.8.2
 
-workflows:
-  version: 2
-  publish-ecr:
-    jobs:
-      - build
-      - aws-ecr/build-and-push-image:
-          account-url: ${AWS_ECR_ACCOUNT_URL}
-          aws-access-key-id: ${AWS_ACCESS_KEY}
-          aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
-          create-repo: true
-          dockerfile: Dockerfile
-          path: .
-          region: ${AWS_REGION}
-          repo: tucklets-app
-          tag: ${CIRCLE_SHA1}
+#workflows:
+#  version: 2
+#  publish-ecr:
+#    jobs:
+#      - build
+#      - aws-ecr/build-and-push-image:
+#          account-url: ${AWS_ECR_ACCOUNT_URL}
+#          aws-access-key-id: ${AWS_ACCESS_KEY}
+#          aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+#          create-repo: true
+#          dockerfile: Dockerfile
+#          path: .
+#          region: ${AWS_REGION}
+#          repo: tucklets-app
+#          tag: ${CIRCLE_SHA1}
 
 jobs:
   build:
