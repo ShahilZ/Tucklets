@@ -12,7 +12,8 @@ workflows:
       - build
       - aws-ecr/build-and-push-image:
           pre-steps:
-            - attach_workspace: /tmp/workspace
+            - attach_workspace:
+              at: /tmp/workspace
           requires:
             - build
           repo: tucklets-app
