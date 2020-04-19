@@ -11,7 +11,8 @@ workflows:
     jobs:
       - build
       - examine:
-          - run: cd build/libs && ls
+          steps:
+            - run: cd build/libs && ls
       - aws-ecr/build-and-push-image:
           repo: tucklets-app
           tag: ${CIRCLE_SHA1}
