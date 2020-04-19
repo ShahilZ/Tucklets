@@ -41,18 +41,8 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
       # run build!
-      - run: gradle build
+      - run: gradle bootJar
 
-  publishECR:
-    account-url: AWS_ECR_ACCOUNT_URL
-    aws-access-key-id: AWS_ACCESS_KEY
-    aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-    create-repo: true
-    dockerfile: Dockerfile
-    path: .
-    region: AWS_REGION
-    repo: circleci-ecr-orb-demo
-    tag: "$CIRCLE_SHA1"
 
 
 workflows:
@@ -60,7 +50,13 @@ workflows:
   publish-ecr:
     jobs:
       - build
-      - publishECR
-        filters:
-          branches:
-            only: master
+      - aws-ecr/build_and_push_image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          dockerfile: Dockerfile
+          path: .
+          region: AWS_REGION
+          repo: tucklets-app
+          tag: "$CIRCLE_SHA1"
