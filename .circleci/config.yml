@@ -2,7 +2,21 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
+
 version: 2.1
+
+
+# Yaml References enable us to DRY out our config by sharing variables across multiple jobs.
+# In this case, we are commonly using the "workspaces" feature to share
+# build artifacts and files across jobs. For example, we build our Javascript
+# persist it to a workspace to be made available when the Jekyll site builds.
+references:
+  workspace_root: &workspace_root
+    /tmp/workspace
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
 orbs:
   aws-ecr: circleci/aws-ecr@6.8.2
 
@@ -11,8 +25,12 @@ workflows:
     jobs:
       - build
       - aws-ecr/build-and-push-image:
+          steps:
+            - *attach_workspace
           requires:
             - build
+          attach_workspace:
+            at: *workspace_root
           repo: tucklets-app
           tag: ${CIRCLE_SHA1}
 jobs:
@@ -52,16 +70,13 @@ jobs:
 
       # run build!
       - run: gradle bootJar
-      - store_artifacts:
-          path: build/libs/app-0.0.1-SNAPSHOT.jar
-          destination: /tmp/artifacts
-#      - persist_to_workspace:
-#        # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
-#        # taken to be the root directory of the workspace.
-#          root: .
-#        # Must be relative path from root
-#          paths:
-#            - build/libs
+      - persist_to_workspace:
+        # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+        # taken to be the root directory of the workspace.
+          root: *workspace_root
+        # Must be relative path from root
+          paths:
+            - build/libs
 
 
   build-docker-publish-ecr:
