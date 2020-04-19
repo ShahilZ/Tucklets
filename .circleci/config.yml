@@ -50,4 +50,10 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
       # run build!
-      - run: gradle bootJar
+      - run:
+        command: |
+          gradle bootJar
+          ls
+          cd build/lib
+          ls
+          cd ../..
