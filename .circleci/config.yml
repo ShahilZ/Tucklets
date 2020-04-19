@@ -3,6 +3,8 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: 2
+orbs:
+  aws-ecr: circleci/aws-ecr@6.8.2
 jobs:
   build:
     docker:
@@ -38,5 +40,27 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
+      # run build!
       - run: gradle build
+
+  publishECR:
+    account-url: AWS_ECR_ACCOUNT_URL
+    aws-access-key-id: AWS_ACCESS_KEY
+    aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+    create-repo: true
+    dockerfile: Dockerfile
+    path: .
+    region: AWS_REGION
+    repo: circleci-ecr-orb-demo
+    tag: "$CIRCLE_SHA1"
+
+
+workflows:
+  version: 2
+  publish-ecr:
+    jobs:
+      - build
+      - publishECR
+        filters:
+          branches:
+            only: master
