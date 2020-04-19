@@ -1,7 +1,7 @@
 FROM openjdk:11.0.7-slim-buster
 
-COPY application-jar/app-0.0.1-SNAPSHOT.jar /usr/app/
+COPY application-jar /usr/app/
 
 WORKDIR /usr/app
 
-ENTRYPOINT ["java","-jar","app-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","application.jar"]
