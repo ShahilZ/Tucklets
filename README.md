@@ -27,4 +27,6 @@ Running locally:
 - Javascript 
 - Html 
 - Bootstrap 
-- Heroku - Hosting 
+- Hosting: Originally on Heroku, now moving to AWS 
+- AWS Technologies: S3 
+- CICD: [Shahil insert here]
