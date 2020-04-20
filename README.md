@@ -30,3 +30,17 @@ Running locally:
 - Hosting: Originally on Heroku, now moving to AWS 
 - AWS Technologies: S3 
 - CICD: [Shahil insert here]
+
+Application Features:
+- Suppported text translation to english and mandarin using Locales 
+- Paypal Integration
+- Email notification upon successful donation
+- Admin Flow:
+  - Used [insert name] Encryption schema to store admin credentials 
+  - Security on all admin webpages
+  - Uploading children via excel file
+  - Exporting all children to PDF
+  - Ability to upload, change, edit children and sponsor information
+  
+
+
