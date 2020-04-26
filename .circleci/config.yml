@@ -17,7 +17,7 @@ workflows:
             - build
           attach-workspace: true
           repo: tucklets-app
-          tag: ${CIRCLE_SHA1}
+          tag: ${CIRCLE_SHA1},latest
 jobs:
   build:
     docker:
