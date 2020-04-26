@@ -1,0 +1,6 @@
+[
+  {
+    "name": "tucklets-app",
+    "imageUri": "583158507571.dkr.ecr.us-west-1.amazonaws.com/tucklets-app:latest"
+  }
+]
