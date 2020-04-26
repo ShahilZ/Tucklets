@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <div th:replace="common-head :: common-head"></div>
     <link rel="stylesheet" th:href="@{/css/sponsor-info.css}">
+    <link rel="stylesheet" th:href="@{/css/sponsor-a-child.css}">
     <script src="https://www.paypal.com/sdk/js?client-id=AZkukKiW5JhZ8TZlegq1Y3GCUw1xzdQZL5LdchpjvPtHZHz7KJtaUXu45oJURfdKce-JGN98OEIfSjkA&vault=true"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.</script>
     <script th:src="@{/js/sponsor-info.js}"></script>
 </head>
@@ -20,15 +21,15 @@
     </div>
     
     <div class="container selected-children-div">
-        <div class="child-div" th:each="child: ${sponsorInfoContainer.children}">
-            <div class="child-image-div">
-                <img class="" th:src="@{/images/sample-kid.png}" alt="Card image cap" width="142" height="162">
+        <div class="child-div" th:each="childContainer: ${sponsorInfoContainer.children}">
+            <div class="sponsor-child-image-container">
+                <img class="card-img-top" th:src="${childContainer.childImageLocation}" alt="Card image cap">
             </div>
             <div class="card-block px-2">
-                <h5 class="card-title" th:text="|${child.firstName} ${child.lastName}|" />
-                <p class="card-text"><b th:text="#{child.age}" /><span th:text="${child.birthYear}"/></p>
-                <p class="card-text"><b th:text="#{child.grade}" /><span th:text="${child.grade}"/></p>
-                <p class="card-text"><b th:text="#{child.info}" /><span th:text="${child.desiredOccupation}"/></p>
+                <h5 class="card-title" th:text="|${childContainer.child.firstName} ${childContainer.child.lastName}|" />
+                <p class="card-text"><b th:text="#{child.age}" /><span th:text="${childContainer.age}"/></p>
+                <p class="card-text"><b th:text="#{child.grade}" /><span th:text="${childContainer.child.grade}"/></p>
+                <p class="card-text"><b th:text="#{child.info}" /><span th:text="${childContainer.child.information}"/></p>
             </div>
             <div class="w-100"></div>
         </div>
@@ -38,7 +39,7 @@
         <form id="sponsor-info-form" class="sponsor-info-form" th:action="@{/sponsor-info/submit}" th:object="${sponsorInfoContainer}" method="post">
             <input id="num-selected-children" type="hidden" th:field="*{numChildren}">
             <fieldset>
-                <input type="hidden" id="children" th:field="*{children}" th:value="*{children}"/>
+                <input type="hidden" id="selectedChildIds" th:name="*{selectedChildIds}" th:field="*{selectedChildIds}">
                 <legend><span class="sponsor-info-section-number">1</span><span th:text="#{sponsor-info.form.header.personal}"/></legend>
                 <label for="sponsor-first-name" th:text="#{sponsor-info.form.firstName}" />
                 <input type="text" id="sponsor-first-name" th:field="*{sponsor.firstName}" th:placeholder="#{sponsor-info.form.placeholder.firstName}">

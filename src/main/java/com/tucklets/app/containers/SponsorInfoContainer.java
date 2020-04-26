@@ -1,6 +1,8 @@
 package com.tucklets.app.containers;
 
+import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Child;
+import com.tucklets.app.entities.ChildAdditionalDetail;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.DonationDuration;
 
@@ -9,7 +11,7 @@ import java.util.List;
 public class SponsorInfoContainer {
 
     private Sponsor sponsor;
-    private List<Child> children;
+    private List<ChildDetailsContainer> children;
     private List<DonationDuration> donationDurations;
     private String[] selectedChildIds;
     private DonationDuration selectedDonationDuration;
@@ -17,7 +19,7 @@ public class SponsorInfoContainer {
 
     public SponsorInfoContainer(
         Sponsor sponsor,
-        List<Child> children,
+        List<ChildDetailsContainer> children,
         List<DonationDuration> donationDurations,
         String[] selectedChildIds,
         DonationDuration selectedDonationDuration,
@@ -39,11 +41,11 @@ public class SponsorInfoContainer {
         this.sponsor = sponsor;
     }
 
-    public List<Child> getChildren() {
+    public List<ChildDetailsContainer> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(List<ChildDetailsContainer> children) {
         this.children = children;
     }
 

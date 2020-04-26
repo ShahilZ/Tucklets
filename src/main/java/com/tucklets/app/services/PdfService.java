@@ -48,7 +48,7 @@ public class PdfService {
             doc.add(new Paragraph(child.getLastName()));
             doc.add(new Paragraph(Integer.toString(child.getGrade())));
             doc.add(new Paragraph(Integer.toString(CalculationUtils.calculateAge(child.getBirthYear()))));
-            doc.add(new Paragraph(child.getDesiredOccupation()));
+            doc.add(new Paragraph(child.getInformation()));
 
             BufferedImage bufferedImage = PdfUtils.generateQRCode(Constants.CHILD_QR_CODE_BASE.concat(Long.toString(child.getChildId())));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

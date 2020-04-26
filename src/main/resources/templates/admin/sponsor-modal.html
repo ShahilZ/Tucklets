@@ -1,0 +1,59 @@
+<div class="modal-container" id="modal-container" th:fragment="modify-sponsor-modal">
+  <div class="modal-div form-group">
+    <div class="modal-header">
+      <div>
+        <h5 class="modal-title" id="edit_title">Edit a sponsor</h5>
+        <h5 class="modal-title" id="add_title">Add a sponsor</h5>
+      </div>
+      <button type="button" class="close" data-dismiss="modal" onclick="closeModal()" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <form class="modify-child-form" th:action="@{/admin/sponsor/submit-sponsor}" th:object="${sponsor}" method="post">
+      <fieldset>
+        <input type="hidden" id="sponsor-id" th:field="*{sponsorId}" />
+        <label for="sponsor-first-name">First Name:</label>
+        <input type="text" id="sponsor-first-name" class="form-control" th:field="*{firstName}" />
+        <label for="sponsor-last-name">Last Name:</label>
+        <input type="text" id="sponsor-last-name" class="form-control" th:field="*{lastName}"/>
+        <label for="sponsor-email">Email:</label>
+        <input type="text" id="sponsor-email" class="form-control" th:field="*{email}"/>
+        <label for="sponsor-donation-amount">Donation Amount:</label>
+        <input type="text" id="sponsor-donation-amount" class="form-control" th:field="*{donationAmount}"/>
+        <label for="sponsor-payment-method">Payment Method:</label>
+        <input type="text" id="sponsor-payment-method" class="form-control" th:field="*{paymentMethod}" />
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option3" autocomplete="off"> Radio
+          </label>
+        </div>
+
+
+        <label for="sponsor-church-name">Church Name:</label>
+        <input type="text" id="sponsor-church-name" class="form-control" th:field="*{churchName}" />
+        <label for="sponsor-address">Address:</label>
+        <input type="text" id="sponsor-address" class="form-control" th:field="*{address}" />
+        <label for="sponsor-creation-date">Creation Date:</label>
+        <input type="text" id="sponsor-creation-date" disabled class="form-control" th:field="*{creationDate}" />
+        <label for="sponsor-deletion-date">Deletion Date:</label>
+        <input type="text" id="sponsor-deletion-date" disabled class="form-control" th:field="*{deletionDate}" />
+        <label for="sponsor-last-update-date">Last Update Date:</label>
+        <input type="text" id="sponsor-last-update-date" disabled class="form-control" th:field="*{lastUpdateDate}" />
+      </fieldset>
+
+      <div class="center-button-container">
+        <div>
+          <input id="edit_button" type="submit" class="btn btn-primary" value="Update" />
+          <input id="add_button" type="submit" class="btn btn-primary" value="Add Sponsor" />
+          <input type="button" class="btn btn-primary" value="Cancel" onclick="closeModal()" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

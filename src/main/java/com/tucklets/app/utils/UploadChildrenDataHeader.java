@@ -10,7 +10,7 @@ public enum UploadChildrenDataHeader {
     LAST_NAME("Last Name"),
     BIRTH_YEAR("Birth Year"),
     GRADE("Grade"),
-    ASPIRATIONS("Aspirations"),
+    INFORMATION("Information"),
     IMAGE_URL("Image Name");
 
     public static final Map<String, UploadChildrenDataHeader> HEADER_TO_UPLOAD_CHILDREN_DATA_HEADER_MAP =

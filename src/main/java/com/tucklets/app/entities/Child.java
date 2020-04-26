@@ -39,8 +39,8 @@ public class Child {
     @Column(name = "is_sponsored")
     private boolean sponsored;
 
-    @Column(name = "desired_occupation", nullable = false)
-    private String desiredOccupation;
+    @Column(name = "information", nullable = false)
+    private String information;
 
     @Column(name = "creation_date", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -110,13 +110,12 @@ public class Child {
         this.sponsored = sponsored;
     }
 
-
-    public String getDesiredOccupation() {
-        return desiredOccupation;
+    public String getInformation() {
+        return information;
     }
 
-    public void setDesiredOccupation(String desiredOccupation) {
-        this.desiredOccupation = desiredOccupation;
+    public void setInformation(String information) {
+        this.information = information;
     }
 
     public Date getCreationDate() {

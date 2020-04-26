@@ -2,6 +2,7 @@ package com.tucklets.app.controllers;
 
 import com.tucklets.app.containers.LocaleContainer;
 import com.tucklets.app.containers.SponsorInfoContainer;
+import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.DonationDuration;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,18 +46,21 @@ public class SponsorInfoController {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    ManageChildrenService manageChildrenService;
+
     @GetMapping(value = "/")
     public ModelAndView handleChildSelection(@RequestParam(value = "childId") String[] childrenIds) {
         ModelAndView modelAndView = new ModelAndView("sponsor-info");
 
         var selectedChildren = childService.fetchChildByIds(childrenIds);
+        var childrenDetailContainers = manageChildrenService.createChildDetailsContainers(selectedChildren);
         var totalDonationAmount = amountService.computeTotalDonationAmount(selectedChildren);
         Sponsor sponsor = new Sponsor();
         sponsor.setDonationAmount(totalDonationAmount);
 
         SponsorInfoContainer sponsorInfoContainer = new SponsorInfoContainer(
-            sponsor,
-            selectedChildren,
+            sponsor, childrenDetailContainers,
             DonationDuration.getAllDonationDurations(),
             childrenIds,
             null,
@@ -72,15 +77,15 @@ public class SponsorInfoController {
 
         // TODO: Validate form.
 
-        List<Child> selectedChildren = sponsorInfoContainer.getChildren();
         Sponsor sponsor = sponsorInfoContainer.getSponsor();
         DonationDuration donationDuration = sponsorInfoContainer.getSelectedDonationDuration();
-
+        List<Child> children = childService.fetchChildByIds(sponsorInfoContainer.getSelectedChildIds());
         sponsorService.addSponsor(sponsor);
-        childAndSponsorAssociationService.createAssociation(selectedChildren, sponsor, donationDuration);
-        childService.setSponsoredChildren(selectedChildren);
 
-        emailService.sendConfirmationEmail(sponsor, selectedChildren);
+        childAndSponsorAssociationService.createAssociation(children, sponsor, donationDuration);
+        childService.setSponsoredChildren(children);
+
+        emailService.sendConfirmationEmail(sponsor, children);
 
         ModelAndView modelAndView = new ModelAndView("thank-you");
         modelAndView.addObject("localeContainer", ContainerUtils.createLocaleContainer());
