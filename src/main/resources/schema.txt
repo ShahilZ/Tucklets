@@ -21,7 +21,7 @@ CREATE TABLE Child(
    birth_year SMALLINT CHECK (birth_year > 0),
    grade SMALLINT CHECK (grade > 0),
    sponsored boolean,
-   desired_occupation VARCHAR (250),
+   information VARCHAR (250),
    creation_date TIMESTAMP NOT NULL,
    last_update_date TIMESTAMP NOT NULL,
    deletion_date date

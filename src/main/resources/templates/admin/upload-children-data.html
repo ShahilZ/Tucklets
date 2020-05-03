@@ -4,7 +4,7 @@
     <div th:replace="common-head :: common-head"></div>
     <link rel="stylesheet" th:href="@{/css/admin/upload.css}">
     <link rel="stylesheet" th:href="@{/css/admin/admin-common.css}">
-    <script type="text/javascript" th:src="@{/js/upload-children-data.js}"></script>
+    <script type="text/javascript" th:src="@{/js/admin/upload-children-data.js}"></script>
 
 </head>
 <body>
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="container">
-            <form class="form-group upload-children-form" th:action="@{/admin/upload-children-data}" method="post" enctype="multipart/form-data">
+            <form class="form-group upload-children-form" th:action="@{/admin/children-dashboard/upload-children-data}" method="post" enctype="multipart/form-data">
                 <ul class="import-directions-div">
                     <b>To complete the import, please follow these directions.</b>
                     <li>Please ensure that your file is an Excel file (.xls or .xlsx).</li>
@@ -34,7 +34,7 @@
                 </div>
                 <div >
                     <input class="btn btn-primary upload-button" type="submit" value="Upload" disabled>
-                    <a th:href="@{/admin/dashboard}" class="btn btn-primary back-to-dashboard-button">Back to Dashboard</a>
+                    <a th:href="@{/admin/children-dashboard/}" class="btn btn-primary back-to-dashboard-button">Back to Dashboard</a>
                 </div>
             </form>
         </div>

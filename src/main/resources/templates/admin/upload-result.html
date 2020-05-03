@@ -3,6 +3,7 @@
 <head>
     <div th:replace="common-head :: common-head"></div>
     <link rel="stylesheet" th:href="@{/css/admin/upload.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin-common.css}">
 </head>
 
 <body>
@@ -21,8 +22,8 @@
 
         </div>
         <div class="container">
-            <a th:href="@{dashboard/}" class="btn btn-primary back-to-dashboard">Back to Dashboard</a>
-            <a th:href="@{dashboard/upload}" class="btn btn-primary">Back to Upload page</a>
+            <a th:href="@{/admin/children-dashboard/}" class="btn btn-primary back-to-dashboard">Back to Dashboard</a>
+            <a th:href="@{/admin/children-dashboard/upload}" class="btn btn-primary">Back to Upload page</a>
         </div>
 
     </div>

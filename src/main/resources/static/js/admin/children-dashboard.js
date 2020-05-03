@@ -14,7 +14,7 @@ function handleDeleteChild(childId) {
     console.log(childId);
     let childRow = $('#child-row' + childId);
     $.ajax({
-        url: '/admin/remove-child/',
+        url: '/admin/children-dashboard/remove-child',
         type: 'DELETE',
         data: {"childId": childId},
         success: function(childInfoResponse) {
@@ -29,7 +29,7 @@ function handleDeleteChild(childId) {
 
 function handleAddChildClick() {
      $.ajax({
-        url: '/admin/retrieve-add-child/',
+        url: '/admin/children-dashboard/add-child/',
         type: 'GET',
         success : function(response) {
             $('#modify-child-modal-holder').html(response)
@@ -48,7 +48,7 @@ function handleAddChildClick() {
 
 function handleEditChildClick(childId) {
     $.ajax({
-        url: '/admin/retrieve-edit-child/',
+        url: '/admin/children-dashboard/edit-child/',
         type: 'GET',
         data: {"childId": childId},
         success : function(response) {
@@ -68,7 +68,7 @@ function handleEditChildClick(childId) {
 function exportChildren() {
     console.log("Exporting");
     $.ajax({
-        url: '/admin/dashboard/export-pdf',
+        url: '/admin/children-dashboard/export-pdf',
         success: function(data) {
         let binaryString = window.atob(data);
         let dataLength = binaryString.length;

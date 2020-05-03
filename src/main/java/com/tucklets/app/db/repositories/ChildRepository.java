@@ -15,9 +15,8 @@ import java.util.Optional;
 @Repository
 public interface ChildRepository extends CrudRepository<Child, Long>, JpaRepository<Child, Long> {
 
-    @Query("select c from Child c where c.sponsored = false")
+    @Query("select c from Child c where c.sponsored = false and c.deletionDate is null")
     List<Child> fetchAvailableChildren();
-
     @Query("select c from Child c where c.childId = :childId")
     Optional<Child> fetchChild(@Param("childId") Long childId);
 

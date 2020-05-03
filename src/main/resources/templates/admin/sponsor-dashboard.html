@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <div th:replace="common-head :: common-head"></div>
+  <link rel="stylesheet" th:href="@{/css/admin/dashboard.css}">
+  <link rel="stylesheet" th:href="@{/css/admin/admin-common.css}">
+  <script type="text/javascript" th:src="@{/js/admin/sponsor-dashboard.js}"></script>
+</head>
+
+<body>
+<div>
+  <div th:replace="header :: header" />
+  <div th:replace="admin/admin-nav-bar :: admin-nav-bar" />
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Admin Dashboard</h1>
+      <p class="lead">View information about children, sponsors, sponsorships, etc.</p>
+    </div>
+  </div>
+
+  <div class="children-table">
+    <h4>Sponsor Information</h4>
+    <table class="table table-striped table-bordered children-data-table">
+      <thead>
+      <tr>
+        <th></th>
+        <th scope="col">Sponsor Id</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Donation Amount</th>
+        <th scope="col">Payment Method</th>
+        <th scope="col">Church Name</th>
+        <th scope="col">Address</th>
+        <th scope="col">Creation Date</th>
+        <th scope="col">Deletion Date</th>
+        <th scope="col">Last Update Date</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="sponsor : ${sponsors}" th:id="sponsor-row + ${sponsor.sponsorId}">
+        <td><input type="image" class="delete-child-button" src="/images/red-x.jpg" th:onclick="|handleDeleteSponsor('${sponsor.sponsorId}')|" /> </td>
+        <td th:text="${sponsor.sponsorId}"/>
+        <td th:text="${sponsor.firstName}"/>
+        <td th:text="${sponsor.lastName}"/>
+        <td th:text="${sponsor.email}"/>
+        <td th:text="${sponsor.donationAmount}"/>
+        <td th:text="${sponsor.paymentMethod}"/>
+        <td th:text="${sponsor.churchName}"/>
+        <td th:text="${sponsor.address}"/>
+        <td th:text="${sponsor.creationDate}"/>
+        <td th:text="${sponsor.deletionDate}"/>
+        <td th:text="${sponsor.lastUpdateDate}"/>
+        <td>
+          <input type="button" class="btn btn-primary" value="Edit" th:onclick="|handleEditSponsorClick('${sponsor.sponsorId}')|" />
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div id="modify-sponsor-modal-holder"></div>
+
+  </div>
+</div>
+</body>
+</html>

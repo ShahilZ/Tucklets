@@ -62,7 +62,7 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest().authenticated()
             .and()
             .formLogin()
-            .loginPage("/login").failureUrl("/unauthorized").defaultSuccessUrl("/admin/dashboard/")
+            .loginPage("/login").failureUrl("/unauthorized").defaultSuccessUrl("/admin/children-dashboard/")
             .permitAll()
             .and()
             .logout()
