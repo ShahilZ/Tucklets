@@ -26,7 +26,7 @@ workflows:
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
-          family: ${PROJECT_NAME}-service
+          family: ${PROJECT_NAME}-deploy-fargate
           cluster-name: ${PROJECT_NAME}-cluster
           container-image-name-updates: container=${PROJECT_NAME}-app,tag=${CIRCLE_SHA1}
 jobs:
