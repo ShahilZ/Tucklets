@@ -3,7 +3,7 @@ package com.tucklets.app.entities.enums;
 public enum ImportStatus {
 
     SUCCESS(false, "Success"),
-    MISMATCHING_HEADERS(true, " Required headers/column names are missing for the uploaded file.");
+    MISMATCHING_HEADERS(true, "Required headers/column names are missing for the uploaded file.");
 
     private boolean hasErrors;
 
