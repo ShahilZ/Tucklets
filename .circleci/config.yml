@@ -7,21 +7,28 @@ version: 2.1
 
 orbs:
   aws-ecr: circleci/aws-ecr@6.8.2
+  aws-ecs: circleci/aws-ecs@1.1.0
 
 workflows:
   build-and-deploy:
     jobs:
       - build
       - aws-ecr/build-and-push-image:
-          filters:
-            branches:
-              only:
-                - master
+#          filters:
+#            branches:
+#              only:
+#                - master
           requires:
             - build
           attach-workspace: true
           repo: tucklets-app
           tag: ${CIRCLE_SHA1},latest
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
+          family: "${PROJECT_NAME}-service"
+          cluster-name: "${PROJECT_NAME}-cluster"
+          container-image-name-updates: "container=${PROJECT_NAME}-app,tag=${CIRCLE_SHA1}"
 jobs:
   build:
     docker:
