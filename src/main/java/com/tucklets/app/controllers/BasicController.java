@@ -6,6 +6,7 @@ import com.tucklets.app.services.ChildService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -34,5 +35,13 @@ public class BasicController {
         admin.setEnabled(true);
         adminService.saveAdmin(admin);
         return "redirect:/admin/children-dashboard/";
+    }
+
+    /**
+     * Health check endpoint for AWS.
+     */
+    @GetMapping("/health")
+    public String healthCheck() {
+        return "success";
     }
 }
