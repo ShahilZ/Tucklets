@@ -27,6 +27,23 @@ function handleDeleteSponsor(sponsorId) {
     });
 }
 
+function handleAddSponsorClick() {
+     $.ajax({
+        url: '/admin/sponsor-dashboard/add-sponsor',
+        type: 'GET',
+        success : function(response) {
+            $('#modify-sponsor-modal-holder').html(response)
+            $("#modal-container").show();
+            $("#add_title").show();
+            $("#add_button").show();
+            $("#edit_title").hide();
+            $("#edit_button").hide();
+        },
+        error : function() {
+            console.log("error");
+        }
+    });
+}
 
 function handleEditSponsorClick(sponsorId) {
     $.ajax({
