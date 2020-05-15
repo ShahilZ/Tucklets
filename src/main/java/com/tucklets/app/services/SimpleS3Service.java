@@ -2,9 +2,7 @@ package com.tucklets.app.services;
 
 import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.stereotype.Service;
@@ -30,8 +28,9 @@ public class SimpleS3Service {
         try {
             AmazonS3 s3Client = AmazonS3ClientBuilder
                 .standard()
-                .withCredentials(new AWSStaticCredentialsProvider(createAwsCreds()))
-                .withRegion(Regions.US_WEST_1)
+                // No longer need this line because .standard().build() will automatically try
+                // all authentication methods. We don't want just access key access for production.
+//                .withCredentials(new AWSStaticCredentialsProvider(createAwsCreds()))
                 .build();
 
             s3Client.putObject(bucketName, fileName, contents);
