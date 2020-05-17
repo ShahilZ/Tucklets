@@ -34,7 +34,8 @@ public class BasicController {
         admin.setUsername("admin");
         admin.setEnabled(true);
         adminService.saveAdmin(admin);
-        return "redirect:/admin/children-dashboard/";
+//        return "redirect:/admin/children-dashboard/";
+        return "home";
     }
 
     /**
