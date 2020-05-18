@@ -1,0 +1,23 @@
+plugins {
+	id("com.github.node-gradle.node") version "2.2.3"
+}
+
+node {
+    version = '12.16.3'
+    npmVersion = '6.14.5'
+    nodeModulesDir = file("${project.projectDir}")
+    download = true
+}
+
+task webpack(type: NodeTask, dependsOn: 'npmInstall') {
+    inputs.file("package-lock.json").withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("webpack.config.js")
+    outputs.cacheIf { true }
+    script = project.file('./node_modules/webpack/bin/webpack.js')
+}
+
+task start(type: NpmTask) {
+    args = ['start']
+}
+
+start.dependsOn('webpack')

@@ -31,6 +31,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/dist/**").addResourceLocations("file:dist/");
+        registry.addResourceHandler("/frontend/dist/**").addResourceLocations("file:frontend/dist/");
     }
 }

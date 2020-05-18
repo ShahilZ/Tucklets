@@ -7,7 +7,8 @@ class Main extends Component {
             <div>
                 <h1>Demo Component</h1>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"/>
-                <span>Hello, World!!</span>
+                <span>Hello, World! Welcome to the main page!</span>
+                <span>Nice!</span>
             </div>
         );
     }
