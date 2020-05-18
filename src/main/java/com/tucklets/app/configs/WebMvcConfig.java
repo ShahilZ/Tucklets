@@ -33,6 +33,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
             .addResourceHandler("/frontend/dist/**")
-            .addResourceLocations("classpath:/frontend/dist/", "file:frontend/dist");
+            .addResourceLocations("classpath:/frontend/dist/", "file:frontend/dist/");
     }
 }
