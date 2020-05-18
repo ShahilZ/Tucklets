@@ -51,7 +51,12 @@ clean.doFirst {
 
 // Add webpack step to bootRun + bootJar
 bootRun.dependsOn('frontend:webpack')
-bootJar.dependsOn('frontend:webpack')
+
+bootJar {
+	from('frontend/dist') {
+		into 'frontend/dist'
+	}
+}
 
 processResources.dependsOn('frontend:webpack')
 
