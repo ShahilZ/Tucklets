@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
-	id("com.github.node-gradle.node") version "2.2.0"
 }
 
 group = 'com.tucklets'
@@ -43,27 +42,16 @@ test {
 	useJUnitPlatform()
 }
 
-node {
-	version = '12.16.3'
-	npmVersion = '6.14.5'
-	download = true
-}
-
-task webpack(type: NodeTask, dependsOn: 'npmInstall') {
-	inputs.file("package-lock.json").withPathSensitivity(PathSensitivity.RELATIVE)
-	inputs.dir("src/main/resources").withPathSensitivity(PathSensitivity.RELATIVE)
-	inputs.file("webpack.config.js")
-	outputs.dir("$buildDir/js")
-	outputs.cacheIf { true }
-	script = project.file('./node_modules/webpack/bin/webpack.js')
-}
 
 clean.doFirst {
-	delete "${rootDir}/node_modules/"
-	delete "${rootDir}/dist"
+	delete "${rootDir}/frontend/node_modules/"
+	delete "${rootDir}/frontend/dist"
 	println "Removed node_modules and dist sources."
 }
 
 // Add webpack step to bootRun + bootJar
-bootRun.dependsOn(webpack)
-bootJar.dependsOn(webpack)
+bootRun.dependsOn('frontend:webpack')
+bootJar.dependsOn('frontend:webpack')
+
+processResources.dependsOn('frontend:webpack')
+
