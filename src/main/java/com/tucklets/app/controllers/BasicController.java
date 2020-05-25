@@ -3,11 +3,17 @@ package com.tucklets.app.controllers;
 import com.tucklets.app.entities.Admin;
 import com.tucklets.app.services.AdminService;
 import com.tucklets.app.services.ChildService;
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class BasicController {
@@ -37,6 +43,7 @@ public class BasicController {
 //        return "redirect:/admin/children-dashboard/";
         return "home";
     }
+
 
     /**
      * Health check endpoint for AWS.
