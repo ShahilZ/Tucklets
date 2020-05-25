@@ -58,7 +58,7 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
             .authorizeRequests()
             .antMatchers("/", "/css/**", "/js/**", "/images/**", "/**/favicon.ico", "/frontend/dist/**").permitAll()
-            .antMatchers("/sponsor-a-child/**", "/sponsor-info/**", "/health").permitAll()
+            .antMatchers("/sponsor-a-child/**", "/sponsor-info/**", "/health", "/locale").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()

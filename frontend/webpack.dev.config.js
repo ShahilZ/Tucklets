@@ -33,9 +33,19 @@ module.exports = {
                 }},
                 {loader: 'react-hot-loader/webpack'}
             ]
-        }]
-    },
+        },        
+        {   test: /\.scss$/,
+            use: [
+                // Creates `style` nodes from JS strings
+                {loader: 'style-loader'},
+                // Translates CSS into CommonJS
+                {loader: 'css-loader'},
+                // Compiles Sass to CSS
+                {loader: 'sass-loader'},
+            ]
+        },
+    ]},
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx', '.scss']
     }
 };
