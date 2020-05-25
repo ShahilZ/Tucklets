@@ -7,7 +7,7 @@
         <img class="d-inline-block align-top tucklets-logo" alt="" th:src="@{/images/tucklets-icon.PNG}"/>
       </a>
       <select class="supported-languages-dropdown" th:if="${localeContainer.supportedLocales != null}">
-        <option th:each="locale : ${localeContainer.supportedLocales}" th:value="${locale.toString()}" th:text="${locale.displayName}" th:selected="${locale} == ${localeContainer.selectedLocale}"/>
+        <option th:each="locale : ${localeContainer.supportedLocales}" th:value="${locale.localeString}" th:text="${locale.localeDisplayName}" th:selected="${locale.localeString} == ${localeContainer.selectedLocaleString}"/>
       </select>
     </nav>
   </div>
