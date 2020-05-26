@@ -15,3 +15,4 @@ public class LocaleController {
         return GSON.toJson(ContainerUtils.createLocaleContainer());
     }
 }
+    
