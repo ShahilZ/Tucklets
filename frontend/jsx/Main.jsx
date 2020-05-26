@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import Home from './Home';
+import { BrowserRouter, Route } from 'react-router-dom'
 
 
-import LocaleChanger from './shared/LocaleChanger';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage'
 import i18n from './shared/i18n';
-import NavBar from "./shared/NavBar";
 
 class Main extends Component {
     constructor(props) {
@@ -28,25 +28,36 @@ class Main extends Component {
     render() {
         return (
             <div>
-                {/* <LocaleChanger handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} />
-                <h1>Demo Component</h1>
-              
-                <span>The selected locale is: {`${this.state.selectedLocale}`}</span>
-                {i18n.t('locales:apptext')} */}
-
-                <NavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} />
-
-                <header className="masthead">
-                    <div className="container">
-                        <div className="masthead-subheading">Welcome to Tucklets.org!</div>
-                        <div className="masthead-heading text-uppercase">Tucklets: Supporting the orphaned children of Kenya</div>
-                        <a className="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>
-                    </div>
-                </header> 
+                <BrowserRouter>
+                    <HomePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <div> Hello, world. </div>
+                    <AboutPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
+                </BrowserRouter>
             </div>
-
-
-
 
         )
     }

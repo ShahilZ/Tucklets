@@ -22,6 +22,9 @@ public class GeneralErrorController implements ErrorController {
         if (response.getStatus() == HttpStatus.NOT_FOUND.value()) {
             System.out.println(response);
 //            modelAndView.setViewName(String.format("redirect:%s", Constants.TUCKLETS_URL));
+            // Redirect to homepage for invalid resources.
+            modelAndView.setViewName("home");
+
         }
         else {
             modelAndView.setViewName("/error");

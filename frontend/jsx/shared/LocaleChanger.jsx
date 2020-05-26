@@ -8,7 +8,9 @@ const props = {
     /** Handler for updating the selected locale. */
     handleSelectedLocaleChange: PropTypes.func.isRequired,
     /** i18n object to help with translations.*/
-    i18n: PropTypes.object.isRequired
+    i18n: PropTypes.object.isRequired,
+    /** Any addditional css classes to style this component/ */
+    additionalClasses: PropTypes.string
 }
 
 class LocaleChanger extends Component {
@@ -38,20 +40,22 @@ class LocaleChanger extends Component {
             console.log(error);
           });
     }
+
     render() {
         let localeList = this.state.supportedLocales.map(function(localeObject, index) {
             return <option key={`${localeObject.locale}-${index}`} value={localeObject.localeString}> {`${localeObject.localeDisplayName}`} </option>
         });
         return (
-            <div className="locale-changer">
-            <label className="locale-changer-label" htmlFor="locale-changer">{`${this.props.i18n.t('locales:language')}`}</label>
-            <select id="locale-changer" value={this.state.selectedLocale} onChange={this.props.handleSelectedLocaleChange}>
-                {localeList}
-            </select>
+            <div className={`locale-changer ${this.props.additionalClasses}`}>
+                <span className="locale-changer-label" htmlFor="locale-changer">{`${this.props.i18n.t('locales:language')}`}</span>
+                <select id="locale-changer" value={this.state.selectedLocale} onChange={this.props.handleSelectedLocaleChange}>
+                    {localeList}
+                </select>
             </div>
         );
     }
 }
+
 LocaleChanger.propTypes = props;
 
 export default LocaleChanger;
