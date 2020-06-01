@@ -1,12 +1,16 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { BrowserRouter, Route } from 'react-router-dom'
-
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage'
 import i18n from './shared/i18n';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import '../static/css/bootstrap-agency-theme.css';
+
 
 class Main extends Component {
     constructor(props) {
@@ -55,7 +59,7 @@ class Main extends Component {
                     <div> Hello, world. </div>
                     <div> Hello, world. </div>
                     <div> Hello, world. </div>
-                    <AboutPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
+                    <AboutPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} numStudents={998} numTeachers={67}/>
                 </BrowserRouter>
             </div>
 
@@ -70,9 +74,7 @@ class Main extends Component {
     //     })
 
     // }
-
 }
-
 
 ReactDOM.render(
     <Main />,

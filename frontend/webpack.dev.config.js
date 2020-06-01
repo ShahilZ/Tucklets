@@ -34,7 +34,7 @@ module.exports = {
                 {loader: 'react-hot-loader/webpack'}
             ]
         },        
-        {   test: /\.scss$/,
+        {   test: /\.(scss|css)$/,
             use: [
                 // Creates `style` nodes from JS strings
                 {loader: 'style-loader'},

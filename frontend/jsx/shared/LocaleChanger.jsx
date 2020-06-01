@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import axios  from 'axios';
 
-import '../../static/styles/locales.scss';
+import '../../static/scss/locales.scss';
 
 
 const props = {
