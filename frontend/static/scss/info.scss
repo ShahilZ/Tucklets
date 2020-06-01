@@ -1,0 +1,22 @@
+.about-section {
+
+    .about-section-image {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    
+    .game-changer-image {
+        background: url("/static/img/game-changer.jpg");
+        background-size: cover;
+        background-position: 50% 50%;
+        background-attachment: scroll;
+        min-height: 300px;
+        height: 100%;
+    }
+    
+    .stats-info {
+        justify-content: center;
+    }
+
+}

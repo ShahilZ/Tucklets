@@ -7,7 +7,7 @@ import LocaleChanger from './LocaleChanger';
 import i18n from './i18n';
 
 
-import '../../static/styles/locales.scss';
+import '../../static/scss/locales.scss';
 
 
 const props = {
