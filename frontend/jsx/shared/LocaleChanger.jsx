@@ -31,7 +31,7 @@ class LocaleChanger extends Component {
     }
 
     componentDidMount() {
-        axios.get('/locale')
+        axios.get('/info/locale')
           .then((response) => {
             // handle success
             this.updateLocaleState(response.data.selectedLocale, response.data.supportedLocales);
