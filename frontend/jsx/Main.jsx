@@ -7,9 +7,10 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage'
 import i18n from './shared/i18n';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import '../static/css/bootstrap-agency-theme.css';
+
+
 
 
 class Main extends Component {
