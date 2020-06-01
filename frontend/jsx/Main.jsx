@@ -8,9 +8,8 @@ import AboutPage from './pages/AboutPage'
 import i18n from './shared/i18n';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+
 import '../static/css/bootstrap-agency-theme.css';
-
-
 
 
 class Main extends Component {
@@ -35,31 +34,6 @@ class Main extends Component {
             <div>
                 <BrowserRouter>
                     <HomePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
-                    <div> Hello, world. </div>
                     <AboutPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} numStudents={998} numTeachers={67}/>
                 </BrowserRouter>
             </div>
