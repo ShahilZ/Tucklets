@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChild, faChalkboardTeacher } from '@fortawesome/free-solid-svg-icons';
 
-import NavBar from '../shared/NavBar';
+import NavBar from '../common/NavBar';
 
 import '../../static/scss/info.scss';
 

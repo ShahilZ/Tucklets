@@ -4,8 +4,10 @@ import axios from 'axios';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage'
-import i18n from './shared/i18n';
+import AboutPage from './pages/AboutPage';
+import OurStoryPage from './pages/OurStoryPage';
+import Footer from './common/Footer';
+import i18n from './common/i18n';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
@@ -35,7 +37,10 @@ class Main extends Component {
                 <BrowserRouter>
                     <HomePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
                     <AboutPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} numStudents={998} numTeachers={67}/>
+                    <OurStoryPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
                 </BrowserRouter>
+                <Footer i18n={i18n} />
+
             </div>
 
         )

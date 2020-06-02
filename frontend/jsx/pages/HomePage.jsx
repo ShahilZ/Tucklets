@@ -1,7 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types';
 
-import NavBar from '../shared/NavBar';
+import NavBar from '../common/NavBar';
 
 
 const props = {
