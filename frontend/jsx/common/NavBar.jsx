@@ -35,7 +35,7 @@ class NavBar extends Component {
                             <ul className="navbar-nav text-uppercase ml-auto">
 
                                 <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#home">Home</Link></li>
-                                <li className="nav-item"><a className="nav-link js-scroll-trigger" href="#portfolio">Our Story</a></li>
+                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#our-story">Our Story</Link></li>
                                 <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#about">About</Link></li>
                                 <li className="nav-item"><a className="nav-link js-scroll-trigger" href="#team">Donate</a></li>
                                 <li className="nav-item"><a className="nav-link js-scroll-trigger" href="#team">Sponsorships</a></li>
