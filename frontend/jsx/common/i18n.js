@@ -7,6 +7,8 @@ import about_zh_tw from './i18n/about/zh_tw.json';
 import about_en_us from './i18n/about/en_us.json';
 import our_story_zh_tw from './i18n/our-story/zh_tw.json';
 import our_story_en_us from './i18n/our-story/en_us.json';
+import newsletters_zh_tw from './i18n/newsletters/zh_tw.json';
+import newsletters_en_us from './i18n/newsletters/en_us.json';
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -22,12 +24,14 @@ i18n
       en: {
           locales: messages_en_us,
           about: about_en_us,
-          our_story: our_story_en_us
+          our_story: our_story_en_us,
+          newsletters: newsletters_en_us
       },
       zh: {
           locales: messages_zh_tw,
           about: about_zh_tw,
-          our_story: our_story_zh_tw
+          our_story: our_story_zh_tw,
+          newsletters: newsletters_zh_tw
       }
   }});
 

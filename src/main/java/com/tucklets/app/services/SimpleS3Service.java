@@ -22,9 +22,13 @@ public class SimpleS3Service {
         );
     }
 
-    public void uploadFile(String fileName, File contents) {
-        String bucketName = System.getenv("S3_BUCKET_NAME");
-
+    /**
+     * Upload given file to the appropriate bucket in S3.
+     * @param fileName   the name of the file to be uploaded
+     * @param contents   the file that will be uploaded
+     * @param bucketName destination in S3
+     */
+    public void uploadFile(String fileName, File contents, String bucketName) {
         try {
             AmazonS3 s3Client = AmazonS3ClientBuilder
                 .standard()

@@ -1,7 +1,6 @@
 package com.tucklets.app.services;
 
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
-import com.tucklets.app.db.repositories.ChildRepository;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.ChildAdditionalDetail;
 import com.tucklets.app.utils.CalculationUtils;
@@ -59,7 +58,10 @@ public class ManageChildrenService {
                     FilenameUtils.getExtension(childDetails.getChildImageFile().getOriginalFilename()));
             // Save image location.
             childAdditionalDetailService.addImageForChild(imageKey, child.getChildId());
-            simpleS3Service.uploadFile(imageKey, S3Utils.convertMultiPartToFile(childDetails.getChildImageFile()));
+            simpleS3Service.uploadFile(
+                imageKey,
+                S3Utils.convertMultiPartToFile(childDetails.getChildImageFile()),
+                S3Utils.S3_IMAGES_BUCKET_NAME);
         }
     }
 
@@ -81,7 +83,8 @@ public class ManageChildrenService {
                 // Fetch image location.
                 ChildAdditionalDetail additionalDetails =
                         childAdditionalDetailService.fetchChildAdditionalDetailById(child.getChildId());
-                childDetailsContainer.setChildImageLocation(S3Utils.computeS3Key(additionalDetails.getImageLocation()));
+                childDetailsContainer.setChildImageLocation(
+                    S3Utils.computeS3Key(additionalDetails.getImageLocation(), S3Utils.S3_IMAGES_BUCKET_BASE_URL));
                 childContainerList.add(childDetailsContainer);
             }
         }
@@ -109,7 +112,8 @@ public class ManageChildrenService {
         String imageLocation = childAdditionalDetail == null
                 ? Constants.DEFAULT_IMAGE_LOCATION
                 : childAdditionalDetail.getImageLocation();
-        childDetailsContainer.setChildImageLocation(S3Utils.computeS3Key(imageLocation));
+        childDetailsContainer.setChildImageLocation(
+            S3Utils.computeS3Key(imageLocation, S3Utils.S3_IMAGES_BUCKET_BASE_URL));
         return childDetailsContainer;
     }
 

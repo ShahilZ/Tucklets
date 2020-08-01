@@ -6,6 +6,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import OurStoryPage from './pages/OurStoryPage';
+import NewslettersPage from './pages/NewslettersPage';
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
@@ -38,11 +39,10 @@ class Main extends Component {
                     <HomePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
                     <AboutPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} numStudents={998} numTeachers={67}/>
                     <OurStoryPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
+                    <NewslettersPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
+                    <Footer i18n={i18n} />
                 </BrowserRouter>
-                <Footer i18n={i18n} />
-
             </div>
-
         )
     }
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ChildAdditionalDetailRepository extends CrudRepository<ChildAdditionalDetail, Long>, JpaRepository<ChildAdditionalDetail, Long>{
+public interface ChildAdditionalDetailRepository extends CrudRepository<ChildAdditionalDetail, Long>, JpaRepository<ChildAdditionalDetail, Long> {
 
     @Query("select cad from ChildAdditionalDetail cad where cad.childId = :childId and cad.archivedDate is null")
     Optional<ChildAdditionalDetail> fetchChildAdditionalDetailByChildId(@Param("childId") Long childId);

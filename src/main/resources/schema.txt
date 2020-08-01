@@ -55,3 +55,9 @@ CREATE TABLE Child_Additional_Detail(
    image_location VARCHAR (250) NOT NULL;
 );
 
+CREATE TABLE Newsletter(
+   newsletter_id serial PRIMARY KEY;
+   filename VARCHAR (250) NOT NULLL;
+   upload_date TIMESTAMP NOT NULL,
+   archive_date TIMESTAMP,
+);
