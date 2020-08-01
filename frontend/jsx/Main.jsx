@@ -37,9 +37,13 @@ class Main extends Component {
             <div>
                 <BrowserRouter>
                     <HomePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
+                    <br />
                     <AboutPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} numStudents={998} numTeachers={67}/>
+                    <br />
                     <OurStoryPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
+                    <br />
                     <NewslettersPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
+                    <br />
                     <Footer i18n={i18n} />
                 </BrowserRouter>
             </div>

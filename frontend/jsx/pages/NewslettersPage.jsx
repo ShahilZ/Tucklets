@@ -35,24 +35,27 @@ class NewslettersPage extends Component {
             <div id="newsletters" className="newsletters-section bg-light">
                 <NavBar handleSelectedLocaleChange={this.props.handleSelectedLocaleChange} i18n={this.props.i18n} />
                 <div className="row"> 
-                    <div className="col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                         <div className="container page-section">
-                            <h2>{`${this.props.i18n.t("newsletters:title")}`}</h2>
-                            <h3 className="section-subheading text-muted m-0">
-                                <div className="row justify-content-center">
-                                    <div className="col-lg-8 col-md-12 col-sm-14 col-12">
-                                        <p>{`${this.props.i18n.t("newsletters:subtext")}`}</p>
-                                    </div>                
-                                </div>
-                            </h3>
-                            <div className="row">
-                                <div className="col-md-2">
-                                    <a href={this.state.newsletters[0].newsletterLocation} target="_blank">
-                                        <input type="button" className="btn btn-primary" value={`${this.props.i18n.t("newsletters:latest")}`} />
-                                    </a>
+                            <div className="text-center newsletter-info">
+                                <h2>{`${this.props.i18n.t("newsletters:title")}`}</h2>
+                                <h3 className="section-subheading text-muted m-0">
+                                    <div className="row justify-content-center">
+                                        <div className="col-lg-8 col-md-12 col-sm-14 col-12">
+                                            <p>{`${this.props.i18n.t("newsletters:subtext")}`}</p>
+                                        </div>                
+                                    </div>
+                                </h3>
+                                <div className="row">
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <a href={this.state.newsletters[0].newsletterLocation} target="_blank">
+                                            <input type="button" className="btn btn-primary" value={`${this.props.i18n.t("newsletters:latest")}`} />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <ul>
+
+                            <ul className="newsletter-links-container">
                                 { this.state.newsletters.map((newsletter, index) => (
                                     <li key={"newletter-" + index}>
                                         <a href={newsletter.newsletterLocation} target="_blank">{this.props.i18n.t("newsletters:click") + newsletter.filename}</a>

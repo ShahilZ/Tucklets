@@ -26,14 +26,16 @@
             <tr>
                 <th scope="col">Newsletter Id</th>
                 <th scope="col">Filename</th>
+                <th scope="col">Location</th>
                 <th scope="col">Upload Date</th>
                 <th scope="col">Deletion Date</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="newsletter : ${newsletters}" th:id="newsletter-row + ${newsletter.newsletterId}">
+            <tr th:each="newsletter : ${newslettersContainer.newsletters}" th:id="newsletter-row + ${newsletter.newsletterId}">
                 <td th:text="${newsletter.newsletterId}"/>
                 <td th:text="${newsletter.filename}"/>
+                <td><a target="_blank" th:href="${newsletter.newsletterLocation}" th:text="${newsletter.newsletterLocation}"/></td>
                 <td th:text="${newsletter.uploadDate}"/>
                 <td th:text="${newsletter.archiveDate}"/>
             </tr>

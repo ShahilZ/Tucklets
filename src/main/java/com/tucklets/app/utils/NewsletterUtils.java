@@ -15,9 +15,9 @@ public class NewsletterUtils {
     /**
      * Creates a container containing a list of all available newsletters.
      */
-    public static NewslettersContainer createNewslettersContainer(NewsletterService newsletterService) {
+    public static NewslettersContainer createNewslettersContainer(NewsletterService newslettersService) {
         return new NewslettersContainer(
-            newsletterService
+            newslettersService
                 .fetchAllAvailableNewsletters()
                 .stream()
                 .map(NewsletterUtils::determineNewsletterLocation)

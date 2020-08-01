@@ -16,7 +16,7 @@ public class InfoController {
     private static final Gson GSON = new Gson();
 
     @Autowired
-    NewsletterService newsletterService;
+    NewsletterService newslettersService;
 
     @GetMapping("/locale")
     public String loadLocales() {
@@ -25,6 +25,6 @@ public class InfoController {
 
     @GetMapping("/fetchNewsletters")
     public String fetchNewsletters() {
-        return GSON.toJson(NewsletterUtils.createNewslettersContainer(newsletterService));
+        return GSON.toJson(NewsletterUtils.createNewslettersContainer(newslettersService));
     }
 }

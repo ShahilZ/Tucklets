@@ -1,8 +1,9 @@
 package com.tucklets.app.controllers.admin;
 
-import com.tucklets.app.entities.Newsletter;
+import com.tucklets.app.containers.NewslettersContainer;
 import com.tucklets.app.services.NewsletterService;
 import com.tucklets.app.utils.ContainerUtils;
+import com.tucklets.app.utils.NewsletterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/admin/newsletters")
@@ -24,8 +24,8 @@ public class NewsletterController {
 
     @GetMapping("/")
     public String viewNewsletters(Model model) {
-        List<Newsletter> newsletters = newslettersService.fetchAllAvailableNewsletters();
-        model.addAttribute("newsletters", newsletters);
+        NewslettersContainer newslettersContainer = NewsletterUtils.createNewslettersContainer(newslettersService);
+        model.addAttribute("newslettersContainer", newslettersContainer);
         model.addAttribute("localeContainer", ContainerUtils.createLocaleContainer());
         return "admin/manage-newsletters";
     }
