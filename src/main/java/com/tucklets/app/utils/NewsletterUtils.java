@@ -21,7 +21,7 @@ public class NewsletterUtils {
                 .fetchAllAvailableNewsletters()
                 .stream()
                 .map(NewsletterUtils::determineNewsletterLocation)
-                .sorted(Comparator.comparing(Newsletter::getUploadDate))
+                .sorted(Comparator.comparing(Newsletter::getUploadDate).reversed())
                 .collect(Collectors.toList()));
     }
 
