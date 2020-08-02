@@ -1,5 +1,6 @@
 import React from 'react'
 import { PropTypes } from 'prop-types';
+import { NavHashLink as Link } from 'react-router-hash-link';
 
 import NavBar from '../common/NavBar';
 
@@ -19,7 +20,9 @@ const HomePage = ({ i18n, handleSelectedLocaleChange }) => {
                 <div className="container">
                     <div className="masthead-subheading">Welcome to Tucklets.org!</div>
                     <div className="masthead-heading text-uppercase">Tucklets: Supporting the orphaned children of Kenya</div>
-                    <a className="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>
+                        <Link className="btn btn-primary btn-xl text-uppercase js-scroll-trigger" smooth to="#about">
+                            Tell Me More
+                        </Link>
                 </div>
             </header> 
         </div>

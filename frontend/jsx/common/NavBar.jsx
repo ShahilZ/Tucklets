@@ -34,12 +34,11 @@ class NavBar extends Component {
                         <div className="collapse navbar-collapse" id="navbarResponsive">
                             <ul className="navbar-nav text-uppercase ml-auto">
 
-                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#home">Home</Link></li>
-                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#our-story">Our Story</Link></li>
-                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#about">About</Link></li>
-                                <li className="nav-item"><a className="nav-link js-scroll-trigger" href="#team">Donate</a></li>
-                                <li className="nav-item"><a className="nav-link js-scroll-trigger" href="#team">Sponsorships</a></li>
-                                <li className="nav-item"><a className="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
+                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#home">{this.props.i18n.t("navigation:home")}</Link></li>
+                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#our-story">{this.props.i18n.t("navigation:our_story")}</Link></li>
+                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#about">{this.props.i18n.t("navigation:about")}</Link></li>
+                                <li className="nav-item"><a className="nav-link js-scroll-trigger" href="#team">{this.props.i18n.t("navigation:donate")}</a></li>
+                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#newsletters">{this.props.i18n.t("navigation:newsletters")}</Link></li>
                                 <li className="nav-item"><LocaleChanger handleSelectedLocaleChange={this.props.handleSelectedLocaleChange} i18n={this.props.i18n} additionalClasses="nav-link js-scroll-trigger" /></li>
                             </ul>
                         </div>

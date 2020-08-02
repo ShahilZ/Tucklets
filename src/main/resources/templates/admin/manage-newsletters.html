@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="common-head :: common-head"></div>
+    <link rel="stylesheet" th:href="@{/css/admin/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin-common.css}">
+    <script type="text/javascript" th:src="@{/js/admin/upload-data.js}"></script>
+</head>
+
+<body>
+<div>
+    <div th:replace="header :: header" />
+    <div th:replace="admin/admin-nav-bar :: admin-nav-bar" />
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Manage Newsletters</h1>
+            <p class="lead">Upload and manage newsletters</p>
+        </div>
+    </div>
+
+    <div class="children-table">
+        <h4>Newsletters</h4>
+        <table class="table table-striped table-bordered children-data-table">
+            <thead>
+            <tr>
+                <th scope="col">Newsletter Id</th>
+                <th scope="col">Filename</th>
+                <th scope="col">Location</th>
+                <th scope="col">Upload Date</th>
+                <th scope="col">Deletion Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="newsletter : ${newslettersContainer.newsletters}" th:id="newsletter-row + ${newsletter.newsletterId}">
+                <td th:text="${newsletter.newsletterId}"/>
+                <td th:text="${newsletter.filename}"/>
+                <td><a target="_blank" th:href="${newsletter.newsletterLocation}" th:text="${newsletter.newsletterLocation}"/></td>
+                <td th:text="${newsletter.uploadDate}"/>
+                <td th:text="${newsletter.archiveDate}"/>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="container">
+            <form class="form-group upload-children-form" th:action="@{/admin/newsletters/upload}" method="post" enctype="multipart/form-data">
+                <p class="import-directions-div">
+                    <b>Please upload your newsletter here</b>
+                </p>
+                <div class="upload-area-div">
+                    <span>Please upload a file (.pdf)</span>
+                    <input class="form-control upload-file-button" type="file" name="file" accept="pdf" onchange="handleUploadFile()">
+                </div>
+                <div>
+                    <input class="btn btn-primary upload-button" type="submit" value="Upload" disabled onclick="preventMultipleSubmissions()">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
