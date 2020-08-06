@@ -8,6 +8,8 @@ import i18n from './i18n';
 
 
 import '../../static/scss/locales.scss';
+import '../../static/scss/info.scss';
+import '../../static/scss/basic.scss';
 
 
 const props = {
@@ -20,17 +22,38 @@ const props = {
 class NavBar extends Component {
     constructor(props) {
         super(props);
-        this.state = {selectedTab: 0 }
+        this.state = {
+            selectedTab: 0,
+            isScrollTop: true }
         // Bind handlers
+        this.handleScroll = this.handleScroll.bind(this);
+    }
 
-    } 
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll() {
+        console.log(window.scrollY);
+        const isScrollTop = window.scrollY < 100;
+        console.log(isScrollTop);
+     
+        if (isScrollTop !== this.state.isScrollTop) {
+            console.log(this.state.isScrollTop)
+            this.setState({ isScrollTop })
+        }
+    }
 
     render() {
         return (
             <div>
-                <nav className="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+                <nav className={this.state.isScrollTop ? "navbar navbar-expand-lg navbar-dark fixed-top tucklets-nav" : "navbar navbar-expand-lg navbar-dark fixed-top tucklets-nav navbar-scroll"} id="mainNav">
                     <div className="container">
-                        <a className="navbar-brand js-scroll-trigger" href="#page-top"><img src="../static/img/navbar-logo.svg" alt="" /></a><button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i className="fas fa-bars ml-1"></i></button>
+                        <a className="navbar-brand js-scroll-trigger" href="#page-top"><img src="../static/img/tucklets_logo.png" alt="" /></a><button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i className="fas fa-bars ml-1"></i></button>
                         <div className="collapse navbar-collapse" id="navbarResponsive">
                             <ul className="navbar-nav text-uppercase ml-auto">
 

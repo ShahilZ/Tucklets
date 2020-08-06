@@ -1,0 +1,18 @@
+#mainNav.tucklets-nav {
+    .navbar-nav {
+        .nav-item {
+            .nav-link.active {
+                color: #fff;
+            }
+            .nav-link:hover {
+                color: #f3bd01;
+            }
+        }
+    }
+}
+
+#mainNav.navbar-scroll {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #08979D;
+}
