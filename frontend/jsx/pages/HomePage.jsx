@@ -15,7 +15,6 @@ const props = {
 const HomePage = ({ i18n, handleSelectedLocaleChange }) => {
     return (
         <div id="home">
-            <NavBar handleSelectedLocaleChange={handleSelectedLocaleChange} i18n={i18n} />
             <header className="masthead">
                 <div className="container">
                     <div className="masthead-subheading">Welcome to Tucklets.org!</div>

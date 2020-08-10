@@ -1,35 +1,33 @@
 package com.tucklets.app.controllers;
 
-import com.tucklets.app.containers.LocaleContainer;
+import com.google.gson.Gson;
 import com.tucklets.app.containers.SponsorInfoContainer;
-import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.DonationDuration;
 import com.tucklets.app.services.AmountService;
 import com.tucklets.app.services.ChildAndSponsorAssociationService;
 import com.tucklets.app.services.ChildService;
+import com.tucklets.app.services.EmailService;
+import com.tucklets.app.services.ManageChildrenService;
 import com.tucklets.app.services.SponsorService;
-import com.tucklets.app.utils.Constants;
 import com.tucklets.app.utils.ContainerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
-import com.tucklets.app.services.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-@Controller
+@RestController
 @RequestMapping(value = "/sponsor-info")
 public class SponsorInfoController {
+
+    private static final Gson GSON = new Gson();
 
     @Autowired
     SponsorService sponsorService;
@@ -50,8 +48,7 @@ public class SponsorInfoController {
     ManageChildrenService manageChildrenService;
 
     @GetMapping(value = "/")
-    public ModelAndView handleChildSelection(@RequestParam(value = "childId") String[] childrenIds) {
-        ModelAndView modelAndView = new ModelAndView("sponsor-info");
+    public String handleChildSelection(@RequestParam(value = "childIds") String[] childrenIds) {
 
         var selectedChildren = childService.fetchChildByIds(childrenIds);
         var childrenDetailContainers = manageChildrenService.createChildDetailsContainers(selectedChildren);
@@ -60,16 +57,15 @@ public class SponsorInfoController {
         sponsor.setDonationAmount(totalDonationAmount);
 
         SponsorInfoContainer sponsorInfoContainer = new SponsorInfoContainer(
-            sponsor, childrenDetailContainers,
+            sponsor,
+            childrenDetailContainers,
             DonationDuration.getAllDonationDurations(),
             childrenIds,
             null,
             selectedChildren.size());
         sponsorInfoContainer.setNumChildren(selectedChildren.size());
 
-        modelAndView.addObject("localeContainer", ContainerUtils.createLocaleContainer());
-        modelAndView.addObject("sponsorInfoContainer", sponsorInfoContainer);
-        return modelAndView;
+        return GSON.toJson(sponsorInfoContainer);
     }
 
     @PostMapping(value = "/submit")

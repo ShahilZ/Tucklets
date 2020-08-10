@@ -33,7 +33,6 @@ class NewslettersPage extends Component {
     render() {
         return (
             <div id="newsletters" className="newsletters-section bg-light">
-                <NavBar handleSelectedLocaleChange={this.props.handleSelectedLocaleChange} i18n={this.props.i18n} />
                 <div className="row"> 
                     <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                         <div className="container page-section">

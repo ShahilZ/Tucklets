@@ -21,7 +21,6 @@ const props = {
 const AboutPage = ({ handleSelectedLocaleChange, i18n, numStudents, numTeachers }) => {
     return (
         <div id="about" className="about-section bg-light">
-            <NavBar handleSelectedLocaleChange={handleSelectedLocaleChange} i18n={i18n} />
             <div className="row"> 
                 <div className="col-lg-6 col-md-6 col-sm-12 col-12">
                     <div className="game-changer-image" />

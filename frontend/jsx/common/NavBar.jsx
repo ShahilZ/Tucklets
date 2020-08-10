@@ -27,25 +27,23 @@ class NavBar extends Component {
 
     render() {
         return (
-            <div>
-                <nav className="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-                    <div className="container">
-                        <a className="navbar-brand js-scroll-trigger" href="#page-top"><img src="../static/img/navbar-logo.svg" alt="" /></a><button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i className="fas fa-bars ml-1"></i></button>
-                        <div className="collapse navbar-collapse" id="navbarResponsive">
-                            <ul className="navbar-nav text-uppercase ml-auto">
+            <nav className="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+                <div className="container">
+                    <a className="navbar-brand js-scroll-trigger" href="#page-top"><img src="../static/img/navbar-logo.svg" alt="" /></a><button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i className="fas fa-bars ml-1"></i></button>
+                    <div className="collapse navbar-collapse" id="navbarResponsive">
+                        <ul className="navbar-nav text-uppercase ml-auto">
 
-                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#home">{this.props.i18n.t("navigation:home")}</Link></li>
-                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#our-story">{this.props.i18n.t("navigation:our_story")}</Link></li>
-                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#about">{this.props.i18n.t("navigation:about")}</Link></li>
-                                <li className="nav-item"><a className="nav-link js-scroll-trigger" href="#team">{this.props.i18n.t("navigation:donate")}</a></li>
-                                <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="#newsletters">{this.props.i18n.t("navigation:newsletters")}</Link></li>
-                                <li className="nav-item"><LocaleChanger handleSelectedLocaleChange={this.props.handleSelectedLocaleChange} i18n={this.props.i18n} additionalClasses="nav-link js-scroll-trigger" /></li>
-                            </ul>
-                        </div>
+                            <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="/#home">{this.props.i18n.t("navigation:home")}</Link></li>
+                            <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="/#our-story">{this.props.i18n.t("navigation:our_story")}</Link></li>
+                            <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="/#about">{this.props.i18n.t("navigation:about")}</Link></li>
+                            <li className="nav-item"><a className="nav-link js-scroll-trigger" href="#team">{this.props.i18n.t("navigation:donate")}</a></li>
+                            <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="/#newsletters">{this.props.i18n.t("navigation:newsletters")}</Link></li>
+                            <li className="nav-item"><Link className="nav-link js-scroll-trigger" smooth to="/#sponsor-a-child">{this.props.i18n.t("sponsor-child:sponsor-a-child")}</Link></li>
+                            <li className="nav-item"><LocaleChanger handleSelectedLocaleChange={this.props.handleSelectedLocaleChange} i18n={this.props.i18n} additionalClasses="nav-link js-scroll-trigger" /></li>
+                        </ul>
                     </div>
-                </nav>
-
-            </div>
+                </div>
+            </nav>
         )
     }
 }
