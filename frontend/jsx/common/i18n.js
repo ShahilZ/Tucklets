@@ -11,8 +11,8 @@ import newsletters_zh_tw from './i18n/newsletters/zh_tw.json';
 import newsletters_en_us from './i18n/newsletters/en_us.json';
 import navigation_zh_tw from './i18n/navigation/zh_tw.json';
 import navigation_en_us from './i18n/navigation/en_us.json';
-import sponsor_a_child_en_us from './i18n/sponsor-a-child/en_us.json';
-import sponsor_a_child_zh_tw from './i18n/sponsor-a-child/zh_tw.json';
+import sponsorship_en_us from './i18n/sponsorship/en_us.json';
+import sponsorship_zh_tw from './i18n/sponsorship/zh_tw.json';
 import sponsor_info_en_us from './i18n/sponsor-info/en_us.json';
 import sponsor_info_zh_tw from './i18n/sponsor-info/zh_tw.json';
 
@@ -33,7 +33,7 @@ i18n
           our_story: our_story_en_us,
           newsletters: newsletters_en_us,
           navigation: navigation_en_us,
-          sponsor_a_child: sponsor_a_child_en_us,
+          sponsorship: sponsorship_en_us,
           sponsor_info: sponsor_info_en_us
       },
       zh: {
@@ -42,7 +42,7 @@ i18n
           our_story: our_story_zh_tw,
           newsletters: newsletters_zh_tw,
           navigation: navigation_zh_tw,
-          sponsor_a_child: sponsor_a_child_zh_tw,
+          sponsorship: sponsorship_zh_tw,
           sponsor_info: sponsor_info_zh_tw
       }
   }});

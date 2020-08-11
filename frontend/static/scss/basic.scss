@@ -1,14 +1,13 @@
 .tucklets-nav {
-    .navbar-nav {
-        .nav-item {
-            .nav-link.active {
-                color: #fff;
-            }
-            .nav-link:hover {
-                color: #f3bd01;
-            }
+    .nav-links.navbar-nav {
+        .nav-link.active {
+            color: #fff;
+        }
+        .nav-link:hover {
+            color: #f3bd01;
         }
     }
+    
 }
 
 .tucklets-nav.navbar-scroll {
