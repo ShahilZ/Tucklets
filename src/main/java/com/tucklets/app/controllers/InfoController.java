@@ -1,6 +1,8 @@
 package com.tucklets.app.controllers;
 
 import com.google.gson.Gson;
+import com.tucklets.app.containers.SponsorAChildContainer;
+import com.tucklets.app.services.ManageChildrenService;
 import com.tucklets.app.services.NewsletterService;
 import com.tucklets.app.utils.ContainerUtils;
 import com.tucklets.app.utils.NewsletterUtils;
@@ -18,6 +20,9 @@ public class InfoController {
     @Autowired
     NewsletterService newslettersService;
 
+    @Autowired
+    ManageChildrenService manageChildrenService;
+
     @GetMapping("/locale")
     public String loadLocales() {
         return GSON.toJson(ContainerUtils.createLocaleContainer());
@@ -26,5 +31,12 @@ public class InfoController {
     @GetMapping("/fetchNewsletters")
     public String fetchNewsletters() {
         return GSON.toJson(NewsletterUtils.createNewslettersContainer(newslettersService));
+    }
+
+    @GetMapping(value = "/fetchChildren")
+    public String fetchAvailableChildren() {
+        SponsorAChildContainer sponsorAChildContainer =
+            new SponsorAChildContainer(manageChildrenService.fetchChildrenWithDetails());
+       return GSON.toJson(sponsorAChildContainer);
     }
 }

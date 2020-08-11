@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import NavBar from '../common/NavBar';
+import NavBar from '../common/TuckletsNavBar';
 
 import '../../static/scss/info.scss';
 
@@ -16,7 +16,6 @@ const props = {
 const OurStoryPage = ({ handleSelectedLocaleChange, i18n }) => {
     return (
         <div id="our-story" className="our-story-section bg-light">
-            <NavBar handleSelectedLocaleChange={handleSelectedLocaleChange} i18n={i18n} />
             <div className="row"> 
                 <div className="col-lg-6 col-md-6 col-sm-12 col-12">
                     <div className="container page-section">
