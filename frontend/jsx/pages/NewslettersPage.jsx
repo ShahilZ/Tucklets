@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
 
-import NavBar from '../common/NavBar';
+import NavBar from '../common/TuckletsNavBar';
 
 import '../../static/scss/info.scss';
 

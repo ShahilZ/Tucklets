@@ -2,7 +2,7 @@ import React from 'react'
 import { PropTypes } from 'prop-types';
 import { NavHashLink as Link } from 'react-router-hash-link';
 
-import NavBar from '../common/NavBar';
+import NavBar from '../common/TuckletsNavBar';
 
 
 const props = {

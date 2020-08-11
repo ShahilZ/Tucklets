@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import NavBar from './common/NavBar';
+import TuckletsNavBar from './common/TuckletsNavBar';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import OurStoryPage from './pages/OurStoryPage';
@@ -89,7 +89,7 @@ class Main extends Component {
         return (
             <div>
                 <BrowserRouter>
-                    <NavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} />
+                    <TuckletsNavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} />
                     <Route path="/sponsor-info/">
                         <SponsorInfoPage 
                             shouldRedirect={this.state.shouldRedirectFromSponsorInfo}
