@@ -36,4 +36,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
             .addResourceLocations("classpath:/frontend/dist/", "file:frontend/dist/",
                     "classpath:/frontend/static/img/", "file:frontend/static/img/");
     }
+
 }
