@@ -65,9 +65,9 @@ class SponsorChildPage extends Component {
                             <img className="card-img-top" src={childContainer.childImageLocation} alt="Card image cap" />
                             <div className="card-body">
                                 <h5 className="card-title">{`${childContainer.child.firstName} ${childContainer.child.lastName}`}</h5>
-                                <p className="card-text"><b>{`${this.props.i18n.t("sponsor_a_child:age")}`}</b><span>{`${childContainer.age}`}</span></p>
-                                <p className="card-text"><b>{`${this.props.i18n.t("sponsor_a_child:grade")}`}</b><span>{`${childContainer.child.grade}`}</span></p>
-                                <p className="card-text"><b>{`${this.props.i18n.t("sponsor_a_child:info")}`}</b><span>{`${childContainer.child.information}`}</span></p>
+                                <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:age")}`}</b><span>{`${childContainer.age}`}</span></p>
+                                <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:grade")}`}</b><span>{`${childContainer.child.grade}`}</span></p>
+                                <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:info")}`}</b><span>{`${childContainer.child.information}`}</span></p>
                                 <input type="checkbox" name="childId" id={`checkbox-${childContainer.child.childId}`} value={childContainer.child.childId} />
                             </div>
                         </div>
@@ -96,18 +96,18 @@ class SponsorChildPage extends Component {
             <div id="sponsor-a-child">
                 <div className="jumbotron jumbotron-fluid">
                     <div className="container">
-                        <h1 className="display-4">{`${this.props.i18n.t("sponsor_a_child:title")}`}</h1>
-                        <p className="lead">{`${this.props.i18n.t("sponsor_a_child:subtitle")}`}</p>
+                        <h1 className="display-4">{`${this.props.i18n.t("sponsorship:title")}`}</h1>
+                        <p className="lead">{`${this.props.i18n.t("sponsorship:subtitle")}`}</p>
                     </div>
                 </div>
                 <div className="container">
-                    <p>{`${this.props.i18n.t("sponsor_a_child:description")}`}</p>
+                    <p>{`${this.props.i18n.t("sponsorship:description")}`}</p>
                 </div>
                 <div className="select-child-form container">
                     <div className="container children-div">
                         { this.renderChildrenComponents() }
                     </div>
-                    <input type="submit" className="btn btn-primary sponsor-now-button" value={this.props.i18n.t("sponsor_a_child:submit")} onClick={this.props.handleSponsorChildSubmission(this.state.childrenSelections)}/>
+                    <input type="submit" className="btn btn-primary sponsor-now-button" value={this.props.i18n.t("sponsorship:submit")} onClick={this.props.handleSponsorChildSubmission(this.state.childrenSelections)}/>
                 </div>
             </div>
         )

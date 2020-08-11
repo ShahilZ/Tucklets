@@ -10,6 +10,7 @@ import OurStoryPage from './pages/OurStoryPage';
 import NewslettersPage from './pages/NewslettersPage';
 import SponsorChildPage from './pages/SponsorChildPage';
 import SponsorInfoPage from './pages/SponsorInfoPage';
+import DonatePage from './pages/DonatePage';
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
@@ -26,15 +27,16 @@ class Main extends Component {
             selectedChildren: [], 
             // Initialize donation amount for inital render.
             sponsor: {donationAmount: 0},
-            // Whether or not the Sponsor Info page should be displayed/whether redirection needs to occur from sponsor info page.
-            shouldRedirectFromSponsorInfo: true,
-            // Whether redirection is necessary from the sponsor child page.
-            shouldRedirectFromSponsorChild: false
+            // Whether or not the the current page should redirect to the main/root web page.
+            shouldRedirectToMainPage: true,
+            // Whether redirection is necessary to reach the Sponsor Info page.
+            shouldRedirectToSponsorInfo: false
         };
 
         // Bind handlers
         this.handleSelectedLocaleChange = this.handleSelectedLocaleChange.bind(this);
         this.handleSponsorChildSubmission = this.handleSponsorChildSubmission.bind(this);
+        this.handleDonationClick = this.handleDonationClick.bind(this);
     }
 
     /**
@@ -46,7 +48,7 @@ class Main extends Component {
         i18n.changeLanguage(selectedLocale);
     }
 
-        /**
+    /**
      * Handles form submission after user has selected the children he or she wants to sponsor.
      */
     handleSponsorChildSubmission(childrenSelections) {
@@ -69,8 +71,8 @@ class Main extends Component {
                 self.setState({ 
                     selectedChildren: response.data.children, 
                     sponsor: response.data.sponsor,
-                    shouldRedirectFromSponsorInfo: false,
-                    shouldRedirectFromSponsorChild: true
+                    shouldRedirectToMainPage: false,
+                    shouldRedirectToSponsorInfo: true
                 });
             })
             .catch(function (error) {
@@ -78,6 +80,22 @@ class Main extends Component {
             });
         }
 
+    }
+
+    /***
+     * Handler that leads user from donate to sponsor info page.
+     */
+    handleDonationClick(amount) {
+        let self = this;
+        return () => {
+            self.setState({ 
+                sponsor: {donationAmount: parseInt(amount)},
+                shouldRedirectToMainPage: false,
+                shouldRedirectToSponsorInfo: true 
+            });
+        }
+
+        
     }
 
 
@@ -90,9 +108,9 @@ class Main extends Component {
             <div>
                 <BrowserRouter>
                     <TuckletsNavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} />
-                    <Route path="/sponsor-info/">
+                    <Route exact path="/sponsor-info/">
                         <SponsorInfoPage 
-                            shouldRedirect={this.state.shouldRedirectFromSponsorInfo}
+                            shouldRedirect={this.state.shouldRedirectToMainPage}
                             selectedChildren={this.state.selectedChildren} 
                             donationAmount={this.state.sponsor.donationAmount} 
                             i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} 
@@ -107,7 +125,9 @@ class Main extends Component {
                         <br />
                         <NewslettersPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
                         <br />
-                        <SponsorChildPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} handleSponsorChildSubmission={this.handleSponsorChildSubmission} shouldRedirect={this.state.shouldRedirectFromSponsorChild} />
+                        <DonatePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} handleDonationClick={this.handleDonationClick} shouldRedirect={this.state.shouldRedirectToSponsorInfo} />
+                        <br />
+                        <SponsorChildPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} handleSponsorChildSubmission={this.handleSponsorChildSubmission} shouldRedirect={this.state.shouldRedirectToSponsorInfo} />
                         <br />
                     </Route>
                     

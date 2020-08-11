@@ -41,10 +41,8 @@ class TuckletsNavBar extends Component {
     handleScroll() {
         console.log(window.scrollY);
         const isScrollTop = window.scrollY < 100;
-        console.log(isScrollTop);
      
         if (isScrollTop !== this.state.isScrollTop) {
-            console.log(this.state.isScrollTop)
             this.setState({ isScrollTop })
         }
     }
@@ -60,11 +58,11 @@ class TuckletsNavBar extends Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto nav-links">
-                            <Link className="nav-link js-scroll-trigger" smooth to="#home">{this.props.i18n.t("navigation:home")}</Link>
-                            <Link className="nav-link js-scroll-trigger" smooth to="#our-story">{this.props.i18n.t("navigation:our_story")}</Link>
-                            <Link className="nav-link js-scroll-trigger" smooth to="#about">{this.props.i18n.t("navigation:about")}</Link>
-                            <a className="nav-link js-scroll-trigger" href="#team">{this.props.i18n.t("navigation:donate")}</a>
-                            <Link className="nav-link js-scroll-trigger" smooth to="#newsletters">{this.props.i18n.t("navigation:newsletters")}</Link>
+                            <Link className="nav-link js-scroll-trigger" smooth to="/#home">{this.props.i18n.t("navigation:home")}</Link>
+                            <Link className="nav-link js-scroll-trigger" smooth to="/#our-story">{this.props.i18n.t("navigation:our_story")}</Link>
+                            <Link className="nav-link js-scroll-trigger" smooth to="/#about">{this.props.i18n.t("navigation:about")}</Link>
+                            <Link className="nav-link js-scroll-trigger" smooth to="/#newsletters">{this.props.i18n.t("navigation:newsletters")}</Link>
+                            <Link className="nav-link js-scroll-trigger" smooth to="/#donate">{this.props.i18n.t("navigation:donate")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#sponsor-a-child">{this.props.i18n.t("sponsorship:sponsor")}</Link>
                             <LocaleChanger handleSelectedLocaleChange={this.props.handleSelectedLocaleChange} i18n={this.props.i18n} additionalClasses="nav-link js-scroll-trigger" />
                         </Nav>
