@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { PropTypes } from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import '../../static/scss/sponsor-a-child.scss';
 import '../../static/scss/sponsor-info.scss';
@@ -11,15 +11,18 @@ const props = {
     /** Handler for updating the selected locale. */
     handleSelectedLocaleChange: PropTypes.func.isRequired,
     /** Array of selected children to display */
-    selectedChildren: PropTypes.array.isRequired,
-    /** Sponsor container object used to store sponsor/donor information. */
-    sponsor: PropTypes.object.isRequired
+    selectedChildren: PropTypes.array,
+    /** The donation amount provided either by the user or by the backend. */
+    donationAmount: PropTypes.number.isRequired,
+    /** Whether or not the sponsor info page should be redirected (only display it if the user goes through the business logic.) */
+    shouldRedirect: PropTypes.bool.isRequired
 }
 
 class SponsorInfoPage extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = { };
 
         this.renderSelectedChildren = this.renderSelectedChildren.bind(this);
@@ -54,6 +57,11 @@ class SponsorInfoPage extends Component {
     
 
     render() {
+        // If user refreshes the page or somehow gets here without going through the flow, redirect to the main page.
+        if (this.props.shouldRedirect) {
+            return <Redirect to="/"/>
+        }
+
         return (
             <div id="sponsor-info">
                 <div className="jumbotron jumbotron-fluid">
@@ -81,7 +89,7 @@ class SponsorInfoPage extends Component {
                         <fieldset>
                             <legend><span className="sponsor-info-section-number">2</span><span>{`${this.props.i18n.t("sponsor_info:form_header_donation_info")}`}</span></legend>
                             <label htmlFor="donation-amount">{`${this.props.i18n.t("sponsor_info:form_amount")}`}</label>
-                            <input type="text" id="donation-amount" readOnly value={this.props.sponsor.donationAmount} />
+                            <input type="text" id="donation-amount" readOnly value={this.props.donationAmount} />
                         </fieldset>
                     </form>
                 </div>

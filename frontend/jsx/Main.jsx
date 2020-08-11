@@ -25,7 +25,11 @@ class Main extends Component {
             selectedLocale: 'en-US', 
             selectedChildren: [], 
             // Initialize donation amount for inital render.
-            sponsor: {donationAmount: 0} 
+            sponsor: {donationAmount: 0},
+            // Whether or not the Sponsor Info page should be displayed/whether redirection needs to occur from sponsor info page.
+            shouldRedirectFromSponsorInfo: true,
+            // Whether redirection is necessary from the sponsor child page.
+            shouldRedirectFromSponsorChild: false
         };
 
         // Bind handlers
@@ -55,14 +59,19 @@ class Main extends Component {
                 }
             }
             let requestParams = selectedChildrenIds.join(',');
-            axios.get('/sponsor-info/', {
+            axios.get('/sponsor-info/selections/', {
                 params: {
                     childIds: requestParams
                 }
             })
             .then(function (response) {
                 console.log(response);
-                self.setState({ selectedChildren: response.data.children, sponsor: response.data.sponsor })
+                self.setState({ 
+                    selectedChildren: response.data.children, 
+                    sponsor: response.data.sponsor,
+                    shouldRedirectFromSponsorInfo: false,
+                    shouldRedirectFromSponsorChild: true
+                });
             })
             .catch(function (error) {
                 console.log(error);
@@ -82,7 +91,12 @@ class Main extends Component {
                 <BrowserRouter>
                     <NavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} />
                     <Route path="/sponsor-info/">
-                        <SponsorInfoPage selectedChildren={this.state.selectedChildren} sponsor={this.state.sponsor} i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
+                        <SponsorInfoPage 
+                            shouldRedirect={this.state.shouldRedirectFromSponsorInfo}
+                            selectedChildren={this.state.selectedChildren} 
+                            donationAmount={this.state.sponsor.donationAmount} 
+                            i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} 
+                        />
                     </Route>
                     <Route exact path="/">
                         <HomePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
@@ -93,7 +107,7 @@ class Main extends Component {
                         <br />
                         <NewslettersPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
                         <br />
-                        <SponsorChildPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} handleSponsorChildSubmission={this.handleSponsorChildSubmission} />
+                        <SponsorChildPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} handleSponsorChildSubmission={this.handleSponsorChildSubmission} shouldRedirect={this.state.shouldRedirectFromSponsorChild} />
                         <br />
                     </Route>
                     

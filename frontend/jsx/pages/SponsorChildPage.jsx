@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
-
-import NavBar from '../common/NavBar';
+import { Redirect } from 'react-router-dom';
 
 import '../../static/scss/sponsor-a-child.scss';
 
@@ -14,7 +12,9 @@ const props = {
     /** Handler for updating the selected locale. */
     handleSelectedLocaleChange: PropTypes.func.isRequired,
     /** Handler for sponsor-a-child selections*/
-    handleSponsorChildSubmission: PropTypes.func.isRequired
+    handleSponsorChildSubmission: PropTypes.func.isRequired,
+    /** Whether redirection is necessary */
+    shouldRedirect: PropTypes.bool.isRequired
 }
 
 class SponsorChildPage extends Component {
@@ -80,6 +80,9 @@ class SponsorChildPage extends Component {
     }
 
     render() {
+        if (this.props.shouldRedirect) {
+            return <Redirect to="/sponsor-info/"/>
+        }
         // Determine selected children.
         let selectedChildrenList = [];
         for (let childId in this.state.childrenSelections) {
@@ -104,9 +107,7 @@ class SponsorChildPage extends Component {
                     <div className="container children-div">
                         { this.renderChildrenComponents() }
                     </div>
-                    <Link to={`/sponsor-info/${selectedChildrenRequest}`}>
-                        <input type="submit" className="btn btn-primary sponsor-now-button" value={this.props.i18n.t("sponsor_a_child:submit")} onClick={this.props.handleSponsorChildSubmission(this.state.childrenSelections)}/>
-                    </Link>
+                    <input type="submit" className="btn btn-primary sponsor-now-button" value={this.props.i18n.t("sponsor_a_child:submit")} onClick={this.props.handleSponsorChildSubmission(this.state.childrenSelections)}/>
                 </div>
             </div>
         )
