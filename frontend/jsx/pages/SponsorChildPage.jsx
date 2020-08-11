@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import '../../static/scss/sponsor-a-child.scss';
 
@@ -13,8 +13,6 @@ const props = {
     handleSelectedLocaleChange: PropTypes.func.isRequired,
     /** Handler for sponsor-a-child selections*/
     handleSponsorChildSubmission: PropTypes.func.isRequired,
-    /** Whether redirection is necessary */
-    shouldRedirect: PropTypes.bool.isRequired
 }
 
 class SponsorChildPage extends Component {
@@ -80,9 +78,7 @@ class SponsorChildPage extends Component {
     }
 
     render() {
-        if (this.props.shouldRedirect) {
-            return <Redirect to="/sponsor-info/"/>
-        }
+    
         // Determine selected children.
         let selectedChildrenList = [];
         for (let childId in this.state.childrenSelections) {
@@ -107,7 +103,8 @@ class SponsorChildPage extends Component {
                     <div className="container children-div">
                         { this.renderChildrenComponents() }
                     </div>
-                    <input type="submit" className="btn btn-primary sponsor-now-button" value={this.props.i18n.t("sponsorship:submit")} onClick={this.props.handleSponsorChildSubmission(this.state.childrenSelections)}/>
+                    <Link to="/sponsor-info/" className="btn btn-primary sponsor-now-button" value={this.props.i18n.t("sponsorship:submit")} onClick={this.props.handleSponsorChildSubmission(this.state.childrenSelections)}>{this.props.i18n.t("sponsorship:submit")}</Link>
+
                 </div>
             </div>
         )

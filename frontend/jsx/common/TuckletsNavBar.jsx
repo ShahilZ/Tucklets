@@ -39,9 +39,7 @@ class TuckletsNavBar extends Component {
     }
 
     handleScroll() {
-        console.log(window.scrollY);
         const isScrollTop = window.scrollY < 100;
-     
         if (isScrollTop !== this.state.isScrollTop) {
             this.setState({ isScrollTop })
         }
