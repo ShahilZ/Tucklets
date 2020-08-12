@@ -9,9 +9,14 @@ const props = {
 
 const Footer = ({ i18n }) => {
     return (
-        <footer id="footer">
-           footer
-        </footer>
+        <div className="footer">
+            <footer id="footer" className="container">
+                Copyright @ Tucklets 2020
+           
+           </footer>
+
+        </div>
+       
 
     )
 }
