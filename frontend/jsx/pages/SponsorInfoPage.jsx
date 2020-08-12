@@ -39,9 +39,9 @@ class SponsorInfoPage extends Component {
                         </div>
                         <div className="card-block px-2">
                             <h5 className="card-title">{`${childContainer.child.firstName} ${childContainer.child.lastName}`}</h5>
-                            <p className="card-text"><b>{`${this.props.i18n.t("sponsor_a_child:age")}`}</b><span>{`${childContainer.age}`}</span></p>
-                            <p className="card-text"><b>{`${this.props.i18n.t("sponsor_a_child:grade")}`}</b><span>{`${childContainer.child.grade}`}</span></p>
-                            <p className="card-text"><b>{`${this.props.i18n.t("sponsor_a_child:info")}`}</b><span>{`${childContainer.child.information}`}</span></p>
+                            <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:age")}`}</b><span>{`${childContainer.age}`}</span></p>
+                            <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:grade")}`}</b><span>{`${childContainer.child.grade}`}</span></p>
+                            <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:info")}`}</b><span>{`${childContainer.child.information}`}</span></p>
                         </div>
                         <div className="w-100"></div>
                     </div>
