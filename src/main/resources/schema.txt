@@ -42,7 +42,7 @@ CREATE TABLE Sponsor(
    church_name VARCHAR (50),
    email VARCHAR (250),
    address VARCHAR(250),
-   receive_notifications boolean NOT NULL,
+   subscribed boolean NOT NULL,
    donation_amount DECIMAL(12, 2) NOT NULL,
    payment_method SMALLINT NOT NULL,
    creation_date TIMESTAMP NOT NULL,
