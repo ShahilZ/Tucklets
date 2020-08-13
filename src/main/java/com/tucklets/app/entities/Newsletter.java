@@ -23,12 +23,8 @@ public class Newsletter {
     private String filename;
 
     @Column(name = "upload_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date uploadDate;
-
-    @Column(name = "archive_date")
-    @Temporal(TemporalType.DATE)
-    private Date archiveDate;
 
     private String newsletterLocation;
 
@@ -51,10 +47,6 @@ public class Newsletter {
         return uploadDate;
     }
 
-    public Date getArchiveDate() {
-        return archiveDate;
-    }
-
     public String getNewsletterLocation() {
         return newsletterLocation;
     }
@@ -62,4 +54,5 @@ public class Newsletter {
     public void setNewsletterLocation(String newsletterLocation) {
         this.newsletterLocation = newsletterLocation;
     }
+
 }

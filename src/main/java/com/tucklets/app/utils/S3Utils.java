@@ -31,9 +31,9 @@ public class S3Utils {
     }
 
     /**
-     * Computes the S3 key for the given image location.
+     * Computes the S3 key for the given file location.
      */
-    public static String computeS3Key(String imageLocation, String baseUrl) {
-        return baseUrl + imageLocation;
+    public static String computeS3Key(String fileLocation, String baseUrl) {
+        return baseUrl + fileLocation;
     }
 }
