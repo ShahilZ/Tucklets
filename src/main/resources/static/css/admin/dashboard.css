@@ -57,7 +57,7 @@
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.delete-child-button {
+.delete-button {
     height: 20px;
     width: 20px;
 }

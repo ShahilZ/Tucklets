@@ -1,7 +1,6 @@
 package com.tucklets.app.services;
 
 import com.tucklets.app.db.repositories.SponsorRepository;
-import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,13 @@ public class SponsorService {
      */
     public List<Sponsor> fetchAllSponsors() {
         return sponsorRepository.fetchAllSponsors();
+    }
+
+    /**
+     * Fetches all active sponsors who are subscribed to receive notifications.
+     */
+    public List<Sponsor> fetchAllSubscribedSponsors() {
+        return sponsorRepository.fetchSubscribedSponsors();
     }
 
     public Sponsor fetchSponsorById(Long sponsorId) {

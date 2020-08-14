@@ -34,6 +34,9 @@ public class Sponsor {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Column(name = "subscribed", nullable = false)
+    private boolean subscribed;
+
     @Column(name = "donation_amount", nullable = false)
     private BigDecimal donationAmount;
 
@@ -125,6 +128,14 @@ public class Sponsor {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(boolean subscribed) {
+        this.subscribed = subscribed;
     }
 
     public BigDecimal getDonationAmount() {

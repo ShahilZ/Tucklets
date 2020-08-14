@@ -11,7 +11,6 @@ function closeModal() {
 }
 
 function handleDeleteChild(childId) {
-    console.log(childId);
     let childRow = $('#child-row' + childId);
     $.ajax({
         url: '/admin/children-dashboard/remove-child',

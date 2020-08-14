@@ -1,6 +1,5 @@
 package com.tucklets.app.db.repositories;
 
-import com.tucklets.app.entities.ChildAdditionalDetail;
 import com.tucklets.app.entities.Newsletter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,9 +13,14 @@ import java.util.Optional;
 @Repository
 public interface NewsletterRepository extends CrudRepository<Newsletter, Long>, JpaRepository<Newsletter, Long>{
 
-    @Query("select n from Newsletter n where n.newsletterId = :newsletterId and n.archiveDate is null")
-    Optional<ChildAdditionalDetail> fetchNewslettersByNewsletterId(@Param("newsletterId") Long newsletterId);
+    @Query("select n from Newsletter n where n.newsletterId = :newsletterId")
+    Optional<Newsletter> fetchNewslettersByNewsletterId(@Param("newsletterId") Long newsletterId);
 
-    @Query("select n from Newsletter n where n.archiveDate is null")
-    List<Newsletter> fetchAllAvailableeNewsletters();
+    @Query("select n from Newsletter n order by n.uploadDate desc")
+    List<Newsletter> fetchAllAvailableNewsletters();
+
+    @Query("select n from Newsletter n where n.filename = :filename")
+    Optional<Newsletter> fetchNewsletterByFilename(@Param("filename") String filename);
+
+    Optional<Newsletter> findFirstByOrderByUploadDateDesc();
 }

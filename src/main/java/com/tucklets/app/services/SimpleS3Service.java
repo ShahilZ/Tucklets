@@ -5,6 +5,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.S3Object;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -42,5 +43,42 @@ public class SimpleS3Service {
             // Log error.
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Delete object from S3.
+     * @param fileName to be deleted (S3 key)
+     * @param bucketName destination in S3 that the file is stored in.
+     */
+    public void deleteFile(String fileName, String bucketName) {
+        try {
+            AmazonS3 s3Client = AmazonS3ClientBuilder
+                .standard()
+                .build();
+
+            s3Client.deleteObject(bucketName, fileName);
+        } catch (SdkClientException e) {
+            // Log error.
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Fetches object from S3.
+     * @param fileName to be retrieved (S3 key)
+     * @param bucketName destination in S3 that the file is stored in.
+     */
+    public S3Object retrieveFile(String fileName, String bucketName) {
+        try {
+            AmazonS3 s3Client = AmazonS3ClientBuilder
+                .standard()
+                .build();
+
+            return s3Client.getObject(bucketName, fileName);
+        } catch (SdkClientException e) {
+            // Log error.
+            e.printStackTrace();
+        }
+        return null;
     }
 }
