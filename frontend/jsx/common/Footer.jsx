@@ -7,13 +7,17 @@ const props = {
     i18n: PropTypes.object.isRequired,
 }
 
+ 
 const Footer = ({ i18n }) => {
     return (
-        <footer id="footer">
-           footer
-        </footer>
-
+        <div className="footer">
+            <footer id="footer" className="container">
+                {`${i18n.t("footer:copyright")}` }
+           </footer>
+        </div>
     )
 }
+
+Footer.propTypes = props;
 
 export default Footer;

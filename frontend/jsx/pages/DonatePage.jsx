@@ -43,8 +43,8 @@ class DonatePage extends Component {
                             </div>
                             <input type="number" id="donation-amount" className="form-control" value={this.state.donationAmount} onChange={this.handleDonationAmountChange}/>
                         </div>
-                        <div className="row btn-group duration-button-group">
-                            <Link to="/sponsor-info/" className="col-md-6 btn btn-primary" onClick={this.props.handleDonationClick(this.state.donationAmount)}>{this.props.i18n.t("donate:donate-monthly")} </Link>
+                        <div className="btn-group duration-button-group">
+                            <Link to="/sponsor-info/" className="col-md-6 btn btn-primary" onClick={this.props.handleDonationClick(this.state.donationAmount)}>{this.props.i18n.t("donate:donate-once")} </Link>
                             <Link to="/sponsor-info/" className="col-md-6 btn btn-secondary" onClick={this.props.handleDonationClick(this.state.donationAmount)}>{this.props.i18n.t("donate:donate-monthly")}</Link>
                         </div>
                         <br></br>

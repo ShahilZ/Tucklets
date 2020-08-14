@@ -31,11 +31,11 @@ class NewslettersPage extends Component {
 
     render() {
         return (
-            <div id="newsletters" className="newsletters-section bg-light">
+            <div id="newsletters" className="newsletter-section bg-light">
                 <div className="row"> 
                     <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                         <div className="container page-section">
-                            <div className="text-center newsletter-info">
+                            <div className="text-center newsletters-info">
                                 <h2>{`${this.props.i18n.t("newsletters:title")}`}</h2>
                                 <h3 className="section-subheading text-muted m-0">
                                     <div className="row justify-content-center">
@@ -56,7 +56,7 @@ class NewslettersPage extends Component {
                             <ul className="newsletter-links-container">
                                 { this.state.newsletters.map((newsletter, index) => (
                                     <li key={"newletter-" + index}>
-                                        <a href={newsletter.newsletterLocation} target="_blank">{this.props.i18n.t("newsletters:click") + newsletter.filename}</a>
+                                        <a className="newsletter-links" href={newsletter.newsletterLocation} target="_blank">{this.props.i18n.t("newsletters:click") + newsletter.filename}</a>
                                     </li>
                                 ))}   
                             </ul>
