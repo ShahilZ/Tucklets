@@ -20,7 +20,7 @@ public interface NewsletterRepository extends CrudRepository<Newsletter, Long>, 
     List<Newsletter> fetchAllAvailableNewsletters();
 
     @Query("select n from Newsletter n where n.filename = :filename")
-    Optional<Newsletter> fetchNewsletterByFilename(String filename);
+    Optional<Newsletter> fetchNewsletterByFilename(@Param("filename") String filename);
 
     Optional<Newsletter> findFirstByOrderByUploadDateDesc();
 }
