@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
+import { Link, withRouter } from 'react-router-dom'
+import axios from 'axios';
 
-import '../../static/scss/sponsor-a-child.scss';
+import '../../static/scss/basic.scss';
 import '../../static/scss/sponsor-info.scss';
 
 const props = {
@@ -13,6 +15,8 @@ const props = {
     selectedChildren: PropTypes.array,
     /** The donation amount provided either by the user or by the backend. */
     donationAmount: PropTypes.number.isRequired,
+    /** The donation duration provided by the user. */
+    donationDuration: PropTypes.number
 }
 
 class SponsorInfoPage extends Component {
@@ -20,13 +24,88 @@ class SponsorInfoPage extends Component {
     constructor(props) {
         super(props);
         console.log(props);
-        this.state = { };
+        this.state = {
+            sponsor: {
+                firstName: "",
+                lastName: "",
+                email: "",
+                address: "",
+                churchName: ""
+            },
+            donation: {
+                donationAmount: props.donationAmount,
+                donationDuration: props.donationDuration,
+                // default to 0 for now.
+                paymentMethod: 0
+            },
 
+         };
+
+         console.log(this.state);
+
+        this.donationInfoChangeHandler = this.donationInfoChangeHandler.bind(this);
         this.renderSelectedChildren = this.renderSelectedChildren.bind(this);
+        this.sponsorInfoChangeHandler = this.sponsorInfoChangeHandler.bind(this);
+        this.sponsorInfoSubmitHandler = this.sponsorInfoSubmitHandler.bind(this);
     }
 
     componentDidMount(){ 
         window.scrollTo(0,0);
+    }
+
+    /**
+     * Handler for sponsor info changes.
+     */
+    sponsorInfoChangeHandler(field) {
+        let self = this;
+        return (event) => {
+            let newValue = event.target.value;
+            self.setState(prevState => ({
+                sponsor: {
+                    ...prevState.sponsor,
+                    [field]: newValue
+                },
+            }));
+        }
+    }
+
+    /**
+     * Handler for donation info changes.
+     */
+    donationInfoChangeHandler(field) {
+        let self = this;
+        return (event) => {
+            let newValue = event.target.value;
+            self.setState(prevState => ({
+                donation: {
+                    ...prevState.donation,
+                    [field]: newValue
+                },
+            }));
+        }
+    }
+
+    /**
+     * Handler for the sponsor info submission button.
+     */
+    sponsorInfoSubmitHandler() {
+        let self = this;
+        console.log(this.state);
+        let selectedChildIds = [];
+        this.props.selectedChildren.map((childContainer) => selectedChildIds.push(childContainer.child.childId));
+        axios.post('/sponsor-info/submit/', {
+            sponsor: this.state.sponsor,
+            donation: this.state.donation,
+            children: selectedChildIds
+
+        })
+        .then(function (response) {
+            console.log(response);
+            self.props.history.push("/thank-you/");
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     renderSelectedChildren() {
@@ -69,21 +148,22 @@ class SponsorInfoPage extends Component {
                         <fieldset>
                             <legend><span className="sponsor-info-section-number">1</span><span>{`${this.props.i18n.t("sponsor_info:form_header_personal")}`}</span></legend>
                             <label htmlFor="sponsor-first-name">{`${this.props.i18n.t("sponsor_info:form_first_name")}`}</label>
-                            <input type="text" id="sponsor-first-name" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_first_name")} />
+                            <input type="text" id="sponsor-first-name" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_first_name")} value={this.state.sponsor.firstName} onChange={this.sponsorInfoChangeHandler("firstName")} />
                             <label htmlFor="sponsor-last-name">{`${this.props.i18n.t("sponsor_info:form_last_name")}`}</label>
-                            <input type="text" id="sponsor-last-name" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_last_name")} />
+                            <input type="text" id="sponsor-last-name" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_last_name")} value={this.state.sponsor.lastName} onChange={this.sponsorInfoChangeHandler("lastName")} />
                             <label htmlFor="sponsor-email">{`${this.props.i18n.t("sponsor_info:form_email")}`}</label>
-                            <input type="text" id="sponsor-email" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_email")} />
+                            <input type="text" id="sponsor-email" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_email")} value={this.state.sponsor.email} onChange={this.sponsorInfoChangeHandler("email")} />
                             <label htmlFor="sponsor-address">{`${this.props.i18n.t("sponsor_info:form_address")}`}</label>
-                            <input type="text" id="sponsor-address" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_address")} />
+                            <input type="text" id="sponsor-address" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_address")} value={this.state.sponsor.address} onChange={this.sponsorInfoChangeHandler("address")} />
                             <label htmlFor="sponsor-church-name">{`${this.props.i18n.t("sponsor_info:form_church_name")}`}</label>
-                            <input type="text" id="sponsor-church-name" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_church_name")} />
+                            <input type="text" id="sponsor-church-name" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_church_name")} value={this.state.sponsor.churchName} onChange={this.sponsorInfoChangeHandler("churchName")} />
                         </fieldset>
                         <fieldset>
                             <legend><span className="sponsor-info-section-number">2</span><span>{`${this.props.i18n.t("sponsor_info:form_header_donation_info")}`}</span></legend>
                             <label htmlFor="donation-amount">{`${this.props.i18n.t("sponsor_info:form_amount")}`}</label>
                             <input type="text" id="donation-amount" readOnly value={this.props.donationAmount} />
                         </fieldset>
+                        <div className="btn btn-primary tucklets-button" onClick={this.sponsorInfoSubmitHandler}>{`${this.props.i18n.t("sponsor_info:form_submit")}`}</div>
                     </form>
                 </div>
             </div>
@@ -94,4 +174,4 @@ class SponsorInfoPage extends Component {
 }
 SponsorInfoPage.propTypes = props;
 
-export default SponsorInfoPage;
+export default withRouter(SponsorInfoPage);

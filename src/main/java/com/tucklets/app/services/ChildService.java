@@ -59,10 +59,9 @@ public class ChildService {
     /**
      * Fetches all children from a given list of child's id.
      */
-    public List<Child> fetchChildByIds(String[] childrenIds) {
+    public List<Child> fetchChildByIds(Long[] childrenIds) {
         List<Child>children = new ArrayList<>();
-        for (String id : childrenIds) {
-            Long childId = Long.valueOf(id);
+        for (Long childId : childrenIds) {
             Child possibleChild = childRepository.fetchChild(childId).orElse(null);
             if (Objects.nonNull(possibleChild)) {
                 children.add(possibleChild);

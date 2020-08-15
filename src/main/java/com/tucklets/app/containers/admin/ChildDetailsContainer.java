@@ -1,5 +1,6 @@
 package com.tucklets.app.containers.admin;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.ChildAndSponsorAssoc;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,13 @@ public class ChildDetailsContainer {
     private ChildAndSponsorAssoc childAndSponsorAssoc;
     private MultipartFile childImageFile;
     private int age;
+
+    public ChildDetailsContainer(){};
+
+    @JsonCreator
+    public ChildDetailsContainer (Integer childId ) {
+        this.child = new Child(Long.valueOf(childId));
+    }
 
     public Child getChild() {
         return child;

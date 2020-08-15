@@ -1,9 +1,14 @@
 package com.tucklets.app.entities;
 
-import com.tucklets.app.entities.enums.PaymentMethod;
-
-import javax.persistence.*;
-import java.math.BigDecimal;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.PreUpdate;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Entity
@@ -37,16 +42,6 @@ public class Sponsor {
     @Column(name = "subscribed", nullable = false)
     private boolean subscribed;
 
-    @Column(name = "donation_amount", nullable = false)
-    private BigDecimal donationAmount;
-
-    @Column(name = "payment_method", nullable = false)
-    @Basic
-    private int paymentMethodValue;
-
-    @Transient
-    private PaymentMethod paymentMethod;
-
     @Column(name = "creation_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date creationDate;
@@ -58,24 +53,6 @@ public class Sponsor {
     @Column(name = "deletion_date")
     @Temporal(TemporalType.DATE)
     private Date deletionDate;
-
-    @PrePersist
-    void onCreate() {
-        Date today = new Date();
-        this.setCreationDate(today);
-        this.setLastUpdateDate(today);
-
-        if (paymentMethod != null) {
-            this.paymentMethodValue = paymentMethod.getPaymentMethodValue();
-        }
-    }
-
-    @PostLoad
-    void fillTransient() {
-        if (paymentMethodValue > 0) {
-            this.paymentMethod = PaymentMethod.of(paymentMethodValue);
-        }
-    }
 
     @PreUpdate
     void onUpdate() {
@@ -136,22 +113,6 @@ public class Sponsor {
 
     public void setSubscribed(boolean subscribed) {
         this.subscribed = subscribed;
-    }
-
-    public BigDecimal getDonationAmount() {
-        return donationAmount;
-    }
-
-    public void setDonationAmount(BigDecimal donationAmount) {
-        this.donationAmount = donationAmount;
-    }
-
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
     }
 
     public Date getCreationDate() {
