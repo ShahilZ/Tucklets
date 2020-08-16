@@ -34,7 +34,14 @@ public class SponsorService {
         return possibleSponsor.orElse(null);
     }
 
-    public void addSponsor(Sponsor sponsor) { sponsorRepository.save(sponsor); }
+    public void addSponsor(Sponsor sponsor) {
+        Date today = new Date();
+        sponsor.setCreationDate(today);
+        sponsor.setLastUpdateDate(today);
+        // All sponsors will start out as "subscribed".
+        sponsor.setSubscribed(true);
+        sponsorRepository.save(sponsor);
+    }
 
     /**
      * Soft deletes the child with the given id.

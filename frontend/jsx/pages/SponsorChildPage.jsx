@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import '../../static/scss/sponsor-a-child.scss';
 
@@ -103,7 +103,7 @@ class SponsorChildPage extends Component {
                     <div className="container children-div">
                         { this.renderChildrenComponents() }
                     </div>
-                    <Link to="/sponsor-info/" className="btn btn-primary sponsor-now-button" value={this.props.i18n.t("sponsorship:submit")} onClick={this.props.handleSponsorChildSubmission(this.state.childrenSelections)}>{this.props.i18n.t("sponsorship:submit")}</Link>
+                    <button className="btn btn-primary sponsor-now-button" onClick={this.props.handleSponsorChildSubmission(this.state.childrenSelections, this.props.history)}>{this.props.i18n.t("sponsorship:submit")}</button>
 
                 </div>
             </div>
@@ -115,4 +115,4 @@ class SponsorChildPage extends Component {
 
 SponsorChildPage.propTypes = props;
 
-export default SponsorChildPage;
+export default withRouter(SponsorChildPage);

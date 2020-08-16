@@ -15,6 +15,8 @@ import sponsorship_en_us from './i18n/sponsorship/en_us.json';
 import sponsorship_zh_tw from './i18n/sponsorship/zh_tw.json';
 import sponsor_info_en_us from './i18n/sponsor-info/en_us.json';
 import sponsor_info_zh_tw from './i18n/sponsor-info/zh_tw.json';
+import sponsor_thank_you_en_us from './i18n/sponsor-thank-you/en_us.json';
+import sponsor_thank_you_zh_tw from './i18n/sponsor-thank-you/zh_tw.json';
 import donate_zh_tw from './i18n/donate/zh_tw.json';
 import donate_en_us from './i18n/donate/en_us.json';
 import footer_zh_tw from './i18n/footer/zh_tw.json';
@@ -39,6 +41,7 @@ i18n
           navigation: navigation_en_us,
           sponsorship: sponsorship_en_us,
           sponsor_info: sponsor_info_en_us,
+          sponsor_thank_you: sponsor_thank_you_en_us,
           donate: donate_en_us,
           footer: footer_en_us
       },
@@ -50,6 +53,7 @@ i18n
           navigation: navigation_zh_tw,
           sponsorship: sponsorship_zh_tw,
           sponsor_info: sponsor_info_zh_tw,
+          sponsor_thank_you: sponsor_thank_you_zh_tw,
           donate: donate_zh_tw,
           footer: footer_zh_tw
       }

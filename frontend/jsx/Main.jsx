@@ -10,6 +10,7 @@ import OurStoryPage from './pages/OurStoryPage';
 import NewslettersPage from './pages/NewslettersPage';
 import SponsorChildPage from './pages/SponsorChildPage';
 import SponsorInfoPage from './pages/SponsorInfoPage';
+import SponsorThankYouPage from './pages/SponsorThankYouPage';
 import DonatePage from './pages/DonatePage';
 import Footer from './common/Footer';
 import i18n from './common/i18n';
@@ -26,7 +27,8 @@ class Main extends Component {
             selectedLocale: 'en-US', 
             selectedChildren: [], 
             // Initialize donation amount for inital render.
-            sponsor: {donationAmount: 0},
+            sponsor: {},
+            donation: {donationAmount: 0, donationDuration: 0}
         };
 
         // Bind handlers
@@ -47,7 +49,7 @@ class Main extends Component {
     /**
      * Handles form submission after user has selected the children he or she wants to sponsor.
      */
-    handleSponsorChildSubmission(childrenSelections) {
+    handleSponsorChildSubmission(childrenSelections, history) {
         let self = this;
         return () => {
             let selectedChildrenIds = []
@@ -67,7 +69,10 @@ class Main extends Component {
                 self.setState({ 
                     selectedChildren: response.data.children, 
                     sponsor: response.data.sponsor,
+                    donation: response.data.donation,
                 });
+                // Manually change route after successful response from backend.
+                history.push("/sponsor-info/");
             })
             .catch(function (error) {
                 console.log(error);
@@ -83,7 +88,7 @@ class Main extends Component {
         let self = this;
         return () => {
             self.setState({ 
-                sponsor: {donationAmount: parseInt(amount)}
+                donation: {donationAmount: parseInt(amount), donationDuration: 0}
             });
         }
 
@@ -99,8 +104,14 @@ class Main extends Component {
                     <Route exact path="/sponsor-info/">
                         <SponsorInfoPage 
                             selectedChildren={this.state.selectedChildren} 
-                            donationAmount={this.state.sponsor.donationAmount} 
-                            i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} 
+                            donationAmount={this.state.donation.donationAmount}
+                            donationDuration={this.state.donation.donationDuration} 
+                            i18n={i18n} 
+                            handleSelectedLocaleChange={this.handleSelectedLocaleChange} 
+                        />
+                    </Route>
+                    <Route exact path="/thank-you/">
+                        <SponsorThankYouPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} 
                         />
                     </Route>
                     <Route exact path="/">
@@ -114,7 +125,7 @@ class Main extends Component {
                         <br />
                         <DonatePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} handleDonationClick={this.handleDonationClick}  />
                         <br />
-                        <SponsorChildPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} handleSponsorChildSubmission={this.handleSponsorChildSubmission}  />
+                        <SponsorChildPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} handleSponsorChildSubmission={this.handleSponsorChildSubmission} />
                         <br />
                     </Route>
                     
