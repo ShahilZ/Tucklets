@@ -57,6 +57,10 @@ bootJar {
 	from('frontend/dist') {
 		into 'frontend/dist'
 	}
+	// Include images from frontend/static folder.
+	from('frontend/static/img') {
+		into 'frontend/static/img'
+	}
 }
 
 processResources.dependsOn('frontend:webpack')
