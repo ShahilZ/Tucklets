@@ -1,0 +1,36 @@
+.tucklets-nav {
+    .nav-links.navbar-nav {
+        .nav-link.active {
+            color: #fff;
+        }
+        .nav-link:hover {
+            color: #f3bd01;
+        }
+        .nav-link:focus {
+            color: #f3bd01;
+        }
+    }
+    
+}
+
+.tucklets-nav.navbar-scroll {
+    // padding-top: 1rem;
+    // padding-bottom: 1rem;
+    background-color: #08979D;
+}
+
+.footer {
+    text-align: center;
+    font-size: 0.9rem;
+    margin:30px;
+}
+
+.tucklets-button {
+    width: 20%;
+    border-radius: 30px;
+    margin-bottom: 5%;
+}
+
+.tucklets-button:hover {
+	background-color: #3e2763;
+}

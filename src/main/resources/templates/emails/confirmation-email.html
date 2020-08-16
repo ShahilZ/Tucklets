@@ -19,9 +19,9 @@
 <div class="container" style="">
   <p>
     <p class="" th:text="|Dear ${sponsor.firstName} ${sponsor.lastName},|"></p>
-    <p class="">Thank you for supporting Tuckets, a 501(c)(3) public benefit charitable corperation. </p>
+    <p class="">Thank you for supporting Tuckets, a 501(c)(3) public benefit charitable corporation. </p>
     <p class="">Here is a receipt of your donation: </p>
-    <p class="" th:text="| Amount: $ ${sponsor.donationAmount} |"></p>
+    <p class="" th:text="| Amount: $ ${donation.donationAmount} |"></p>
   </p>
   <div class="" th:each="child : ${children}">
     <p> You have agreed to support the following child: </p>
@@ -30,7 +30,7 @@
   <div>
     <p> Thank you again for your donation. Please keep this for your records.</p>
     <p> Sincerely, </p>
-    <p> Tuckets Foundation</p>
+    <p> Tucklets Foundation</p>
     <a href="https://tucklets.org" class="btn btn-primary">Go to Tucklets.org</a>
   </div>
 </div>

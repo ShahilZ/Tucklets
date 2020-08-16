@@ -1,35 +1,37 @@
 package com.tucklets.app.controllers;
 
-import com.tucklets.app.containers.LocaleContainer;
+import com.google.gson.Gson;
 import com.tucklets.app.containers.SponsorInfoContainer;
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Child;
+import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.DonationDuration;
 import com.tucklets.app.services.AmountService;
 import com.tucklets.app.services.ChildAndSponsorAssociationService;
 import com.tucklets.app.services.ChildService;
+import com.tucklets.app.services.DonationService;
+import com.tucklets.app.services.EmailService;
+import com.tucklets.app.services.ManageChildrenService;
+import com.tucklets.app.services.SponsorAndDonationAssociationService;
 import com.tucklets.app.services.SponsorService;
-import com.tucklets.app.utils.Constants;
-import com.tucklets.app.utils.ContainerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
-import com.tucklets.app.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping(value = "/sponsor-info")
 public class SponsorInfoController {
+
+    private static final Gson GSON = new Gson();
 
     @Autowired
     SponsorService sponsorService;
@@ -41,6 +43,9 @@ public class SponsorInfoController {
     ChildService childService;
 
     @Autowired
+    DonationService donationService;
+
+    @Autowired
     AmountService amountService;
 
     @Autowired
@@ -49,47 +54,69 @@ public class SponsorInfoController {
     @Autowired
     ManageChildrenService manageChildrenService;
 
-    @GetMapping(value = "/")
-    public ModelAndView handleChildSelection(@RequestParam(value = "childId") String[] childrenIds) {
-        ModelAndView modelAndView = new ModelAndView("sponsor-info");
+    @Autowired
+    SponsorAndDonationAssociationService sponsorAndDonationAssociationService;
 
-        var selectedChildren = childService.fetchChildByIds(childrenIds);
+    @GetMapping(value = "/")
+    public String handleSponsorInfoLanding() {
+        // Redirect to root page.
+        return "home";
+    }
+
+    @GetMapping(value = "/selections/")
+    @ResponseBody
+    public String handleChildSelection(@RequestParam(value = "childIds") String[] childrenIds) {
+        // TODO: Validate request params?
+        Long[] childIds = Arrays.stream(childrenIds).map(Long::parseLong).toArray(Long[]::new);
+
+        var selectedChildren = childService.fetchChildByIds(childIds);
         var childrenDetailContainers = manageChildrenService.createChildDetailsContainers(selectedChildren);
         var totalDonationAmount = amountService.computeTotalDonationAmount(selectedChildren);
         Sponsor sponsor = new Sponsor();
-        sponsor.setDonationAmount(totalDonationAmount);
+        Donation donation = new Donation(totalDonationAmount);
 
         SponsorInfoContainer sponsorInfoContainer = new SponsorInfoContainer(
-            sponsor, childrenDetailContainers,
-            DonationDuration.getAllDonationDurations(),
-            childrenIds,
-            null,
-            selectedChildren.size());
-        sponsorInfoContainer.setNumChildren(selectedChildren.size());
-
-        modelAndView.addObject("localeContainer", ContainerUtils.createLocaleContainer());
-        modelAndView.addObject("sponsorInfoContainer", sponsorInfoContainer);
-        return modelAndView;
+            donation, sponsor, childrenDetailContainers);
+        return GSON.toJson(sponsorInfoContainer);
     }
 
     @PostMapping(value = "/submit")
-    public ModelAndView handleSponsorSubmission(@ModelAttribute SponsorInfoContainer sponsorInfoContainer) {
+    @ResponseBody
+    public String handleSponsorSubmission(@RequestBody SponsorInfoContainer sponsorInfoContainer) {
 
         // TODO: Validate form.
-
         Sponsor sponsor = sponsorInfoContainer.getSponsor();
-        DonationDuration donationDuration = sponsorInfoContainer.getSelectedDonationDuration();
-        List<Child> children = childService.fetchChildByIds(sponsorInfoContainer.getSelectedChildIds());
+        Donation donation = sponsorInfoContainer.getDonation();
+        DonationDuration donationDuration =
+            sponsorInfoContainer.getDonation().getDonationDuration() == null
+                ? DonationDuration.ONE_YEAR
+                : DonationDuration.INDEFINITE;
+
+        // Add donation info.
+        donationService.addDonation(donation);
+        // Add sponsor info.
         sponsorService.addSponsor(sponsor);
 
-        childAndSponsorAssociationService.createAssociation(children, sponsor, donationDuration);
-        childService.setSponsoredChildren(children);
+        sponsorAndDonationAssociationService.createAssociation(sponsor, donation);
+        List<ChildDetailsContainer> childrenContainer = sponsorInfoContainer.getChildren();
 
-        emailService.sendConfirmationEmail(sponsor, children);
 
-        ModelAndView modelAndView = new ModelAndView("thank-you");
-        modelAndView.addObject("localeContainer", ContainerUtils.createLocaleContainer());
+        // SponsorInfoContainer contains selected children, then create children assocs and send email regarding them.
+        if (!childrenContainer.isEmpty()) {
+            Long[] childIds = childrenContainer
+                .stream()
+                .map(childDetailsContainer -> childDetailsContainer.getChild().getChildId())
+                .toArray(Long[]::new);
+            List<Child> children = childService.fetchChildByIds(childIds);
+            childAndSponsorAssociationService.createAssociation(children, sponsor, donationDuration);
+            childService.setSponsoredChildren(children);
+            emailService.sendConfirmationEmail(sponsor, children, donation);
 
-        return modelAndView;
+        }
+        else {
+            // TODO: Generic sponsorship flow; send different email.
+        }
+
+        return "success";
     }
 }

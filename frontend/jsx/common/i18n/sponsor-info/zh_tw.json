@@ -1,0 +1,22 @@
+{
+    "sponsor-info": "Sponsor Info",
+    "title": "Sponsor Information",
+    "subtitle": "Thank you for your support!",
+    "description": "You can sponsor one or more children or teacher from the list below.",
+    "form_header_personal": "Personal Information",
+    "form_first_name": "First Name *",
+    "form_last_name": "Last Name *",
+    "form_email": "Email *",
+    "form_address": "Address",
+    "form_church_name": "Church Name",
+    "form_placeholder_first_name": "First Name",
+    "form_placeholder_last_name": "Last Name",
+    "form_placeholder_email": "awesome@yahoo.com",
+    "form_placeholder_address": "ex. 1234 Address Here",
+    "form_placeholder_church_name": "Optional Church Name",
+
+    "form_header_donation_info": "Donation Information",
+    "form_amount": "Amount",
+
+    "form_submit": "Submit"
+}

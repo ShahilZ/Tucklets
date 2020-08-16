@@ -1,36 +1,28 @@
 package com.tucklets.app.containers;
 
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
-import com.tucklets.app.entities.Child;
-import com.tucklets.app.entities.ChildAdditionalDetail;
+import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Sponsor;
-import com.tucklets.app.entities.enums.DonationDuration;
 
 import java.util.List;
 
 public class SponsorInfoContainer {
 
+    private Donation donation;
     private Sponsor sponsor;
     private List<ChildDetailsContainer> children;
-    private List<DonationDuration> donationDurations;
-    private String[] selectedChildIds;
-    private DonationDuration selectedDonationDuration;
-    private int numChildren;
 
     public SponsorInfoContainer(
+        Donation donation,
         Sponsor sponsor,
-        List<ChildDetailsContainer> children,
-        List<DonationDuration> donationDurations,
-        String[] selectedChildIds,
-        DonationDuration selectedDonationDuration,
-        int numChildren)
-    {
+        List<ChildDetailsContainer> children) {
+        this.donation = donation;
         this.sponsor = sponsor;
         this.children = children;
-        this.donationDurations = donationDurations;
-        this.selectedChildIds = selectedChildIds;
-        this.selectedDonationDuration = selectedDonationDuration;
-        this.numChildren = numChildren;
+    }
+
+    public Donation getDonation() {
+        return donation;
     }
 
     public Sponsor getSponsor() {
@@ -49,35 +41,4 @@ public class SponsorInfoContainer {
         this.children = children;
     }
 
-    public List<DonationDuration> getDonationDurations() {
-        return donationDurations;
-    }
-
-    public void setDonationDurations(List<DonationDuration> donationDurations) {
-        this.donationDurations = donationDurations;
-    }
-
-    public String[] getSelectedChildIds() {
-        return selectedChildIds;
-    }
-
-    public void setSelectedChildIds(String[] selectedChildIds) {
-        this.selectedChildIds = selectedChildIds;
-    }
-
-    public DonationDuration getSelectedDonationDuration() {
-        return selectedDonationDuration;
-    }
-
-    public void setSelectedDonationDuration(DonationDuration selectedDonationDuration) {
-        this.selectedDonationDuration = selectedDonationDuration;
-    }
-
-    public int getNumChildren() {
-        return numChildren;
-    }
-
-    public void setNumChildren(int numChildren) {
-        this.numChildren = numChildren;
-    }
 }

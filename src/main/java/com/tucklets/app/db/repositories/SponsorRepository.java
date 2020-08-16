@@ -1,6 +1,5 @@
 package com.tucklets.app.db.repositories;
 
-import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +19,7 @@ public interface SponsorRepository extends CrudRepository<Sponsor, Long>, JpaRep
 
     @Query("select s from Sponsor s where s.sponsorId = :sponsorId")
     Optional<Sponsor> fetchSponsorById(@Param("sponsorId") Long sponsorId);
+
+    @Query("select s from Sponsor s where s.subscribed is true and s.deletionDate is null")
+    List<Sponsor> fetchSubscribedSponsors();
 }

@@ -54,6 +54,12 @@ public class Child {
     @Temporal(TemporalType.DATE)
     private Date deletionDate;
 
+    public Child(){};
+
+    public Child(long childId) {
+        this.childId = childId;
+    }
+
     @PrePersist
     void onCreate() {
         Date today = new Date();

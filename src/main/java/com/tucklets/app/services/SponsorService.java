@@ -1,7 +1,6 @@
 package com.tucklets.app.services;
 
 import com.tucklets.app.db.repositories.SponsorRepository;
-import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +22,26 @@ public class SponsorService {
         return sponsorRepository.fetchAllSponsors();
     }
 
+    /**
+     * Fetches all active sponsors who are subscribed to receive notifications.
+     */
+    public List<Sponsor> fetchAllSubscribedSponsors() {
+        return sponsorRepository.fetchSubscribedSponsors();
+    }
+
     public Sponsor fetchSponsorById(Long sponsorId) {
         Optional<Sponsor> possibleSponsor = sponsorRepository.fetchSponsorById(sponsorId);
         return possibleSponsor.orElse(null);
     }
 
-    public void addSponsor(Sponsor sponsor) { sponsorRepository.save(sponsor); }
+    public void addSponsor(Sponsor sponsor) {
+        Date today = new Date();
+        sponsor.setCreationDate(today);
+        sponsor.setLastUpdateDate(today);
+        // All sponsors will start out as "subscribed".
+        sponsor.setSubscribed(true);
+        sponsorRepository.save(sponsor);
+    }
 
     /**
      * Soft deletes the child with the given id.

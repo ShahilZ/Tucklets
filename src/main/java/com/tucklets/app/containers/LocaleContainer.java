@@ -1,30 +1,29 @@
 package com.tucklets.app.containers;
 
 import java.util.List;
-import java.util.Locale;
 
 public class LocaleContainer {
 
     /**
      * List of supported locales for the Tucklets Application.
      */
-    private List<Locale> supportedLocales;
+    private List<LocaleDescriptionContainer> supportedLocales;
 
     /**
      * User-selected locale.
      */
-    private Locale selectedLocale;
+    private String selectedLocaleString;
 
-    public LocaleContainer(List<Locale> supportedLocales, Locale selectedLocale) {
+    public LocaleContainer(List<LocaleDescriptionContainer> supportedLocales, String selectedLocaleString) {
         this.supportedLocales = supportedLocales;
-        this.selectedLocale = selectedLocale;
+        this.selectedLocaleString = selectedLocaleString;
     }
 
-    public List<Locale> getSupportedLocales() {
+    public List<LocaleDescriptionContainer> getSupportedLocales() {
         return supportedLocales;
     }
 
-    public Locale getSelectedLocale() {
-        return selectedLocale;
+    public String getSelectedLocaleString() {
+        return selectedLocaleString;
     }
 }

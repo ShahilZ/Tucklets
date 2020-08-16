@@ -42,6 +42,7 @@ CREATE TABLE Sponsor(
    church_name VARCHAR (50),
    email VARCHAR (250),
    address VARCHAR(250),
+   subscribed boolean NOT NULL,
    donation_amount DECIMAL(12, 2) NOT NULL,
    payment_method SMALLINT NOT NULL,
    creation_date TIMESTAMP NOT NULL,
@@ -55,3 +56,8 @@ CREATE TABLE Child_Additional_Detail(
    image_location VARCHAR (250) NOT NULL;
 );
 
+CREATE TABLE Newsletter(
+   newsletter_id serial PRIMARY KEY;
+   filename VARCHAR (250) NOT NULLL;
+   upload_date TIMESTAMP NOT NULL,
+);

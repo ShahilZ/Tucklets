@@ -29,30 +29,29 @@
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Email</th>
-        <th scope="col">Donation Amount</th>
-        <th scope="col">Payment Method</th>
         <th scope="col">Church Name</th>
         <th scope="col">Address</th>
         <th scope="col">Creation Date</th>
         <th scope="col">Deletion Date</th>
         <th scope="col">Last Update Date</th>
+        <th scope="col">Is subscribed</th>
         <th scope="col">Action</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="sponsor : ${sponsors}" th:id="sponsor-row + ${sponsor.sponsorId}">
-        <td><input type="image" class="delete-child-button" src="/images/red-x.jpg" th:onclick="|handleDeleteSponsor('${sponsor.sponsorId}')|" /> </td>
+        <td><input type="image" class="delete-button" src="/images/red-x.jpg" th:onclick="|handleDeleteSponsor('${sponsor.sponsorId}')|" /> </td>
         <td th:text="${sponsor.sponsorId}"/>
         <td th:text="${sponsor.firstName}"/>
         <td th:text="${sponsor.lastName}"/>
         <td th:text="${sponsor.email}"/>
-        <td th:text="${sponsor.donationAmount}"/>
-        <td th:text="${sponsor.paymentMethod}"/>
         <td th:text="${sponsor.churchName}"/>
         <td th:text="${sponsor.address}"/>
         <td th:text="${sponsor.creationDate}"/>
         <td th:text="${sponsor.deletionDate}"/>
         <td th:text="${sponsor.lastUpdateDate}"/>
+        <td th:text="${sponsor.subscribed}"/>
+
         <td>
           <input type="button" class="btn btn-primary" value="Edit" th:onclick="|handleEditSponsorClick('${sponsor.sponsorId}')|" />
         </td>

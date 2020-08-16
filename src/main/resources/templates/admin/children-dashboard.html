@@ -40,7 +40,7 @@
             </thead>
             <tbody>
             <tr th:each="childContainer : ${childrenDetails}" th:id="child-row + ${childContainer.child.childId}">
-                <td><input type="image" class="delete-child-button" src="/images/red-x.jpg" th:onclick="|handleDeleteChild('${childContainer.child.childId}')|" /> </td>
+                <td><input type="image" class="delete-button" src="/images/red-x.jpg" th:onclick="|handleDeleteChild('${childContainer.child.childId}')|" /> </td>
                 <td><img class="icon-image" th:src="${childContainer.childImageLocation}" /></td>
                 <td th:text="*{childContainer.child.childId}"/>
                 <td th:text="*{childContainer.child.firstName}"/>
