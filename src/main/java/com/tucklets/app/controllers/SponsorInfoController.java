@@ -7,6 +7,7 @@ import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.DonationDuration;
+import com.tucklets.app.entities.enums.SponsorInfoStatus;
 import com.tucklets.app.services.AmountService;
 import com.tucklets.app.services.ChildAndSponsorAssociationService;
 import com.tucklets.app.services.ChildService;
@@ -15,7 +16,11 @@ import com.tucklets.app.services.EmailService;
 import com.tucklets.app.services.ManageChildrenService;
 import com.tucklets.app.services.SponsorAndDonationAssociationService;
 import com.tucklets.app.services.SponsorService;
+import com.tucklets.app.utils.TextUtils;
+import com.tucklets.app.validations.DonationValidator;
+import com.tucklets.app.validations.SponsorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,19 +87,27 @@ public class SponsorInfoController {
 
     @PostMapping(value = "/submit")
     @ResponseBody
-    public String handleSponsorSubmission(@RequestBody SponsorInfoContainer sponsorInfoContainer) {
+    public ResponseEntity<String> handleSponsorSubmission(@RequestBody SponsorInfoContainer sponsorInfoContainer) {
 
-        // TODO: Validate form.
         Sponsor sponsor = sponsorInfoContainer.getSponsor();
         Donation donation = sponsorInfoContainer.getDonation();
-        DonationDuration donationDuration =
-            sponsorInfoContainer.getDonation().getDonationDuration() == null
-                ? DonationDuration.ONE_YEAR
-                : DonationDuration.INDEFINITE;
+
+        // TODO: Remove temp workaround.
+        donation.setDonationDuration(DonationDuration.ONE_YEAR);
+
+        // Validation for sponsor + donation.
+        SponsorInfoStatus sponsorStatus = SponsorValidator.validateSponsor(sponsor);
+        boolean isValidDonation = DonationValidator.validateDonation(donation);
+
+        if (!isValidDonation || sponsorStatus != SponsorInfoStatus.SUCCESS) {
+            return ResponseEntity.badRequest().body(GSON.toJson(SponsorInfoStatus.ERROR));
+        }
 
         // Add donation info.
         donationService.addDonation(donation);
+
         // Add sponsor info.
+        sponsor = copyAndCleanSponsor(sponsor);
         sponsorService.addSponsor(sponsor);
 
         sponsorAndDonationAssociationService.createAssociation(sponsor, donation);
@@ -108,7 +121,7 @@ public class SponsorInfoController {
                 .map(childDetailsContainer -> childDetailsContainer.getChild().getChildId())
                 .toArray(Long[]::new);
             List<Child> children = childService.fetchChildByIds(childIds);
-            childAndSponsorAssociationService.createAssociation(children, sponsor, donationDuration);
+            childAndSponsorAssociationService.createAssociation(children, sponsor, donation.getDonationDuration());
             childService.setSponsoredChildren(children);
             emailService.sendConfirmationEmail(sponsor, children, donation);
 
@@ -117,6 +130,20 @@ public class SponsorInfoController {
             // TODO: Generic sponsorship flow; send different email.
         }
 
-        return "success";
+        return ResponseEntity.ok(GSON.toJson(sponsorStatus));
     }
+
+    /**
+    * Helper method that copies over the fields of a sponsor object and cleans the text as well.
+    */
+    private Sponsor copyAndCleanSponsor(Sponsor originalSponsor) {
+        Sponsor newSponsor = new Sponsor();
+        newSponsor.setEmail(TextUtils.cleanString(originalSponsor.getEmail()));
+        newSponsor.setFirstName(TextUtils.cleanString(originalSponsor.getFirstName()));
+        newSponsor.setLastName(TextUtils.cleanString(originalSponsor.getLastName()));
+        newSponsor.setAddress(TextUtils.cleanString(originalSponsor.getAddress()));
+        newSponsor.setChurchName(TextUtils.cleanString(originalSponsor.getChurchName()));
+        return newSponsor;
+    }
+
 }

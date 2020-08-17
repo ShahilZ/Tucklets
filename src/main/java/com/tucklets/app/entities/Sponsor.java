@@ -36,7 +36,7 @@ public class Sponsor {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
 
     @Column(name = "subscribed", nullable = false)
