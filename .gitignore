@@ -5,6 +5,9 @@ build/
 !**/src/main/**
 !**/src/test/**
 
+# Terraform
+**/.terraform/**
+
 **/node_modules/
 **/dist/
 package-lock.json
