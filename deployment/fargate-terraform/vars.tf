@@ -6,6 +6,16 @@ variable "aws_region" {
   default = "us-west-2"
 }
 
+variable "aws_access_key" {
+  type = string
+  description = "AWS Access Key"
+}
+
+variable "aws_secret_key" {
+  type = string
+  description = "AWS Secret Key"
+}
+
 variable "aws_provider_role_arn" {
   type = string
   description = "AWS Provider's role arn"
