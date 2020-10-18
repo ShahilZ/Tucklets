@@ -1,6 +1,13 @@
 # AWS provider
 terraform {
   required_version = ">= 0.13"
+  backend "s3" {
+    bucket         = "tucklets-terraform-state"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "tucklets-terraform-state-locks-table"
+    encrypt        = true
+  }
 }
 
 provider "aws" {
