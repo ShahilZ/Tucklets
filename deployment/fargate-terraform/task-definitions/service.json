@@ -1,0 +1,33 @@
+[
+  {
+    "name": "${image_name}",
+    "image": "${ecr_repo}:${version_tag}",
+    "essential": true,
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "us-west-2",
+        "awslogs-stream-prefix": "awslogs-tucklets",
+        "awslogs-group": "tucklets"
+      }
+    },
+    "portMappings": [
+      {
+        "containerPort": 8083,
+        "hostPort": 8083,
+        "protocol": "tcp"
+      }
+    ],
+    "networkMode": "awsvpc",
+    "environment": [
+      {
+        "name": "test",
+        "value": "0"
+      },
+      {
+        "name": "test1",
+        "value": "1"
+      }
+    ]
+  }
+]

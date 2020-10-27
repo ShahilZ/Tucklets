@@ -24,6 +24,7 @@ resource "aws_lb_target_group" "ecs_target_group" {
   port                = "80"
   protocol            = "HTTP"
   vpc_id              = aws_vpc.tucklets_vpc.id
+  target_type         = "ip"
 
   health_check {
     healthy_threshold   = "5"
@@ -37,7 +38,7 @@ resource "aws_lb_target_group" "ecs_target_group" {
   }
 }
 
-resource "aws_alb_listener" "alb-listener" {
+resource "aws_alb_listener" "default_http_listener" {
   load_balancer_arn = aws_lb.ecs_lb.arn
   port              = "80"
   protocol          = "HTTP"

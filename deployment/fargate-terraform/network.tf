@@ -5,6 +5,10 @@ resource "aws_vpc" "tucklets_vpc" {
   enable_dns_hostnames = true
 }
 
+data "aws_subnet_ids" "all_subnets" {
+  vpc_id = aws_vpc.tucklets_vpc.id
+}
+
 resource "aws_subnet" "private" {
   count = length(var.private_subnet_cidr_blocks)
 

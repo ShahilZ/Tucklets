@@ -1,17 +1,12 @@
 # IAM Roles
 
-resource "aws_iam_role" "ecs-service-role" {
-  name                = "ecs-tucklets-service-role"
-  path                = "/"
-  assume_role_policy  = data.aws_iam_policy_document.ecs-service-policy.json
+// Assumes role for other Amazon services.
+resource "aws_iam_role" "ecs_task_role" {
+  name                = "${var.service_name}-task-role"
+  assume_role_policy  = data.aws_iam_policy_document.ecs_service_policy.json
 }
 
-resource "aws_iam_role_policy_attachment" "ecs-service-role-attachment" {
-  role       =  aws_iam_role.ecs-service-role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
-}
-
-data "aws_iam_policy_document" "ecs-service-policy" {
+data "aws_iam_policy_document" "ecs_service_policy" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -22,4 +17,7 @@ data "aws_iam_policy_document" "ecs-service-policy" {
   }
 }
 
-
+// Default AWS Task Execution Role.
+data "aws_iam_role" "task_execution_role" {
+  name = "ecsTaskExecutionRole"
+}

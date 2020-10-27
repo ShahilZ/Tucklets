@@ -26,6 +26,7 @@ variable "aws_role_arn_external_id" {
   description = "External id for aws provider's role_arn."
 }
 
+// Network variables
 variable "cidr_block" {
   default     = "10.0.0.0/16"
   type        = string
@@ -48,4 +49,35 @@ variable "availability_zones" {
   default     = ["us-west-2a", "us-west-2b"]
   type        = list(string)
   description = "List of availability zones"
+}
+
+// Service variables
+variable "service_name" {
+  default     = "tucklets-service"
+  description = "Name of service"
+}
+
+variable "service_desired_task_count" {
+  default     = 2
+  description = "Desired number of tasks"
+}
+
+variable "service_task_cpu_count" {
+  default     = 1024
+  description = "Number of cpus for service task"
+}
+
+variable "service_task_memory" {
+  default     = 2048
+  description = "Memory size for task"
+}
+
+// App variables
+variable "app_name" {
+  default     = "tucklets"
+  description = "Name of application"
+}
+
+variable "version_tag" {
+  description = "Version tag of the built image (passed in via pipeline)"
 }
