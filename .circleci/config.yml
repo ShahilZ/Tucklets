@@ -23,8 +23,10 @@ workflows:
           attach-workspace: true
 #          repo: ${PROJECT_NAME}-app
           repo: ${PROJECT_NAME}-images
-          tag: ${CIRCLE_SHA1},latest
-#      - aws-ecs/deploy-service-update:
+#          tag: ${CIRCLE_SHA1},latest
+          tag: ${CIRCLE_SHA1}
+
+      #      - aws-ecs/deploy-service-update:
 #          requires:
 #            - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
 #          family: ${PROJECT_NAME}-service
