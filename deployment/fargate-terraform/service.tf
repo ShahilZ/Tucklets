@@ -6,8 +6,8 @@ resource "aws_ecs_service" "tucklets_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    security_groups  = []
-    subnets          = data.aws_subnet_ids.all_subnets.ids
+    security_groups  = [aws_security_group.ecs_tasks.id]
+    subnets          = data.aws_subnet_ids.default.ids
     assign_public_ip = true
   }
 
