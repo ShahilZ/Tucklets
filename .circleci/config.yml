@@ -31,6 +31,8 @@ workflows:
 #          cluster-name: ${PROJECT_NAME}-cluster
 #          container-image-name-updates: container=${PROJECT_NAME}-image,tag=${CIRCLE_SHA1}
       - terraform-apply
+          requires:
+            - aws-ecr/build-and-push-image
 jobs:
   build:
     docker:
@@ -76,8 +78,6 @@ jobs:
           paths:
             - build/libs
   terraform-apply:
-      requires:
-        - aws-ecr/build-and-push-image
       docker:
         - image: hashicorp/terraform:light
       steps:
