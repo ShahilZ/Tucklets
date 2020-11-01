@@ -15,7 +15,7 @@
 
 resource "aws_lb" "ecs_lb" {
   name                = "tucklets-lb"
-  security_groups     = [aws_vpc.tucklets_vpc.default_security_group_id]
+  security_groups     = [aws_security_group.tucklets_lb.id]
   subnets             = [aws_subnet.public[0].id, aws_subnet.public[1].id]
 }
 
