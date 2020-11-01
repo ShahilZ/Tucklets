@@ -82,7 +82,7 @@ jobs:
       steps:
         - checkout
         - run:
-            name: terraform init & plan
+            name: terraform init & apply
             command: |
               cd deployment/fargate-terraform
               terraform init -backend-config="access_key=${DEV_ACCESS_KEY_ID}" -backend-config="secret_key=${DEV_SECRET_ACCESS_KEY}"
