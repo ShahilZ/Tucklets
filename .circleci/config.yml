@@ -30,7 +30,7 @@ workflows:
 #          family: ${PROJECT_NAME}-service
 #          cluster-name: ${PROJECT_NAME}-cluster
 #          container-image-name-updates: container=${PROJECT_NAME}-image,tag=${CIRCLE_SHA1}
-      - terraform-apply
+      - terraform-apply:
           requires:
             - aws-ecr/build-and-push-image
 jobs:
