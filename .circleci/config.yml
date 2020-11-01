@@ -80,7 +80,7 @@ jobs:
   terraform-apply:
       docker:
         - image: hashicorp/terraform:light
-      working_directory: ~/project
+
       steps:
         - checkout
         - run:
