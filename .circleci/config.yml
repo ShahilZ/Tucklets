@@ -80,12 +80,12 @@ jobs:
   terraform-apply:
       docker:
         - image: hashicorp/terraform:light
+      working_directory: deployment/fargate-terraform
       steps:
         - checkout
         - run:
             name: terraform init & plan
             command: |
-              cd ../deployment/fargate-terraform
               terraform init -backend-config="access_key=${DEV_ACCESS_KEY_ID}" -backend-config="secret_key=${DEV_SECRET_ACCESS_KEY}"
               terraform apply -auto-approve -var-file="deployment/fargate-terraform/prod.tfvars" -var "aws_access_key=${DEV_ACCESS_KEY_ID}" -var "aws_secret_key=${DEV_SECRET_ACCESS_KEY}"
 
