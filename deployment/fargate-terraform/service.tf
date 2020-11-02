@@ -39,8 +39,14 @@ resource "aws_ecs_task_definition" "ecs_task" {
 data "template_file" "container_image" {
   template = file("task-definitions/service.json")
   vars = {
-    image_name  = var.app_name
-    ecr_repo    = aws_ecr_repository.tucklets_ecr.repository_url
-    version_tag = var.version_tag
+    image_name             = var.app_name
+    ecr_repo               = aws_ecr_repository.tucklets_ecr.repository_url
+    version_tag            = var.version_tag
+    port_url               = var.port_url
+    service_email          = var.service_email
+    service_email_password = var.service_email_password
+    postgres_user          = var.postgres_user
+    postgres_creds         = var.postgres_creds
+    s3_bucket_name         = var.s3_bucket_name
   }
 }

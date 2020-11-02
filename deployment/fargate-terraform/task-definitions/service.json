@@ -21,12 +21,28 @@
     "networkMode": "awsvpc",
     "environment": [
       {
-        "name": "test",
-        "value": "0"
+        "name": "PORT_URL",
+        "value": "${port_url}"
       },
       {
-        "name": "test1",
-        "value": "1"
+        "name": "SERVICE_EMAIL",
+        "value": "${service_email}"
+      },
+      {
+        "name": "SERVICE_EMAIL_PASSWORD",
+        "value": "${service_email_password}"
+      },
+      {
+        "name": "POSTGRES_USER",
+        "value": "${postgres_user}"
+      },
+      {
+        "name": "POSTGRES_CREDS",
+        "value": "${postgres_creds}"
+      },
+      {
+        "name": "S3_BUCKET_NAME",
+        "value": "${s3_bucket_name}"
       }
     ]
   }
