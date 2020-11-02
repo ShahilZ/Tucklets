@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Exporting environment variables and setting them as
 # TF_VAR prefixed names so we don't have to manually pass them to terraform via -var.
 
