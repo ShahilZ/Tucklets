@@ -11,3 +11,4 @@ export TF_VAR_postgres_user=$POSTGRES_USER
 export TF_VAR_postgres_creds=$POSTGRES_CREDS
 export TF_VAR_s3_bucket_name=$S3_BUCKET_NAME
 
+
