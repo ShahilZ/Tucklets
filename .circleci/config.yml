@@ -38,18 +38,18 @@ workflows:
 #          cluster-name: ${PROJECT_NAME}-cluster
 #          container-image-name-updates: container=${PROJECT_NAME}-image,tag=${CIRCLE_SHA1}
 
-      - terraform-plan:
-          requires:
-            - build
-          filters:
-            branches:
-              ignore:
-                - master
+#      - terraform-plan:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              ignore:
+#                - master
       - terraform-apply:
-          filters:
-            branches:
-              only:
-                - master
+#          filters:
+#            branches:
+#              only:
+#                - master
           requires:
             - aws-ecr/build-and-push-image
 jobs:
