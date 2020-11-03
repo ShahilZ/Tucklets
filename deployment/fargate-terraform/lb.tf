@@ -67,9 +67,9 @@ resource "aws_alb_listener" "default_http_listener" {
     type = "redirect"
 
     redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
+      port           = "443"
+      protocol       = "HTTPS"
+      status_code    = "HTTP_301"
     }
   }
 }
@@ -82,7 +82,7 @@ resource "aws_alb_listener" "default_https_listener" {
   certificate_arn    = aws_acm_certificate.default.arn
 
   default_action {
-    target_group_arn = aws_lb_target_group.ecs_https_target_group
+    target_group_arn = aws_lb_target_group.ecs_https_target_group.arn
     type             = "forward"
   }
 }
