@@ -1,7 +1,26 @@
 // TODO: Pull from AWS.
 
-resource "aws_security_group" "tucklets_lb" {
-  name        = "tucklets-lb-sg"
+resource "aws_security_group" "http" {
+  name        = "tucklets-lb-http-sg"
+  description = "access to the Application Load Balancer (ALB)"
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 80
+    to_port     = 80
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    protocol    = "-1"
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "https" {
+  name        = "tucklets-lb-https-sg"
   description = "access to the Application Load Balancer (ALB)"
 
   ingress {
