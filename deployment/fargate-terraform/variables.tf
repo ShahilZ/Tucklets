@@ -75,7 +75,7 @@ variable "service_task_memory" {
 // Routing variables
 variable "domain_name" {
   description = "Name of the service's domain"
-  default = "tucklets.tk"
+  default = "tucklets.net"
 }
 
 // App variables
