@@ -44,8 +44,8 @@ resource "aws_security_group" "ecs_tasks" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = 8083
-    to_port         = 8083
+    from_port       = 8443
+    to_port         = 8443
     cidr_blocks     = ["0.0.0.0/0"]
     security_groups = [aws_security_group.http.id, aws_security_group.https.id]
   }
