@@ -15,7 +15,7 @@
 
 resource "aws_lb" "ecs_lb" {
   name                = "tucklets-lb"
-  security_groups     = [aws_security_group.http, aws_security_group.https]
+  security_groups     = [aws_security_group.http.id, aws_security_group.https.id]
   subnets             = data.aws_subnet_ids.default.ids
 }
 
