@@ -2,7 +2,7 @@
 
 resource "aws_security_group" "http" {
   name        = "tucklets-lb-http-sg"
-  description = "access to the Application Load Balancer (ALB)"
+  description = "HTTP access to the Application Load Balancer (ALB)"
 
   ingress {
     protocol    = "tcp"
@@ -21,7 +21,7 @@ resource "aws_security_group" "http" {
 
 resource "aws_security_group" "https" {
   name        = "tucklets-lb-https-sg"
-  description = "access to the Application Load Balancer (ALB)"
+  description = "HTTPS access to the Application Load Balancer (ALB)"
 
   ingress {
     protocol    = "tcp"
