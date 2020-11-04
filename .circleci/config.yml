@@ -14,10 +14,10 @@ workflows:
     jobs:
       - build
       - aws-ecr/build-and-push-image:
-          filters:
-            branches:
-              only:
-                - master
+#          filters:
+#            branches:
+#              only:
+#                - master
           requires:
             - build
           attach-workspace: true
@@ -41,15 +41,15 @@ workflows:
       - terraform-plan:
           requires:
             - build
-          filters:
-            branches:
-              ignore:
-                - master
+#          filters:
+#            branches:
+#              ignore:
+#                - master
       - terraform-apply:
-          filters:
-            branches:
-              only:
-                - master
+#          filters:
+#            branches:
+#              only:
+#                - master
           requires:
             - aws-ecr/build-and-push-image
 jobs:

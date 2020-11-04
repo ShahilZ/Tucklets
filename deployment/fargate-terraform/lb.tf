@@ -19,24 +19,24 @@ resource "aws_lb" "ecs_lb" {
   subnets             = data.aws_subnet_ids.default.ids
 }
 
-resource "aws_lb_target_group" "ecs_http_target_group" {
-  name                = "tucklets-ecs-http-target-group"
-  port                = "80"
-  protocol            = "HTTP"
-  vpc_id              = data.aws_vpc.default.id
-  target_type         = "ip"
-
-  health_check {
-    healthy_threshold   = "5"
-    unhealthy_threshold = "2"
-    interval            = "30"
-    matcher             = "200"
-    path                = "/health"
-    port                = "traffic-port"
-    protocol            = "HTTP"
-    timeout             = "5"
-  }
-}
+//resource "aws_lb_target_group" "ecs_http_target_group" {
+//  name                = "tucklets-ecs-http-target-group"
+//  port                = "80"
+//  protocol            = "HTTP"
+//  vpc_id              = data.aws_vpc.default.id
+//  target_type         = "ip"
+//
+//  health_check {
+//    healthy_threshold   = "5"
+//    unhealthy_threshold = "2"
+//    interval            = "30"
+//    matcher             = "200"
+//    path                = "/health"
+//    port                = "traffic-port"
+//    protocol            = "HTTP"
+//    timeout             = "5"
+//  }
+//}
 
 
 resource "aws_lb_target_group" "ecs_https_target_group" {
