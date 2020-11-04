@@ -12,7 +12,7 @@ resource "aws_ecr_lifecycle_policy" "tucklets_ecr_lifecycle_policy" {
             "rulePriority": 1,
             "description": "Keeping only 3 youngest images; expires the old ones",
             "selection": {
-                "tagStatus": "untagged",
+                "tagStatus": "any",
                 "countType": "imageCountMoreThan",
                 "countNumber": 3
             },
