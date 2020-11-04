@@ -75,7 +75,11 @@ variable "service_task_memory" {
 // Routing variables
 variable "domain_name" {
   description = "Name of the service's domain"
-  default = "tucklets.net"
+  default     = "tucklets.net"
+}
+
+variable "ssl_key_store_password" {
+  description = "Password for HTTPS key"
 }
 
 // App variables
