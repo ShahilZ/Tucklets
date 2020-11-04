@@ -14,7 +14,7 @@ resource "aws_ecs_service" "tucklets_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.ecs_https_target_group.arn
     container_name   = var.app_name
-    container_port   = 8083
+    container_port   = 8443
   }
 
   depends_on = [
