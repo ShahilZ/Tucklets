@@ -13,8 +13,8 @@
     },
     "portMappings": [
       {
-        "containerPort": 8083,
-        "hostPort": 8083,
+        "containerPort": 8443,
+        "hostPort": 8443,
         "protocol": "tcp"
       }
     ],
@@ -43,6 +43,10 @@
       {
         "name": "S3_BUCKET_NAME",
         "value": "${s3_bucket_name}"
+      },
+      {
+        "name": "SSL_KEY_STORE_PASSWORD",
+        "value": "${ssl_key_store_password}"
       }
     ]
   }

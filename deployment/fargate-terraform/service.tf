@@ -12,13 +12,14 @@ resource "aws_ecs_service" "tucklets_service" {
   }
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.ecs_target_group.arn
+    target_group_arn = aws_lb_target_group.ecs_https_target_group.arn
     container_name   = var.app_name
-    container_port   = 8083
+    container_port   = 8443
   }
 
   depends_on = [
-    aws_alb_listener.default_http_listener
+    aws_alb_listener.default_http_listener,
+    aws_alb_listener.default_https_listener
   ]
 
   //tags?
@@ -48,5 +49,6 @@ data "template_file" "container_image" {
     postgres_user          = var.postgres_user
     postgres_creds         = var.postgres_creds
     s3_bucket_name         = var.s3_bucket_name
+    ssl_key_store_password = var.ssl_key_store_password
   }
 }
