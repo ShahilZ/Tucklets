@@ -1,4 +1,4 @@
-const http = require('http');
+const https = require('https');
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -13,9 +13,12 @@ const server = new WebpackDevServer(webpack(config), {
   hot: true,
   historyApiFallback: true,
   proxy: {
-    "*": "http://localhost:8083"
+    "*": { 
+      target: 'https://localhost:8443',
+      // Secure = false since we are currently using a self-signed certificate and want to avoid DEPTH_ZERO_SELF_SIGNED_CERT issue.
+      secure: false }
   }
-}).listen(3000, 'localhost', function (err, result) {
+}).listen(port, 'localhost', function (err, result) {
   if (err) {
     console.log(err);
   }
