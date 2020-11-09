@@ -24,4 +24,11 @@ public class MainPageController {
         testResponse.put("name", name);
         return testResponse;
     }
+
+    @GetMapping("/fetchConfigs")
+    public Map<String, String> fetchConfigs() {
+        Map<String, String> configsResponse = new HashMap<>();
+        configsResponse.put("paypal_client_id", System.getenv("PAYPAL_CLIENT_ID"));
+        return configsResponse;
+    }
 }

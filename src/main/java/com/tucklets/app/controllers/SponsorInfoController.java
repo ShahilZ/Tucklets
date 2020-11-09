@@ -128,6 +128,7 @@ public class SponsorInfoController {
         }
         else {
             // TODO: Generic sponsorship flow; send different email.
+            emailService.sendGenericConfirmationEmail(sponsor, donation);
         }
 
         return ResponseEntity.ok(GSON.toJson(sponsorStatus));

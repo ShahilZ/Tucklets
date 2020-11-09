@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/common.css">
+</head>
+<body>
+<div class="banner">
+    <div>
+        <nav class="navbar navbar-light navbar-custom">
+            <a class="navbar-brand" href="#">
+                <img class="d-inline-block align-top tucklets-logo" alt="" src="../static/images/tucklets-icon.PNG"/>
+            </a>
+        </nav>
+    </div>
+</div>
+<div class="container" style="">
+    <p>
+    <p class="" th:text="|Dear ${sponsor.firstName} ${sponsor.lastName},|"></p>
+    <p class="">Thank you for supporting Tuckets, a 501(c)(3) public benefit charitable corporation. </p>
+    <p class="">Here is a receipt of your donation: </p>
+    <p class="" th:text="| Amount: $ ${donation.donationAmount} |"></p>
+    </p>
+    <div>
+        <p> Thank you again for your support. Please keep this for your records.</p>
+        <p> Sincerely, </p>
+        <p> Tucklets Foundation</p>
+        <a href="https://tucklets.org" class="btn btn-primary">Go to Tucklets.org</a>
+    </div>
+</div>
+</body>
+</html>

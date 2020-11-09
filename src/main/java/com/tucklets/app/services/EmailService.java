@@ -28,20 +28,35 @@ public class EmailService {
     @Autowired
     SimpleS3Service simpleS3Service;
 
+    /**
+     * Generic thank you email for donors.
+     */
+    public void sendGenericConfirmationEmail(Sponsor sponsor, Donation donation) {
+        // from recipient is defined in application.properties
+        MimeMessagePreparator messagePreparator = message -> {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(sponsor.getEmail());
+            helper.setSubject("Tucklets - Thank you supporting children in Kenya! ");
+            String emailContent = buildThankYouContent(sponsor, donation);
+            helper.setText(emailContent, true);
+        };
+        javaMailSender.send(messagePreparator);
+    }
+
     public void sendConfirmationEmail(Sponsor sponsor, List<Child> children, Donation donation) {
         // from recipient is defined in application.properties
         MimeMessagePreparator messagePreparator = message -> {
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(sponsor.getEmail());
             helper.setSubject("Tucklets - Thank you sponsoring a child! ");
-            String emailContent = buildThankYouContent(sponsor, children, donation);
+            String emailContent = buildThankYouContentWithChildren(sponsor, children, donation);
             helper.setText(emailContent, true);
 
         };
         javaMailSender.send(messagePreparator);
     }
 
-    private String buildThankYouContent (Sponsor sponsor, List<Child> children, Donation donation) {
+    private String buildThankYouContentWithChildren (Sponsor sponsor, List<Child> children, Donation donation) {
         Context context = new Context();
         context.setVariable("children", children);
         context.setVariable("sponsor", sponsor);
@@ -49,6 +64,18 @@ public class EmailService {
         context.setVariable("localeContainer", ContainerUtils.createLocaleContainer());
 
         return templateEngine.process("emails/confirmation-email", context);
+    }
+
+    /**
+     * Generic message for donors.
+     */
+    private String buildThankYouContent (Sponsor sponsor, Donation donation) {
+        Context context = new Context();
+        context.setVariable("sponsor", sponsor);
+        context.setVariable("donation", donation);
+        context.setVariable("localeContainer", ContainerUtils.createLocaleContainer());
+
+        return templateEngine.process("emails/confirmation-email-generic", context);
     }
 
     /**

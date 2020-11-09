@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 import '../../static/scss/info.scss';
 
@@ -18,17 +19,35 @@ class DonatePage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { donationAmount: "" }
+        this.state = { donationAmount: "", amountHasErrors: false }
 
         this.handleDonationAmountChange = this.handleDonationAmountChange.bind(this);
+        this.submitDonationHandler = this.submitDonationHandler.bind(this);
     }
 
+    /** Handler for donation amount changes. When the amount becomes valid, remove any error styling there may be. */
     handleDonationAmountChange(event) {
-        this.setState({ donationAmount: event.target.value})
+        if (!!event.target.value) {
+            this.setState({ donationAmount: event.target.value, amountHasErrors: false})
+        }
     }
 
+    /** Handler for submitting a donation. */
+    submitDonationHandler(donationAmount, donationDuration, history) {
+        let self = this;
+        return () => {
+            // TODO: Validate against negatives.
+            if ( !donationAmount || donationAmount === "" ) {
+                self.setState({ amountHasErrors: true })
+            }
+            else {
+                self.props.handleDonationClick(donationAmount, donationDuration, history);
+            }
+        }
+    }
 
     render() {
+        let donationAmountClassName = `form-control ${this.state.amountHasErrors ? 'is-invalid' : ''}`
         return (
             <div id="donate" className="donate-section">
                 <div className="donate-form-section">
@@ -41,11 +60,11 @@ class DonatePage extends Component {
                             <div className="input-group-prepend">
                                 <span className="input-group-text">$</span>
                             </div>
-                            <input type="number" id="donation-amount" className="form-control" value={this.state.donationAmount} onChange={this.handleDonationAmountChange}/>
+                            <input type="number" id="donation-amount" className={donationAmountClassName} value={this.state.donationAmount} onChange={this.handleDonationAmountChange}/>
                         </div>
                         <div className="btn-group duration-button-group">
-                            <Link to="/sponsor-info/" className="col-md-6 btn btn-primary" onClick={this.props.handleDonationClick(this.state.donationAmount)}>{this.props.i18n.t("donate:donate-once")} </Link>
-                            <Link to="/sponsor-info/" className="col-md-6 btn btn-secondary" onClick={this.props.handleDonationClick(this.state.donationAmount)}>{this.props.i18n.t("donate:donate-monthly")}</Link>
+                            <button to="/sponsor-info/" className="col-md-6 btn btn-primary" onClick={this.submitDonationHandler(this.state.donationAmount, 0, this.props.history)}>{this.props.i18n.t("donate:donate-once")} </button>
+                            <button to="/sponsor-info/" className="col-md-6 btn btn-secondary" onClick={this.submitDonationHandler(this.state.donationAmount, 1, this.props.history)}>{this.props.i18n.t("donate:donate-monthly")}</button>
                         </div>
                         <br></br>
                         <br></br>
@@ -59,4 +78,4 @@ class DonatePage extends Component {
 
 DonatePage.propTypes = props;
 
-export default DonatePage;
+export default withRouter(DonatePage);

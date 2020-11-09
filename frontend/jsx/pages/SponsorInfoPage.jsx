@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { Link, withRouter } from 'react-router-dom'
+import { PayPalButton } from 'react-paypal-button-v2';
 import axios from 'axios';
 
 import '../../static/scss/basic.scss';
@@ -16,7 +17,9 @@ const props = {
     /** The donation amount provided either by the user or by the backend. */
     donationAmount: PropTypes.number.isRequired,
     /** The donation duration provided by the user. */
-    donationDuration: PropTypes.number
+    donationDuration: PropTypes.number,
+    /** The PayPal Client ID necessary to complete payment. */
+    payPalClientId: PropTypes.string.isRequired
 }
 
 class SponsorInfoPage extends Component {
@@ -47,6 +50,7 @@ class SponsorInfoPage extends Component {
         this.renderSelectedChildren = this.renderSelectedChildren.bind(this);
         this.sponsorInfoChangeHandler = this.sponsorInfoChangeHandler.bind(this);
         this.sponsorInfoSubmitHandler = this.sponsorInfoSubmitHandler.bind(this);
+        this.paypalSuccessHandler = this.paypalSuccessHandler.bind(this);
     }
 
     componentDidMount(){ 
@@ -108,6 +112,16 @@ class SponsorInfoPage extends Component {
         });
     }
 
+    /**
+     * Success handler for PayPal submission.
+     */
+    paypalSuccessHandler() {
+        let self = this;
+        return (details, data) => {
+            self.sponsorInfoSubmitHandler();
+        }
+    }
+
     renderSelectedChildren() {
         return (
             <div className="container selected-children-div">
@@ -126,8 +140,6 @@ class SponsorInfoPage extends Component {
                     </div>
                 ))}
             </div>
-
-
         )
     }
     
@@ -163,7 +175,14 @@ class SponsorInfoPage extends Component {
                             <label htmlFor="donation-amount">{`${this.props.i18n.t("sponsor_info:form_amount")}`}</label>
                             <input type="text" id="donation-amount" readOnly value={this.props.donationAmount} />
                         </fieldset>
-                        <div className="btn btn-primary tucklets-button" onClick={this.sponsorInfoSubmitHandler}>{`${this.props.i18n.t("sponsor_info:form_submit")}`}</div>
+                        <PayPalButton
+                            amount={this.props.donationAmount}
+                            shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                            onSuccess={this.paypalSuccessHandler()}
+                            options={{
+                                clientId: this.props.payPalClientId
+                              }}
+                        />
                     </form>
                 </div>
             </div>
