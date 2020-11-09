@@ -11,4 +11,5 @@ export TF_VAR_postgres_user=$POSTGRES_USER
 export TF_VAR_postgres_creds=$POSTGRES_CREDS
 export TF_VAR_s3_bucket_name=$S3_BUCKET_NAME
 export TF_VAR_ssl_key_store_password=$SSL_KEY_STORE_PASSWORD
+export TF_VAR_paypal_client_id=$PAYPAL_CLIENT_ID
 

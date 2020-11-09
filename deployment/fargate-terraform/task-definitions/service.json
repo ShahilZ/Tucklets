@@ -47,6 +47,10 @@
       {
         "name": "SSL_KEY_STORE_PASSWORD",
         "value": "${ssl_key_store_password}"
+      },
+      {
+        "name": "PAYPAL_CLIENT_ID",
+        "value": "${paypal_client_id}"
       }
     ]
   }
