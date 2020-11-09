@@ -118,7 +118,6 @@ class SponsorInfoPage extends Component {
     paypalSuccessHandler() {
         let self = this;
         return (details, data) => {
-            console.log(details);
             self.sponsorInfoSubmitHandler();
         }
     }
