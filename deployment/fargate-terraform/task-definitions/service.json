@@ -1,0 +1,53 @@
+[
+  {
+    "name": "${image_name}",
+    "image": "${ecr_repo}:${version_tag}",
+    "essential": true,
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-region": "us-west-2",
+        "awslogs-stream-prefix": "tucklets/ecs/",
+        "awslogs-group": "awslogs-tucklets"
+      }
+    },
+    "portMappings": [
+      {
+        "containerPort": 8443,
+        "hostPort": 8443,
+        "protocol": "tcp"
+      }
+    ],
+    "networkMode": "awsvpc",
+    "environment": [
+      {
+        "name": "PORT_URL",
+        "value": "${port_url}"
+      },
+      {
+        "name": "SERVICE_EMAIL",
+        "value": "${service_email}"
+      },
+      {
+        "name": "SERVICE_EMAIL_PASSWORD",
+        "value": "${service_email_password}"
+      },
+      {
+        "name": "POSTGRES_USER",
+        "value": "${postgres_user}"
+      },
+      {
+        "name": "POSTGRES_CREDS",
+        "value": "${postgres_creds}"
+      },
+      {
+        "name": "S3_BUCKET_NAME",
+        "value": "${s3_bucket_name}"
+      },
+      {
+        "name": "SSL_KEY_STORE_PASSWORD",
+        "value": "${ssl_key_store_password}"
+      }
+    ]
+  }
+]

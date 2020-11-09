@@ -21,14 +21,37 @@ workflows:
           requires:
             - build
           attach-workspace: true
-          repo: ${PROJECT_NAME}-app
-          tag: ${CIRCLE_SHA1},latest
-      - aws-ecs/deploy-service-update:
+          repo: ${PROJECT_NAME}-images
+          tag: ${CIRCLE_SHA1}
+
+#          To trigger update using ECS orb, needs to have ',latest' as part of the tag. No longer need this since
+#          deployment is done via Terraform.
+
+#          repo: ${PROJECT_NAME}-app
+#          tag: ${CIRCLE_SHA1},latest
+
+#          Trigger ECS update using orb; switched over to deploy via Terraform.
+#            - aws-ecs/deploy-service-update:
+#          requires:
+#            - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
+#          family: ${PROJECT_NAME}-service
+#          cluster-name: ${PROJECT_NAME}-cluster
+#          container-image-name-updates: container=${PROJECT_NAME}-image,tag=${CIRCLE_SHA1}
+
+      - terraform-plan:
           requires:
-            - aws-ecr/build-and-push-image # only run this job once aws-ecr/build-and-push-image has completed
-          family: ${PROJECT_NAME}-service
-          cluster-name: ${PROJECT_NAME}-cluster
-          container-image-name-updates: container=${PROJECT_NAME}-image,tag=${CIRCLE_SHA1}
+            - build
+          filters:
+            branches:
+              ignore:
+                - master
+      - terraform-apply:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - aws-ecr/build-and-push-image
 jobs:
   build:
     docker:
@@ -39,8 +62,6 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/postgres:9.6-alpine
-
-    working_directory: ~/repo
 
     environment:
       # Customize the JVM maximum heap limit
@@ -73,3 +94,35 @@ jobs:
         # Must be relative path from root
           paths:
             - build/libs
+  terraform-apply:
+      docker:
+        - image: hashicorp/terraform:light
+
+      steps:
+        - checkout
+        - run:
+            name: terraform init & apply
+            command: |
+              cd deployment/fargate-terraform
+              terraform init -backend-config="access_key=${DEV_ACCESS_KEY_ID}" -backend-config="secret_key=${DEV_SECRET_ACCESS_KEY}"
+              source setup_env.sh
+              terraform apply -auto-approve -var-file="prod.tfvars" -var "version_tag=${CIRCLE_SHA1}"
+
+  terraform-plan:
+    docker:
+      - image: hashicorp/terraform:light
+
+    steps:
+      - checkout
+      - run:
+          name: terraform init & plan
+          command: |
+            cd deployment/fargate-terraform
+            terraform init -backend-config="access_key=${DEV_ACCESS_KEY_ID}" -backend-config="secret_key=${DEV_SECRET_ACCESS_KEY}"
+            source setup_env.sh
+            terraform plan -var-file="prod.tfvars" -var "version_tag=${CIRCLE_SHA1}"
+
+
+
+
+
