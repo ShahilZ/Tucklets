@@ -87,17 +87,10 @@ class Main extends Component {
      * Handler that leads user from donate to sponsor info page.
      */
     handleDonationClick(amount, donationDuration, history) {
-        // let self = this;
-        // return () => {
-        //     self.setState({ 
-        //         donation: {donationAmount: parseInt(amount), donationDuration: donationDuration}
-        //     });
-        // }
         this.setState({ 
             donation: {donationAmount: parseInt(amount), donationDuration: donationDuration}
         });
         // Manually change route after successful validation.
-        console.log(history);
         history.push("/sponsor-info/");
     }
 

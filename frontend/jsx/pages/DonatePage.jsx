@@ -46,8 +46,6 @@ class DonatePage extends Component {
         }
     }
 
-
-
     render() {
         let donationAmountClassName = `form-control ${this.state.amountHasErrors ? 'is-invalid' : ''}`
         return (
