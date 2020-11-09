@@ -183,7 +183,6 @@ class SponsorInfoPage extends Component {
                                 clientId: this.props.payPalClientId
                               }}
                         />
-                        {/* <div className="btn btn-primary tucklets-button" onClick={this.sponsorInfoSubmitHandler}>{`${this.props.i18n.t("sponsor_info:form_submit")}`}</div> */}
                     </form>
                 </div>
             </div>
