@@ -19,6 +19,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import '../static/css/bootstrap-agency-theme.css';
 
+// let DonationDuration = {ONE_TIME: "One time", MONTHLY: "Monthly"};
 
 class Main extends Component {
     constructor(props) {
@@ -28,7 +29,8 @@ class Main extends Component {
             selectedChildren: [], 
             // Initialize donation amount for inital render.
             sponsor: {},
-            donation: {donationAmount: 0, donationDuration: 0}
+            donation: {donationAmount: 0, donationDuration: 0},
+            payPalClientId: ""
         };
 
         // Bind handlers
@@ -84,15 +86,19 @@ class Main extends Component {
     /***
      * Handler that leads user from donate to sponsor info page.
      */
-    handleDonationClick(amount) {
-        let self = this;
-        return () => {
-            self.setState({ 
-                donation: {donationAmount: parseInt(amount), donationDuration: 0}
-            });
-        }
-
-        
+    handleDonationClick(amount, donationDuration, history) {
+        // let self = this;
+        // return () => {
+        //     self.setState({ 
+        //         donation: {donationAmount: parseInt(amount), donationDuration: donationDuration}
+        //     });
+        // }
+        this.setState({ 
+            donation: {donationAmount: parseInt(amount), donationDuration: donationDuration}
+        });
+        // Manually change route after successful validation.
+        console.log(history);
+        history.push("/sponsor-info/");
     }
 
 
@@ -107,7 +113,8 @@ class Main extends Component {
                             donationAmount={this.state.donation.donationAmount}
                             donationDuration={this.state.donation.donationDuration} 
                             i18n={i18n} 
-                            handleSelectedLocaleChange={this.handleSelectedLocaleChange} 
+                            handleSelectedLocaleChange={this.handleSelectedLocaleChange}
+                            payPalClientId={this.state.payPalClientId} 
                         />
                     </Route>
                     <Route exact path="/thank-you/">
@@ -135,14 +142,11 @@ class Main extends Component {
         )
     }
 
-    // componentDidMount() {
-    //     let name = '';
-    //     axios.get('/test').then((response) => {
-    //         console.log(response.data);
-    //         this.setState({ name: response.data.name });
-    //     })
-
-    // }
+    componentDidMount() {
+        axios.get('/fetchConfigs').then((response) => {
+            this.setState({ payPalClientId: response.data.paypal_client_id})
+        });
+    }
 }
 
 ReactDOM.render(
