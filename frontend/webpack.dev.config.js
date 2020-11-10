@@ -20,17 +20,13 @@ module.exports = {
         // prints more readable module names in the browser console on HMR updates
 
         // new BundleAnalyzerPlugin()
+
         // new BrotliPlugin({
         //     asset: '[path].br[query]',
         //     test: /\.(js|css|html|svg)$/,
         //     threshold: 10240,
         //     minRatio: 0.8
         // })
-        new CompressionPlugin({
-            test: /\.(js|css|html|svg)$/,
-            threshold: 10240,
-            minRatio: 0.8
-        })
     ],
     devServer: {
         contentBase: './dist',
