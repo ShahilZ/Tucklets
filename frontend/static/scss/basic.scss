@@ -13,6 +13,9 @@
         }
     }
     
+    // Overriding bootstrap's .container css class.
+    // Increase the container class's max-width to take up 1740px of the
+    // navbar horizonally for devices with a width of 992px or higher. 
     @media (min-width: 992px) {
         .container {
             max-width: 1740px;
@@ -20,9 +23,10 @@
     }
 }
 
+// Overridding bootstrap agency's navbar-scroll. 
+// When scrolling through the page, navbar's background 
+// color will now be white.  
 .tucklets-nav.navbar-scroll {
-    // padding-top: 1rem;
-    // padding-bottom: 1rem;
     background-color: #fff;
 }
 
