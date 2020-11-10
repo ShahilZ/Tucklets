@@ -1,5 +1,5 @@
 plugins {
-	id("com.github.node-gradle.node") version "2.2.3"
+	id("com.github.node-gradle.node") version "2.2.4"
 }
 
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -12,10 +12,18 @@ node {
 }
 
 task webpack(type: NodeTask, dependsOn: 'npmInstall') {
-    inputs.file("package-lock.json").withPathSensitivity(PathSensitivity.RELATIVE)
-    inputs.file("webpack.config.js")
+    inputs.file('package-lock.json').withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.dir('jsx')
     outputs.cacheIf { true }
     script = project.file('./node_modules/webpack/bin/webpack.js')
+    args = ['--config', 'webpack.prod.config.js']
+}
+
+task webpackDev(type: NodeTask, dependsOn: 'npmInstall') {
+    inputs.file('package-lock.json').withPathSensitivity(PathSensitivity.RELATIVE)
+    outputs.cacheIf { true }
+    script = project.file('./node_modules/webpack/bin/webpack.js')
+    args = ['--config', 'webpack.dev.config.js']
 }
 
 task start(type: NpmTask) {
@@ -33,4 +41,4 @@ task stopNodes(type: Exec) {
     }
 }
 
-start.dependsOn('webpack')
+start.dependsOn('webpackDev')

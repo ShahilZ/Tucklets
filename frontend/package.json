@@ -40,6 +40,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "bootstrap": "^4.5.2",
+    "brotli-webpack-plugin": "^1.1.0",
+    "compression-webpack-plugin": "^6.1.0",
     "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",
     "jquery": "^3.5.1",
@@ -54,6 +56,7 @@
     "startbootstrap-agency": "^6.0.1",
     "style-loader": "^1.2.1",
     "url-loader": "^4.1.0",
+    "webpack-bundle-analyzer": "^4.1.0",
     "webpack-dev-server": "^3.11.0",
     "webpack-hot-middleware": "^2.25.0"
   }
