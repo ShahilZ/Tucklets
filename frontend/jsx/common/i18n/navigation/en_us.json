@@ -1,7 +1,9 @@
 {
-    "home": "Home",
-    "about": "About Us",
-    "newsletters": "Newsletters",
-    "our_story": "Our Story",
-    "donate": "Donate"
+    "home": "HOME",
+    "about": "ABOUT US",
+    "newsletters": "NEWSLETTERS",
+    "our_story": "OUR STORY",
+    "donate": "DONATE",
+    "sponsor_navbar": "SPONSOR",
+    "language": "LANGUAGE"
   }

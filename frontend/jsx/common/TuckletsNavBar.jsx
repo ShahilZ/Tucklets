@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types';
 import { NavHashLink as Link } from 'react-router-hash-link';
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
+import Container from 'react-bootstrap/Container'
 
 import LocaleChanger from './LocaleChanger';
 import i18n from './i18n';
@@ -48,23 +49,28 @@ class TuckletsNavBar extends Component {
     render() {
         return (
             <div>
-                <Navbar className={`tucklets-nav ${this.state.isScrollTop ? "" : "navbar-scroll"}`} expand="lg" fixed="top">
-                    <Navbar.Brand href="#home">
-                        Tucklets
-                        {/* <a className="navbar-brand js-scroll-trigger" href="#page-top"><img src="../static/img/tucklets_logo.png" alt="" /></a><button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i className="fas fa-bars ml-1"></i></button> */}
+                <Navbar className="tucklets-nav navbar-scroll" expand="lg" fixed="top">
+                    <Container>
+                    <Navbar.Brand href="/#home">
+                        <img
+                            src="../../static/img/tucklets-logo-purple.png"
+                            className={`${this.state.isScrollTop ? "tucklets-logo-regular" : "tucklets-logo-condensed"}`}
+                            alt="Tucklets Logo"
+                        />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto nav-links">
+                        <Nav className="ml-auto nav-links">
                             <Link className="nav-link js-scroll-trigger" smooth to="/#home">{this.props.i18n.t("navigation:home")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#our-story">{this.props.i18n.t("navigation:our_story")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#about">{this.props.i18n.t("navigation:about")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#newsletters">{this.props.i18n.t("navigation:newsletters")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#donate">{this.props.i18n.t("navigation:donate")}</Link>
-                            <Link className="nav-link js-scroll-trigger" smooth to="/#sponsor-a-child">{this.props.i18n.t("sponsorship:sponsor")}</Link>
+                            <Link className="nav-link js-scroll-trigger" smooth to="/#sponsor-a-child">{this.props.i18n.t("navigation:sponsor_navbar")}</Link>
                             <LocaleChanger handleSelectedLocaleChange={this.props.handleSelectedLocaleChange} i18n={this.props.i18n} additionalClasses="nav-link js-scroll-trigger" />
                         </Nav>
                     </Navbar.Collapse>
+                    </Container>
                 </Navbar>
             </div>
         )
