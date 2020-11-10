@@ -1,3 +1,6 @@
+const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
+
 module.exports = {
     entry: [
         './jsx/Main.jsx'
@@ -5,8 +8,15 @@ module.exports = {
     output: {
         filename: 'bundle.js'
     },
-    mode: 'development',
-    devtool: 'source-map',
+    mode: 'production',
+    devtool: '',
+    plugins: [
+        new CompressionPlugin({
+            test: /\.(js|css|html|svg)$/,
+            threshold: 10240,
+            minRatio: 0.8
+        })
+    ],
     module: {
         rules: 
         [

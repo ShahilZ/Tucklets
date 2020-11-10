@@ -1,5 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BrotliPlugin = require('brotli-webpack-plugin');
+
 module.exports = {
     entry: [
         // entry point
@@ -15,6 +18,19 @@ module.exports = {
 
         new webpack.NamedModulesPlugin(),
         // prints more readable module names in the browser console on HMR updates
+
+        // new BundleAnalyzerPlugin()
+        // new BrotliPlugin({
+        //     asset: '[path].br[query]',
+        //     test: /\.(js|css|html|svg)$/,
+        //     threshold: 10240,
+        //     minRatio: 0.8
+        // })
+        new CompressionPlugin({
+            test: /\.(js|css|html|svg)$/,
+            threshold: 10240,
+            minRatio: 0.8
+        })
     ],
     devServer: {
         contentBase: './dist',
