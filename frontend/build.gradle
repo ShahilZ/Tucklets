@@ -16,15 +16,14 @@ task webpack(type: NodeTask, dependsOn: 'npmInstall') {
     inputs.dir('jsx')
     outputs.cacheIf { true }
     script = project.file('./node_modules/webpack/bin/webpack.js')
-    args = ['--config', 'webpack.prod.config']
-
+    args = ['--config', 'webpack.prod.config.js']
 }
 
 task webpackDev(type: NodeTask, dependsOn: 'npmInstall') {
     inputs.file('package-lock.json').withPathSensitivity(PathSensitivity.RELATIVE)
     outputs.cacheIf { true }
     script = project.file('./node_modules/webpack/bin/webpack.js')
-    args = ['--config', 'webpack.dev.config']
+    args = ['--config', 'webpack.dev.config.js']
 }
 
 task start(type: NpmTask) {
