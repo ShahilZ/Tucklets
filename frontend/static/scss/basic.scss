@@ -1,7 +1,9 @@
 .tucklets-nav {
+    background-color: #fff;
     .nav-links.navbar-nav {
+        padding-left: 13px;
         .nav-link.active {
-            color: #fff;
+            color: #666666;
         }
         .nav-link:hover {
             color: #f3bd01;
@@ -11,12 +13,28 @@
         }
     }
     
+    @media (min-width: 992px) {
+        .container {
+            max-width: 1740px;
+        }
+    }
 }
 
 .tucklets-nav.navbar-scroll {
     // padding-top: 1rem;
     // padding-bottom: 1rem;
-    background-color: #08979D;
+    background-color: #fff;
+}
+
+
+.tucklets-logo-regular {
+    width:192px;
+    height:70px;
+}
+
+.tucklets-logo-condensed {
+    width:155px;
+    height:50px;
 }
 
 .footer {

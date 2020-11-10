@@ -48,7 +48,7 @@ class LocaleChanger extends Component {
         });
         return (
             <div className={`locale-changer ${this.props.additionalClasses}`}>
-                <span className="locale-changer-label" htmlFor="locale-changer">{`${this.props.i18n.t('locales:language')}`}</span>
+                <span className="locale-changer-label" htmlFor="locale-changer">{`${this.props.i18n.t('navigation:language')}`}</span>
                 <select id="locale-changer" value={this.state.selectedLocale} onChange={this.props.handleSelectedLocaleChange}>
                     {localeList}
                 </select>
