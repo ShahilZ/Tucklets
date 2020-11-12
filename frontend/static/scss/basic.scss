@@ -13,22 +13,24 @@
         }
     }
     
-    // Overriding bootstrap's .container css class.
-    // Increase the container class's max-width to take up 1740px of the
-    // navbar horizonally for devices with a width of 992px or higher. 
-    @media (min-width: 992px) {
+    // Overriding bootstrap's .container css class (within the .tucklets-nav class).
+    // Increase the container class's max-width to take up 100% of the
+    // navbar horizonally for all device widths.
+
+    @media (min-width: 576px) {
         .container {
-            max-width: 1740px;
+            max-width: 100%;
         }
+    }
+
+    // Overridding bootstrap agency's navbar-scroll.
+    // When scrolling through the page, navbar's background
+    // color will now be white.
+    &.navbar-scroll {
+        background-color: #fff;
     }
 }
 
-// Overridding bootstrap agency's navbar-scroll. 
-// When scrolling through the page, navbar's background 
-// color will now be white.  
-.tucklets-nav.navbar-scroll {
-    background-color: #fff;
-}
 
 
 .tucklets-logo-regular {
