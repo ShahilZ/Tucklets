@@ -73,7 +73,7 @@ class TuckletsNavBar extends Component {
     render() {
         return (
             <div>
-                <Navbar className="tucklets-nav navbar-scroll" expand="lg" fixed="top" expanded={this.state.isNavBarExpanded} onToggle={this.toggleNavBar}>
+                <Navbar className="tucklets-nav navbar-scroll" expand="lg" fixed="top" expanded={this.state.isNavBarExpanded}>
                     <Container>
                     <Navbar.Brand href="/#home">
                         <img
