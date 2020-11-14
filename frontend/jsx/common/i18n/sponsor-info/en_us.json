@@ -17,6 +17,7 @@
 
     "form_header_donation_info": "Donation Information",
     "form_amount": "Amount",
+    "form_duration": "Duration",
 
     "form_submit": "Submit"
 }

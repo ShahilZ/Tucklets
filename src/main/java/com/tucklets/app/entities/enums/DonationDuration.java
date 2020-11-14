@@ -7,26 +7,26 @@ import java.util.stream.Stream;
 
 public enum DonationDuration
 {
-    ONE_YEAR(1, "sponsor-info.donationDuration.ONE_YEAR"),
-    THREE_YEAR(2, "sponsor-info.donationDuration.THREE_YEARS"),
-    INDEFINITE(3, "sponsor-info.donationDuration.INDEFINITE"),
-    SIX_MONTHS(0, "sponsor-info.donationDuration.SIX_MONTHS");
+//    ONE_YEAR(1, "sponsor-info.donationDuration.ONE_YEAR"),
+//    THREE_YEAR(2, "sponsor-info.donationDuration.THREE_YEARS"),
+//    INDEFINITE(3, "sponsor-info.donationDuration.INDEFINITE"),
+//    SIX_MONTHS(0, "sponsor-info.donationDuration.SIX_MONTHS");
+    ONCE("ONCE"),
+    MONTHLY("MONTHLY");
 
-    private int donationDurationValue;
-    private String displayText;
+    private String donationDurationText;
 
-    DonationDuration(int donationDurationValue, String displayText) {
-        this.donationDurationValue = donationDurationValue;
-        this.displayText = displayText;
+    DonationDuration(String donationDurationText) {
+        this.donationDurationText = donationDurationText;
     }
 
-    public int getDonationDuration() {
-        return donationDurationValue;
+    public String getDonationDuration() {
+        return donationDurationText;
     }
 
-    public static DonationDuration of(int donationDurationValue) {
+    public static DonationDuration of(String donationDurationText) {
         return Stream.of(DonationDuration.values())
-                .filter(p -> p.getDonationDuration() == donationDurationValue)
+                .filter(p -> p.getDonationDuration().equals(donationDurationText))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
@@ -36,9 +36,5 @@ public enum DonationDuration
      */
     public static List<DonationDuration> getAllDonationDurations() {
         return Stream.of(DonationDuration.values()).collect(Collectors.toList());
-    }
-
-    public String getDisplayText() {
-        return displayText;
     }
 }

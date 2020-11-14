@@ -92,8 +92,7 @@ public class SponsorInfoController {
         Sponsor sponsor = sponsorInfoContainer.getSponsor();
         Donation donation = sponsorInfoContainer.getDonation();
 
-        // TODO: Remove temp workaround.
-        donation.setDonationDuration(DonationDuration.ONE_YEAR);
+        donation.setDonationDuration(donation.getDonationDuration());
 
         // Validation for sponsor + donation.
         SponsorInfoStatus sponsorStatus = SponsorValidator.validateSponsor(sponsor);

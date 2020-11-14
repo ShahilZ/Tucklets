@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { PayPalButton } from 'react-paypal-button-v2';
 import axios from 'axios';
 
+import DonationButtonGroup from '../common/DonationButtonGroup';
 import '../../static/scss/basic.scss';
 import '../../static/scss/sponsor-info.scss';
 
@@ -17,16 +18,17 @@ const props = {
     /** The donation amount provided either by the user or by the backend. */
     donationAmount: PropTypes.number.isRequired,
     /** The donation duration provided by the user. */
-    donationDuration: PropTypes.number,
+    donationDuration: PropTypes.string,
     /** The PayPal Client ID necessary to complete payment. */
-    payPalClientId: PropTypes.string.isRequired
+    payPalClientId: PropTypes.string.isRequired,
+    /** Whether donation duration can be updated. */
+    allowDonationDurationChange: PropTypes.bool.isRequired
 }
 
 class SponsorInfoPage extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             sponsor: {
                 firstName: "",
@@ -44,9 +46,7 @@ class SponsorInfoPage extends Component {
 
          };
 
-         console.log(this.state);
-
-        this.donationInfoChangeHandler = this.donationInfoChangeHandler.bind(this);
+        this.donationDurationChangeHandler = this.donationDurationChangeHandler.bind(this);
         this.renderSelectedChildren = this.renderSelectedChildren.bind(this);
         this.sponsorInfoChangeHandler = this.sponsorInfoChangeHandler.bind(this);
         this.sponsorInfoSubmitHandler = this.sponsorInfoSubmitHandler.bind(this);
@@ -74,16 +74,15 @@ class SponsorInfoPage extends Component {
     }
 
     /**
-     * Handler for donation info changes.
+     * Handler for donation duration changes.
      */
-    donationInfoChangeHandler(field) {
+    donationDurationChangeHandler(donationDuration) {
         let self = this;
-        return (event) => {
-            let newValue = event.target.value;
+        return () => {
             self.setState(prevState => ({
                 donation: {
                     ...prevState.donation,
-                    [field]: newValue
+                    donationDuration: donationDuration
                 },
             }));
         }
@@ -172,6 +171,13 @@ class SponsorInfoPage extends Component {
                         </fieldset>
                         <fieldset>
                             <legend><span className="sponsor-info-section-number">2</span><span>{`${this.props.i18n.t("sponsor_info:form_header_donation_info")}`}</span></legend>
+                            <DonationButtonGroup
+                                i18n={this.props.i18n}
+                                donationDurationChangeHandler={this.donationDurationChangeHandler}
+                                currentDonationDuration={this.state.donation.donationDuration}
+                                shouldDisplayLabel={true}
+                                shouldAllowDonationDurationChanges={this.props.allowDonationDurationChange}
+                            />
                             <label htmlFor="donation-amount">{`${this.props.i18n.t("sponsor_info:form_amount")}`}</label>
                             <input type="text" id="donation-amount" readOnly value={this.props.donationAmount} />
                         </fieldset>

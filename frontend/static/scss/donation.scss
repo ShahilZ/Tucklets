@@ -1,0 +1,30 @@
+@import '_donation-duration.scss';
+
+.donation-button {
+    border-radius: 0.25rem;
+    
+    &:hover {
+        @include donation-selected-color;
+    }
+}
+
+.btn-info.donation-duration-button.disabled {
+    cursor: none;
+    pointer-events: none;
+    @include donation-selected-color;
+}
+
+.btn-info.donation-duration-button {
+    &:hover {
+        background-color: #17a2b8;
+    }
+    &.donation-duration-selected {
+        @include donation-selected-color;
+    }
+    &.disabled {
+        cursor: none;
+        pointer-events: none;
+        @include donation-selected-color;
+    }
+
+}

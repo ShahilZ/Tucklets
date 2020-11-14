@@ -89,8 +89,8 @@ class TuckletsNavBar extends Component {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto nav-links">
                             <Link className="nav-link js-scroll-trigger" smooth to="/#home" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:home")}</Link>
-                            <Link className="nav-link js-scroll-trigger" smooth to="/#our-story" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:our_story")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#about" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:about")}</Link>
+                            <Link className="nav-link js-scroll-trigger" smooth to="/#our-story" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:our_story")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#newsletters" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:newsletters")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#donate" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:donate")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#sponsor-a-child" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:sponsor_navbar")}</Link>

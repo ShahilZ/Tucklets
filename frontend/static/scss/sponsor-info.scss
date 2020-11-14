@@ -1,3 +1,4 @@
+@import "_donation-duration.scss";
 
 .sponsor-info-div {
 	background-color: #f4f7f8;
@@ -79,4 +80,13 @@
 .child-image-div {
     border:0!important;
     background-color: rgba(0,0,0,.03);
+}
+
+.btn-info.donation-duration-selected {
+    @include donation-selected-color;
+
+}
+
+.duration-button-group {
+    width: 50%;
 }

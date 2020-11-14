@@ -33,8 +33,8 @@ public class Donation {
     @Column(name = "donation_amount", updatable = false, nullable = false)
     private BigDecimal donationAmount;
 
-    @Column(name = "donation_duration_value", updatable = false, nullable = false)
-    private int donationDurationValue;
+    @Column(name = "donation_duration_text", updatable = false, nullable = false)
+    private String donationDurationText;
 
     @Transient
     private DonationDuration donationDuration;
@@ -60,7 +60,7 @@ public class Donation {
             this.paymentMethodValue = paymentMethod.getPaymentMethodValue();
         }
         if (donationDuration != null) {
-            this.donationDurationValue = donationDuration.getDonationDuration();
+            this.donationDurationText = donationDuration.getDonationDuration();
         }
     }
 
@@ -69,7 +69,7 @@ public class Donation {
         if (paymentMethodValue > 0) {
             this.paymentMethod = PaymentMethod.of(paymentMethodValue);
         }
-        this.donationDuration = DonationDuration.of(donationDurationValue);
+        this.donationDuration = DonationDuration.of(donationDurationText);
     }
 
     public Donation() {};
@@ -92,14 +92,6 @@ public class Donation {
 
     public void setDonationAmount(BigDecimal donationAmount) {
         this.donationAmount = donationAmount;
-    }
-
-    public int getDonationDurationValue() {
-        return donationDurationValue;
-    }
-
-    public void setDonationDurationValue(int donationDurationValue) {
-        this.donationDurationValue = donationDurationValue;
     }
 
     public DonationDuration getDonationDuration() {
