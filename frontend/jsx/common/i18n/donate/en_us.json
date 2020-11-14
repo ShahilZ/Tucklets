@@ -7,8 +7,9 @@
   "last-name:": "Last Name",
   "email": "Email",
   "address": "Address",
-  "donate-once": "DONATE ONCE",
-  "donate-monthly": "DONATE MONTHLY"
+  "duration": "Duration",
+  "donate-once": "ONCE",
+  "donate-monthly": "MONTHLY"
 
   
 

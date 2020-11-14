@@ -1,3 +1,5 @@
+@import "_donation-duration.scss";
+
 .about-section {
 
     .about-section-image {
@@ -24,8 +26,6 @@
 
 
 .our-story-section {
-
-
     .our-story-image {
         background: url("/static/img/our-story.jpg");
         background-size: cover;
@@ -79,6 +79,18 @@
     .donate-form-section h2, 
     .donate-form-section p { 
         color: white;
+    }
+
+    .donation-button {
+        border-radius: 0.25rem;
+        
+        &:hover {
+            @include donation-selected-color;
+        }
+    }
+
+    .donate-button-spacing {
+        margin-right: 10px;
     }
 }
 

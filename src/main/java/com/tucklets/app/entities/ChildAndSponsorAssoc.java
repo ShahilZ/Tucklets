@@ -39,7 +39,7 @@ public class ChildAndSponsorAssoc {
 
     @Column(name = "donation_duration", nullable = false)
     @Basic
-    private int donationDurationValue;
+    private String donationDurationText;
 
     @Transient
     private DonationDuration donationDuration;
@@ -51,14 +51,7 @@ public class ChildAndSponsorAssoc {
     @PrePersist
     void onCreate() {
         if (donationDuration != null) {
-            this.donationDurationValue = donationDuration.getDonationDuration();
-        }
-    }
-
-    @PostLoad
-    void fillTransient() {
-        if (donationDurationValue > 0) {
-            this.donationDuration = DonationDuration.of(donationDurationValue);
+            this.donationDurationText = donationDuration.getDonationDuration();
         }
     }
 

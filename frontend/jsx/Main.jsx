@@ -15,11 +15,11 @@ import DonatePage from './pages/DonatePage';
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
+import { DonationDuration } from './common/utils/donation';
+
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 import '../static/css/bootstrap-agency-theme.css';
-
-// let DonationDuration = {ONE_TIME: "One time", MONTHLY: "Monthly"};
 
 class Main extends Component {
     constructor(props) {
@@ -29,7 +29,8 @@ class Main extends Component {
             selectedChildren: [], 
             // Initialize donation amount for inital render.
             sponsor: {},
-            donation: {donationAmount: 0, donationDuration: 0},
+            donation: {donationAmount: 0, donationDuration: DonationDuration.ONCE},
+            allowDonationDurationChange: true,
             payPalClientId: ""
         };
 
@@ -72,6 +73,7 @@ class Main extends Component {
                     selectedChildren: response.data.children, 
                     sponsor: response.data.sponsor,
                     donation: response.data.donation,
+                    allowDonationDurationChange: false
                 });
                 // Manually change route after successful response from backend.
                 history.push("/sponsor-info/");
@@ -88,7 +90,8 @@ class Main extends Component {
      */
     handleDonationClick(amount, donationDuration, history) {
         this.setState({ 
-            donation: {donationAmount: parseInt(amount), donationDuration: donationDuration}
+            donation: { donationAmount: parseInt(amount), donationDuration: donationDuration },
+            allowDonationDurationChange: true
         });
         // Manually change route after successful validation.
         history.push("/sponsor-info/");
@@ -107,7 +110,8 @@ class Main extends Component {
                             donationDuration={this.state.donation.donationDuration} 
                             i18n={i18n} 
                             handleSelectedLocaleChange={this.handleSelectedLocaleChange}
-                            payPalClientId={this.state.payPalClientId} 
+                            payPalClientId={this.state.payPalClientId}
+                            allowDonationDurationChange={this.state.allowDonationDurationChange}
                         />
                     </Route>
                     <Route exact path="/thank-you/">

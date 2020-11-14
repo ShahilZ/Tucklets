@@ -4,6 +4,9 @@ import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
 
+import { DonationButtonGroup } from '../common/DonationButtonGroup';
+import { DonationDuration } from '../common/utils/donation';
+
 import '../../static/scss/info.scss';
 
 const props = {
@@ -38,7 +41,7 @@ class DonatePage extends Component {
         return () => {
             // TODO: Validate against negatives.
             if ( !donationAmount || donationAmount === "" ) {
-                self.setState({ amountHasErrors: true })
+                self.setState({ amountHasErrors: true }) 
             }
             else {
                 self.props.handleDonationClick(donationAmount, donationDuration, history);
@@ -47,7 +50,7 @@ class DonatePage extends Component {
     }
 
     render() {
-        let donationAmountClassName = `form-control ${this.state.amountHasErrors ? 'is-invalid' : ''}`
+        let donationAmountClassName = `form-control ${this.state.amountHasErrors ? 'is-invalid' : ''}`;
         return (
             <div id="donate" className="donate-section">
                 <div className="donate-form-section">
@@ -63,8 +66,9 @@ class DonatePage extends Component {
                             <input type="number" id="donation-amount" className={donationAmountClassName} value={this.state.donationAmount} onChange={this.handleDonationAmountChange}/>
                         </div>
                         <div className="btn-group duration-button-group">
-                            <button to="/sponsor-info/" className="col-md-6 btn btn-primary" onClick={this.submitDonationHandler(this.state.donationAmount, 0, this.props.history)}>{this.props.i18n.t("donate:donate-once")} </button>
-                            <button to="/sponsor-info/" className="col-md-6 btn btn-secondary" onClick={this.submitDonationHandler(this.state.donationAmount, 1, this.props.history)}>{this.props.i18n.t("donate:donate-monthly")}</button>
+                            <button to="/sponsor-info/" className="col-md-6 btn btn-info donation-button" onClick={this.submitDonationHandler(this.state.donationAmount, DonationDuration.ONCE, this.props.history)}>{this.props.i18n.t("donate:donate-once")} </button>
+                            <span className="donate-button-spacing" />
+                            <button to="/sponsor-info/" className="col-md-6 btn btn-info donation-button" onClick={this.submitDonationHandler(this.state.donationAmount, DonationDuration.MONTHLY, this.props.history)}>{this.props.i18n.t("donate:donate-monthly")}</button>
                         </div>
                         <br></br>
                         <br></br>
