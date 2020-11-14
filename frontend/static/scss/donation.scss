@@ -8,12 +8,6 @@
     }
 }
 
-.btn-info.donation-duration-button.disabled {
-    cursor: none;
-    pointer-events: none;
-    @include donation-selected-color;
-}
-
 .btn-info.donation-duration-button {
     &:hover {
         background-color: #17a2b8;
