@@ -56,11 +56,11 @@ class SponsorChildPage extends Component {
                 this.state.children.map((childContainer) => (
                     <label 
                         key={`child-id${childContainer.child.childId}`} 
-                        className={`card child-div ${this.state.childrenSelections[childContainer.child.childId] ? 'selected-overlay' : ''}`} 
+                        className={`card child-div col-12 col-sm-6 col-md-4 ${this.state.childrenSelections[childContainer.child.childId] ? 'selected-overlay' : ''}`} 
                         htmlFor={`checkbox-${childContainer.child.childId}`} 
                         onChange={this.onChildSelection(childContainer.child.childId)}>
                         <div className="sponsor-child-image-container">
-                            <img className="card-img-top" src={childContainer.childImageLocation} alt="Card image cap" />
+                            <img className="card-img-top child-image-box" src={childContainer.childImageLocation} alt="Card image cap" />
                             <div className="card-body">
                                 <h5 className="card-title">{`${childContainer.child.firstName} ${childContainer.child.lastName}`}</h5>
                                 <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:age")}`}</b><span>{`${childContainer.age}`}</span></p>
