@@ -17,10 +17,10 @@ const HomePage = ({ i18n, handleSelectedLocaleChange }) => {
         <div id="home">
             <header className="masthead">
                 <div className="container">
-                    <div className="masthead-subheading">Welcome to Tucklets.org!</div>
-                    <div className="masthead-heading text-uppercase">Tucklets: Supporting the orphaned children of Kenya</div>
+    <div className="masthead-subheading"><span>{i18n.t("home:title")}</span></div>
+                    <div className="masthead-heading text-uppercase"><span>{i18n.t("home:subtext")}</span></div>
                         <Link className="btn btn-primary btn-xl text-uppercase js-scroll-trigger" smooth to="#about">
-                            Tell Me More
+                        <span>{i18n.t("home:learn_more")}</span>
                         </Link>
                 </div>
             </header> 

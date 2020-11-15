@@ -11,6 +11,8 @@ import donate_zh_tw from './i18n/donate/zh_tw.json';
 import donate_en_us from './i18n/donate/en_us.json';
 import footer_zh_tw from './i18n/footer/zh_tw.json';
 import footer_en_us from './i18n/footer/en_us.json';
+import home_en_us from './i18n/home/en_us.json';
+import home_zh_tw from './i18n/home/zh_tw.json';
 import our_story_zh_tw from './i18n/our-story/zh_tw.json';
 import our_story_en_us from './i18n/our-story/en_us.json';
 import newsletters_zh_tw from './i18n/newsletters/zh_tw.json';
@@ -41,6 +43,7 @@ i18n
           confirm: confirm_en_us,
           donate: donate_en_us,
           footer: footer_en_us,
+          home: home_en_us,
           locales: messages_en_us,
           our_story: our_story_en_us,
           newsletters: newsletters_en_us,
@@ -54,6 +57,7 @@ i18n
           confirm: confirm_zh_tw,
           donate: donate_zh_tw,
           footer: footer_zh_tw,
+          home: home_zh_tw,
           locales: messages_zh_tw,
           our_story: our_story_zh_tw,
           newsletters: newsletters_zh_tw,
