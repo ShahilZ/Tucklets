@@ -1,0 +1,16 @@
+{
+    "title": "Confirmation",
+    "subtitle": "Please verify the following information before proceeding to payment.",
+    "form_header_personal": "Personal Information",
+    "name": "Your name",
+    "email": "Your email",
+    "address": "Your address",
+
+    "form_sponsorship": "Sponsorship",
+    "form_amount": "Amount",
+    "form_duration": "Frequency",
+    "monthly": "Once a month",
+    "once": "One time (today)",
+
+    "submit_check": "Submit"
+}

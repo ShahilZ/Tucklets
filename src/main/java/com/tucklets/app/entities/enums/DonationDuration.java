@@ -11,8 +11,8 @@ public enum DonationDuration
 //    THREE_YEAR(2, "sponsor-info.donationDuration.THREE_YEARS"),
 //    INDEFINITE(3, "sponsor-info.donationDuration.INDEFINITE"),
 //    SIX_MONTHS(0, "sponsor-info.donationDuration.SIX_MONTHS");
-    ONCE("ONCE"),
-    MONTHLY("MONTHLY");
+    ONCE("once"),
+    MONTHLY("monthly");
 
     private String donationDurationText;
 
