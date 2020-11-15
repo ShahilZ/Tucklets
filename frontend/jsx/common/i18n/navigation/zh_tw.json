@@ -1,8 +1,9 @@
 {
-    "home": "家",
+    "home": "主頁",
     "about": "關於我們",
     "newsletters": "時事通訊",
     "our_story": "我們的故事",
-    "donate": "捐",
-    "sponsor_navbar": "贊助"
+    "donate": "捐款",
+    "sponsor_navbar": "贊助孩子",
+    "chinese_traditional": "中文（繁体）"
   }
