@@ -3,6 +3,36 @@
     padding-top: 76px;
 }
 
+.tucklets-main {
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #8fa7b6;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(78, 104, 120, 0.25);
+    }
+
+    .btn.btn-primary {
+        color: #ffff;
+        background-color: #4AD3B8;
+        border-color: #4AD3B8;
+        :hover {
+            background-color: red;
+        }
+    }
+
+    .button.btn-primary:hover {
+        background-color: red; /* Green */
+        color: white;
+      }
+
+    .btn.btn-secondary {
+        color: #ffff;
+        background-color: #4E6878;
+        border-color: #4E6878;
+    }
+}
+
 .tucklets-nav {
     background-color: #fff;
     .nav-links.navbar-nav {

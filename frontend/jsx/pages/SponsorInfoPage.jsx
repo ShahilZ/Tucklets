@@ -4,6 +4,9 @@ import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios';
 
 import DonationButtonGroup from '../common/DonationButtonGroup';
+import {Jumbotron, Form, Button, InputGroup, FormControl, Col, Row } from 'react-bootstrap';
+import SponsorForm from '../common/SponsorForm';
+
 import '../../static/scss/basic.scss';
 import '../../static/scss/sponsor-info.scss';
 
@@ -29,13 +32,13 @@ class SponsorInfoPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+           
             donation: {
                 donationAmount: props.donationAmount,
                 donationDuration: props.donationDuration,
                 // default to 0 for now.
                 paymentMethod: 0
-            },
-
+            }
          };
 
         this.paypalSuccessHandler = this.paypalSuccessHandler.bind(this);
@@ -60,28 +63,18 @@ class SponsorInfoPage extends Component {
     render() {
         // TODO: user refreshes the page or somehow gets here without going through the flow, redirect to the main page.
         return (
-            <div id="sponsor-info">
-                <div className="jumbotron jumbotron-fluid">
+            <div id="sponsor-info" className="sponsor-info">
+                <Jumbotron>
                     <div className="container">
-                        <h1 className="display-4">{`${this.props.i18n.t("sponsor_info:title")}`}</h1>
-                        <p className="lead">{`${this.props.i18n.t("sponsor_info:subtitle")}`}</p>
+                        <h1 className="text-center text-md-left">{`${this.props.i18n.t("sponsor_info:title")}`}</h1>
                     </div>
-                </div>
+                </Jumbotron>
+                <SponsorForm i18n={this.props.i18n}/>
+
+
                 <div className="sponsor-info-div">
                     <form id="sponsor-info-form" className="sponsor-info-form">
-                        <fieldset>
-                            <legend><span className="sponsor-info-section-number">1</span><span>{`${this.props.i18n.t("sponsor_info:form_header_personal")}`}</span></legend>
-                            <label htmlFor="sponsor-first-name">{`${this.props.i18n.t("sponsor_info:form_first_name")}`}</label>
-                            <input type="text" id="sponsor-first-name" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_first_name")} value={this.props.sponsor.firstName} onChange={this.props.sponsorInfoChangeHandler("firstName")} />
-                            <label htmlFor="sponsor-last-name">{`${this.props.i18n.t("sponsor_info:form_last_name")}`}</label>
-                            <input type="text" id="sponsor-last-name" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_last_name")} value={this.props.sponsor.lastName} onChange={this.props.sponsorInfoChangeHandler("lastName")} />
-                            <label htmlFor="sponsor-email">{`${this.props.i18n.t("sponsor_info:form_email")}`}</label>
-                            <input type="text" id="sponsor-email" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_email")} value={this.props.sponsor.email} onChange={this.props.sponsorInfoChangeHandler("email")} />
-                            <label htmlFor="sponsor-address">{`${this.props.i18n.t("sponsor_info:form_address")}`}</label>
-                            <input type="text" id="sponsor-address" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_address")} value={this.props.sponsor.address} onChange={this.props.sponsorInfoChangeHandler("address")} />
-                            <label htmlFor="sponsor-church-name">{`${this.props.i18n.t("sponsor_info:form_church_name")}`}</label>
-                            <input type="text" id="sponsor-church-name" placeholder={this.props.i18n.t("sponsor_info:form_placeholder_church_name")} value={this.props.sponsor.churchName} onChange={this.props.sponsorInfoChangeHandler("churchName")} />
-                        </fieldset>
+                    
                         <fieldset>
                             <legend><span className="sponsor-info-section-number">2</span><span>{`${this.props.i18n.t("sponsor_info:form_header_donation_info")}`}</span></legend>
                             {/* <DonationButtonGroup

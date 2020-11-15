@@ -168,7 +168,7 @@ class Main extends Component {
     render() {
         return (
             // Add padding-top to accommodate room for the navigation bar.
-            <div className="tucklets-nav-padding">
+            <div className="tucklets-main tucklets-nav-padding">
                 <BrowserRouter>
                     <TuckletsNavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} />
                     <Route exact path="/sponsor-info/">

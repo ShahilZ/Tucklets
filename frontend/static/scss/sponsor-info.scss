@@ -1,59 +1,34 @@
 @import "_donation-duration.scss";
 
-.sponsor-info-div {
-	background-color: #f4f7f8;
-	margin: 0 15%;
-	border-radius: 8px;
-	font-family: Georgia, "Times New Roman", Times, serif;
-}
+.sponsor-info {
+    .jumbotron {
+        background-color: #4A73AD;
+    }
+    h4 {
+        color: #666666
+    }
+    h1 {
+        color: #ffff !important;
+        font-weight: 700;
+    }
 
-.sponsor-info-form {
-    padding: 5% 10%;
-
-}
-
-.sponsor-info-form input {
-    width: 100%;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    border: none;
-    border-radius: 4px;
-    font-size: 15px;
-    margin: 0;
-    outline: 0;
-    padding: 2%;
-    background-color: #e8eeef;
-    color: #8a97a0;
-    margin-bottom: 5%;
-}
-
-.sponsor-info-form fieldset {
-    border: 0;
+    .sponsor-form-btn {
+        width: 200px;
+       
+    }
+    .sponsor-form-bottom {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .sponsor-info-div legend {
 	font-size: 1.4em;
 }
 
-.sponsor-info-form .sponsor-info-section-number {
-    background-color: #3e2763;
-    color: #fff;
-    height: 30px;
-    width: 30px;
-    display: inline-block;
-    margin-right: 1%;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 5px 5px 15px 15px;
-
-}
-
 .sponsor-info-div label {
 	display: block;
 	margin-bottom: 8px;
-}
-
-.sponsor-info-div input:focus {
-	background-color: #d2d9dd;
 }
 
 
