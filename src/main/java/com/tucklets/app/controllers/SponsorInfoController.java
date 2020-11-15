@@ -78,7 +78,8 @@ public class SponsorInfoController {
         var childrenDetailContainers = manageChildrenService.createChildDetailsContainers(selectedChildren);
         var totalDonationAmount = amountService.computeTotalDonationAmount(selectedChildren);
         Sponsor sponsor = new Sponsor();
-        Donation donation = new Donation(totalDonationAmount);
+        // For now, force monthly payment frequencey.
+        Donation donation = new Donation(totalDonationAmount, DonationDuration.MONTHLY);
 
         SponsorInfoContainer sponsorInfoContainer = new SponsorInfoContainer(
             donation, sponsor, childrenDetailContainers);

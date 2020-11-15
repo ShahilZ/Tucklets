@@ -23,15 +23,25 @@
     width: 20rem;
 }
 
-.child-div {
+.child-label {
 
     margin: 1rem;
+    box-shadow: -2px 2px 8px 0px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+        background-color: #c9bbfb26;
+        cursor: pointer;
+    }
 }
 
-.child-div:hover {
-    background-color: #c9bbfb26;
-    cursor: pointer;
+.child-div {
+    box-shadow: -2px 2px 8px 0px rgba(0, 0, 0, 0.2);
 }
+
+.child-name {
+    color: #B04BC4; 
+}
+
 
 .selected-overlay {
     background-color: #c9bbfb26;
@@ -68,5 +78,6 @@
         height: 200px;
         background-position: center center;
         background-size: cover;
+        object-fit: contain;
     }
 }

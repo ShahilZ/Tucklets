@@ -3,6 +3,8 @@ import axios from 'axios';
 import { PropTypes } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
+import ChildImageContainer from '../common/sponsorship/ChildImageContainer';
+
 import '../../static/scss/sponsor-a-child.scss';
 
 
@@ -56,22 +58,14 @@ class SponsorChildPage extends Component {
                 this.state.children.map((childContainer) => (
                     <label 
                         key={`child-id${childContainer.child.childId}`} 
-                        className={`card child-div col-12 col-sm-6 col-md-4 ${this.state.childrenSelections[childContainer.child.childId] ? 'selected-overlay' : ''}`} 
+                        className={`card child-label col-12 col-sm-6 col-md-4 ${this.state.childrenSelections[childContainer.child.childId] ? 'selected-overlay' : ''}`} 
                         htmlFor={`checkbox-${childContainer.child.childId}`} 
                         onChange={this.onChildSelection(childContainer.child.childId)}>
-                        <div className="sponsor-child-image-container">
-                            <img className="card-img-top child-image-box" src={childContainer.childImageLocation} alt="Card image cap" />
-                            <div className="card-body">
-                                <h5 className="card-title">{`${childContainer.child.firstName} ${childContainer.child.lastName}`}</h5>
-                                <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:age")}`}</b><span>{`${childContainer.age}`}</span></p>
-                                <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:grade")}`}</b><span>{`${childContainer.child.grade}`}</span></p>
-                                <p className="card-text"><b>{`${this.props.i18n.t("sponsorship:info")}`}</b><span>{`${childContainer.child.information}`}</span></p>
-                                <input type="checkbox" name="childId" id={`checkbox-${childContainer.child.childId}`} value={childContainer.child.childId} />
-                            </div>
-                        </div>
+                            <ChildImageContainer i18n={this.props.i18n} childContainer={childContainer} />
+                            <input type="checkbox" name="childId" id={`checkbox-${childContainer.child.childId}`} value={childContainer.child.childId} />
                     </label>
                 ))
-            )
+            );
         }
         return "";
 
@@ -89,7 +83,7 @@ class SponsorChildPage extends Component {
         // let selectedChildrenRequest = `?childIds=${selectedChildrenList.join(',')}`;
         let selectedChildrenRequest = '';
         return (
-            <div id="sponsor-a-child">
+            <div id="sponsor-a-child" className="bg-light">
                 <div className="jumbotron jumbotron-fluid">
                     <div className="container">
                         <h1 className="display-4">{`${this.props.i18n.t("sponsorship:title")}`}</h1>

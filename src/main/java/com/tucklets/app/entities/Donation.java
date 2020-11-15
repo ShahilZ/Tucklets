@@ -74,8 +74,9 @@ public class Donation {
 
     public Donation() {};
 
-    public Donation(BigDecimal donationAmount) {
+    public Donation(BigDecimal donationAmount, DonationDuration donationDuration) {
         this.donationAmount = donationAmount;
+        this.donationDuration = donationDuration;
     }
 
     public Long getDonationId() {

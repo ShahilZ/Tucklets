@@ -6,6 +6,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import TuckletsNavBar from './common/TuckletsNavBar';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
+import ConfirmationPage from './pages/ConfirmationPage';
 import OurStoryPage from './pages/OurStoryPage';
 import NewslettersPage from './pages/NewslettersPage';
 import SponsorChildPage from './pages/SponsorChildPage';
@@ -18,8 +19,8 @@ import i18n from './common/i18n';
 import { DonationDuration } from './common/utils/donation';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
-
 import '../static/css/bootstrap-agency-theme.css';
+import '../static/scss/basic.scss';
 
 class Main extends Component {
     constructor(props) {
@@ -28,16 +29,28 @@ class Main extends Component {
             selectedLocale: 'en-US', 
             selectedChildren: [], 
             // Initialize donation amount for inital render.
-            sponsor: {},
-            donation: {donationAmount: 0, donationDuration: DonationDuration.ONCE},
+            sponsor: {
+                firstName: "",
+                lastName: "",
+                email: "",
+                address: "",
+                churchName: ""
+            },
+            donation: {donationAmount: 0, donationDuration: DonationDuration.ONCE },
             allowDonationDurationChange: true,
             payPalClientId: ""
         };
 
-        // Bind handlers
+        // Bind handlers here
+
         this.handleSelectedLocaleChange = this.handleSelectedLocaleChange.bind(this);
-        this.handleSponsorChildSubmission = this.handleSponsorChildSubmission.bind(this);
+        // Handlers for donation updates
         this.handleDonationClick = this.handleDonationClick.bind(this);
+        this.donationDurationChangeHandler = this.donationDurationChangeHandler.bind(this);
+        // Handlers for sponsorship flows.
+        this.handleSponsorChildSubmission = this.handleSponsorChildSubmission.bind(this);
+        this.sponsorInfoChangeHandler = this.sponsorInfoChangeHandler.bind(this);
+        this.sponsorInfoSubmitHandler = this.sponsorInfoSubmitHandler.bind(this);
     }
 
     /**
@@ -48,6 +61,46 @@ class Main extends Component {
         this.setState({ selectedLocale: selectedLocale });
         i18n.changeLanguage(selectedLocale);
     }
+
+    /**
+     * Handler for sponsor info changes.
+     */
+    sponsorInfoChangeHandler(field) {
+        let self = this;
+        return (event) => {
+            let newValue = event.target.value;
+            self.setState(prevState => ({
+                sponsor: {
+                    ...prevState.sponsor,
+                    [field]: newValue
+                },
+            }));
+        }
+    }
+
+    /**
+     * Handler for the sponsor info submission button.
+     */
+    sponsorInfoSubmitHandler() {
+        let self = this;
+        console.log(this.state);
+        let selectedChildIds = [];
+        this.props.selectedChildren.map((childContainer) => selectedChildIds.push(childContainer.child.childId));
+        axios.post('/sponsor-info/submit/', {
+            sponsor: this.state.sponsor,
+            donation: this.state.donation,
+            children: selectedChildIds
+
+        })
+        .then(function (response) {
+            console.log(response);
+            self.props.history.push("/thank-you/");
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
 
     /**
      * Handles form submission after user has selected the children he or she wants to sponsor.
@@ -71,8 +124,7 @@ class Main extends Component {
                 console.log(response);
                 self.setState({ 
                     selectedChildren: response.data.children, 
-                    sponsor: response.data.sponsor,
-                    donation: response.data.donation,
+                    donation: { donationAmount: response.data.donation.donationAmount, donationDuration: DonationDuration.MONTHLY},
                     allowDonationDurationChange: false
                 });
                 // Manually change route after successful response from backend.
@@ -97,21 +149,49 @@ class Main extends Component {
         history.push("/sponsor-info/");
     }
 
+    /**
+     * Handler for donation duration changes.
+     */
+    donationDurationChangeHandler(donationDuration) {
+        let self = this;
+        return () => {
+            self.setState(prevState => ({
+                donation: {
+                    ...prevState.donation,
+                    donationDuration: donationDuration
+                },
+            }));
+        }
+    }
+
 
     render() {
         return (
-            <div>
+            // Add padding-top to accommodate room for the navigation bar.
+            <div className="tucklets-nav-padding">
                 <BrowserRouter>
                     <TuckletsNavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} />
                     <Route exact path="/sponsor-info/">
                         <SponsorInfoPage 
                             selectedChildren={this.state.selectedChildren} 
-                            donationAmount={this.state.donation.donationAmount}
-                            donationDuration={this.state.donation.donationDuration} 
+                            donation={this.state.donation}
                             i18n={i18n} 
                             handleSelectedLocaleChange={this.handleSelectedLocaleChange}
                             payPalClientId={this.state.payPalClientId}
                             allowDonationDurationChange={this.state.allowDonationDurationChange}
+                            sponsor={this.state.sponsor}
+                            sponsorInfoChangeHandler={this.sponsorInfoChangeHandler}
+                        />
+                    </Route>
+                    <Route exact path="/sponsor-info/confirm/">
+                        <ConfirmationPage 
+                            selectedChildren={this.state.selectedChildren} 
+                            donation={this.state.donation}
+                            i18n={i18n} 
+                            handleSelectedLocaleChange={this.handleSelectedLocaleChange}
+                            payPalClientId={this.state.payPalClientId}
+                            willPayByCheck={true}
+                            sponsor={this.state.sponsor}
                         />
                     </Route>
                     <Route exact path="/thank-you/">
