@@ -29,6 +29,13 @@ public class BasicController {
 
     @RequestMapping("/")
     public String init() {
+//        return "redirect:/admin/children-dashboard/";
+        return "home";
+    }
+
+    // TODO: Remove this method after we figure a way to create default admin.
+    @RequestMapping("/info/resetAdmins")
+    public String resetAdmins() {
         adminService.resetAdmins();
         // Encrypt password
         String hashedPassword = passwordEncoder.encode("password");
@@ -40,8 +47,7 @@ public class BasicController {
         admin.setUsername("admin");
         admin.setEnabled(true);
         adminService.saveAdmin(admin);
-//        return "redirect:/admin/children-dashboard/";
-        return "home";
+        return "success";
     }
 
 
