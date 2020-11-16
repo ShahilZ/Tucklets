@@ -48,7 +48,6 @@ data "template_file" "container_image" {
     service_email_password = var.service_email_password
     postgres_user          = var.postgres_user
     postgres_creds         = var.postgres_creds
-    s3_bucket_name         = var.s3_bucket_name
     ssl_key_store_password = var.ssl_key_store_password
     paypal_client_id       = var.paypal_client_id
   }

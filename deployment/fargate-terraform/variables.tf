@@ -112,10 +112,6 @@ variable "postgres_creds" {
   description = "Postgres user's password"
 }
 
-variable "s3_bucket_name" {
-  description = "Name of the s3 bucket"
-}
-
 variable "paypal_client_id" {
   description = "Paypal client id"
 }
