@@ -22,9 +22,8 @@ class NewslettersPage extends Component {
 
     
     componentDidMount() {
-        let name = '';
         axios.get('/info/fetchNewsletters').then((response) => {
-            if (response.data.newsletters) {
+            if (response.data.newsletters.length > 0) {
                 this.setState({ newsletters: response.data.newsletters });
             }
         })

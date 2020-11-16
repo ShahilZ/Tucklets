@@ -1,5 +1,6 @@
 package com.tucklets.app.services;
 
+import com.tucklets.app.configs.AwsConfig;
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.ChildAdditionalDetail;
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class ManageChildrenService {
+
+    @Autowired
+    AwsConfig awsConfig;
 
     @Autowired
     ChildService childService;
@@ -61,7 +65,7 @@ public class ManageChildrenService {
             simpleS3Service.uploadFile(
                 imageKey,
                 S3Utils.convertMultiPartToFile(childDetails.getChildImageFile()),
-                S3Utils.S3_IMAGES_BUCKET_NAME);
+                awsConfig.getS3ImagesBucketName());
         }
     }
 
@@ -87,7 +91,7 @@ public class ManageChildrenService {
                         ? additionalDetails.getImageLocation()
                         : Constants.MISSING_PHOTO_URL;
                 childDetailsContainer.setChildImageLocation(
-                        S3Utils.computeS3Key(imageLocation, S3Utils.S3_IMAGES_BUCKET_BASE_URL)
+                        S3Utils.computeS3Key(imageLocation, awsConfig.getS3ImagesBucketUrl())
                 );
                 childContainerList.add(childDetailsContainer);
             }
@@ -117,7 +121,7 @@ public class ManageChildrenService {
                 ? Constants.DEFAULT_IMAGE_LOCATION
                 : childAdditionalDetail.getImageLocation();
         childDetailsContainer.setChildImageLocation(
-            S3Utils.computeS3Key(imageLocation, S3Utils.S3_IMAGES_BUCKET_BASE_URL));
+            S3Utils.computeS3Key(imageLocation, awsConfig.getS3ImagesBucketUrl()));
         return childDetailsContainer;
     }
 

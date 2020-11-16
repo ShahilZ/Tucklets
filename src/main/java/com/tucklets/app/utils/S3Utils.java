@@ -1,5 +1,7 @@
 package com.tucklets.app.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -13,11 +15,6 @@ import java.util.Objects;
 public class S3Utils {
 
     private S3Utils(){};
-
-    public static String S3_IMAGES_BUCKET_BASE_URL = "https://tucklets-images.s3-us-west-1.amazonaws.com/";
-    public static String S3_NEWSLETTERS_BUCKET_BASE_URL = "https://tucklets-newsletters.s3-us-west-1.amazonaws.com/";
-    public static String S3_IMAGES_BUCKET_NAME = "tucklets-images";
-    public static String S3_NEWSLETTERS_BUCKET_NAME = "tucklets-newsletters";
 
     /**
      * Takes the given MultipartFile and converts that to a File.

@@ -1,5 +1,6 @@
 package com.tucklets.app.services;
 
+import com.tucklets.app.configs.AwsConfig;
 import com.tucklets.app.containers.admin.NewsletterStatusContainer;
 import com.tucklets.app.containers.admin.NewsletterStatusContainer.NewsletterStatus;
 import com.tucklets.app.db.repositories.NewsletterRepository;
@@ -18,6 +19,9 @@ import java.util.Optional;
 
 @Service
 public class NewsletterService {
+
+    @Autowired
+    AwsConfig awsConfig;
 
     @Autowired
     EmailService emailService;
@@ -55,7 +59,7 @@ public class NewsletterService {
         simpleS3Service.uploadFile(
             filename,
             S3Utils.convertMultiPartToFile(file),
-            S3Utils.S3_NEWSLETTERS_BUCKET_NAME);
+            awsConfig.getS3NewslettersBucketName());
 
         // Store metadata in db.
         addNewsletter(new Newsletter(file.getOriginalFilename(), new Date()));
@@ -70,7 +74,7 @@ public class NewsletterService {
         if (newsletterOptional.isPresent()) {
             Newsletter newsletter = newsletterOptional.get();
             String newsletterLocation = newsletter.getFilename();
-            simpleS3Service.deleteFile(newsletterLocation, S3Utils.S3_NEWSLETTERS_BUCKET_NAME);
+            simpleS3Service.deleteFile(newsletterLocation, awsConfig.getS3NewslettersBucketName());
             newsletterRepository.delete(newsletter);
         }
         else {
