@@ -3,6 +3,47 @@
     padding-top: 76px;
 }
 
+.tucklets-main {
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #8fa7b6;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(78, 104, 120, 0.25);
+    }
+
+    // Overriding all .btn.btn-primary button for buttons in css class .tucklets-main
+    .btn.btn-primary {
+        color: #ffff;
+        background-color: #2AAAC5;
+        border-color: #4AD3B8;
+        &:focus {
+           color: #ffff;
+           box-shadow: 0 0 0 0.2rem rgba(104, 140, 161, 0.25);
+        }
+        &:hover {
+            background-color: #4973AD;
+        }
+        &:active {
+            color: #fff !important; 
+            // Overriding the active css 
+            background-color: #4973AD !important;
+            box-shadow: 0 0 0 0.2rem rgba(104, 140, 161, 0.25) !important;
+        }
+    }
+
+    .button.btn-primary:hover {
+        background-color: red; /* Green */
+        color: white;
+      }
+
+    .btn.btn-secondary {
+        color: #ffff;
+        background-color: #4E6878;
+        border-color: #4E6878;
+    }
+}
+
 .tucklets-nav {
     background-color: #fff;
     .nav-links.navbar-nav {

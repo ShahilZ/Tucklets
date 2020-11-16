@@ -1,23 +1,39 @@
 {
     "sponsor-info": "Sponsor Info",
-    "title": "Sponsor Information",
+    "title": "Your Payment",
     "subtitle": "Thank you for your support!",
     "description": "You can sponsor one or more children or teacher from the list below.",
     "form_header_personal": "Personal Information",
+    "form_header_address": "Address",
     "form_first_name": "First Name *",
     "form_last_name": "Last Name *",
     "form_email": "Email *",
+    "form_phone_number": "Phone Number",
     "form_address": "Address",
     "form_church_name": "Church Name",
+    "form_street_address": "Street Address",
+    "form_country": "Country/Region",
+    "form_city": "City",
+    "form_state":"State/Province",
+    "form_zip": "Zip",
+
     "form_placeholder_first_name": "First Name",
     "form_placeholder_last_name": "Last Name",
     "form_placeholder_email": "awesome@yahoo.com",
+    "form_placeholder_phone_number": "xxx-xxx-xxxx",
     "form_placeholder_address": "ex. 1234 Address Here",
     "form_placeholder_church_name": "Optional Church Name",
 
-    "form_header_donation_info": "Donation Information",
-    "form_amount": "Amount",
-    "form_duration": "Duration",
+    "form_error_first_name": "Please provide a valid first name.",
+    "form_error_last_name": "Please provide a valid last name.",
+    "form_error_email": "Please provide a valid email address.",
 
-    "form_submit": "Submit"
+    "form_newsletters_subscription_checkbox": "Subscribe me to receive Tucklets newsletters",
+    "form_pay_by_check_checkbox": "I want to pay by check",
+
+    "form_header_donation_info": "Donation Information",
+    "form_duration": "Duration",
+    "form_amount": "Amount",
+    
+    "form_submit": "NEXT"
 }

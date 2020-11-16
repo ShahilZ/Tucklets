@@ -42,6 +42,9 @@ public class Sponsor {
     @Column(name = "subscribed", nullable = false)
     private boolean subscribed;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "creation_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date creationDate;
@@ -113,6 +116,14 @@ public class Sponsor {
 
     public void setSubscribed(boolean subscribed) {
         this.subscribed = subscribed;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Date getCreationDate() {

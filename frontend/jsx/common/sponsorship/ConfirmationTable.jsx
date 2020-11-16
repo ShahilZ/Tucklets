@@ -35,7 +35,12 @@ const ConfirmationTable = ({ i18n, sponsor, donation }) => {
                                 <span>{sponsor.email}</span>
                             </td>
                             <td>
-                                <span>{!!sponsor.address ? sponsor.address : i18n.t("confirm:not_provided")}</span>
+                                { sponsor.address.streetAddress == "" && <span>{i18n.t("confirm:not_provided")}</span>}
+
+                                { sponsor.address.streetAddress != "" && 
+                                    <div><span>{sponsor.address.streetAddress} </span><br />
+                                    <span>{sponsor.address.city}, {sponsor.address.state} {sponsor.address.zip}</span> <br />
+                                    <span>{sponsor.address.country}</span></div> }
                             </td>
                         </tr>
                         <tr className="confirmation-spacer"></tr>
