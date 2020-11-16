@@ -23,6 +23,7 @@ class NewslettersPage extends Component {
     
     componentDidMount() {
         axios.get('/info/fetchNewsletters').then((response) => {
+            // Only update state if there are newsletters to display.
             if (response.data.newsletters.length > 0) {
                 this.setState({ newsletters: response.data.newsletters });
             }
