@@ -1,6 +1,7 @@
 package com.tucklets.app.controllers;
 
 import com.google.gson.Gson;
+import com.tucklets.app.configs.AwsConfig;
 import com.tucklets.app.containers.SponsorAChildContainer;
 import com.tucklets.app.services.ManageChildrenService;
 import com.tucklets.app.services.NewsletterService;
@@ -18,6 +19,9 @@ public class InfoController {
     private static final Gson GSON = new Gson();
 
     @Autowired
+    AwsConfig awsConfig;
+
+    @Autowired
     NewsletterService newslettersService;
 
     @Autowired
@@ -30,7 +34,7 @@ public class InfoController {
 
     @GetMapping("/fetchNewsletters")
     public String fetchNewsletters() {
-        return GSON.toJson(NewsletterUtils.createNewslettersContainer(newslettersService));
+        return GSON.toJson(NewsletterUtils.createNewslettersContainer(newslettersService, awsConfig));
     }
 
     @GetMapping(value = "/fetchChildren")

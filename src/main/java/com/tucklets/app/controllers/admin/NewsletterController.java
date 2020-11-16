@@ -1,6 +1,7 @@
 package com.tucklets.app.controllers.admin;
 
 import com.google.gson.Gson;
+import com.tucklets.app.configs.AwsConfig;
 import com.tucklets.app.containers.NewslettersContainer;
 import com.tucklets.app.containers.admin.NewsletterStatusContainer;
 import com.tucklets.app.entities.Sponsor;
@@ -31,6 +32,9 @@ public class NewsletterController {
     private static final Gson GSON = new Gson();
 
     @Autowired
+    AwsConfig awsConfig;
+
+    @Autowired
     NewsletterService newslettersService;
 
     @Autowired
@@ -38,7 +42,8 @@ public class NewsletterController {
 
     @GetMapping("/")
     public String viewNewsletters(Model model) {
-        NewslettersContainer newslettersContainer = NewsletterUtils.createNewslettersContainer(newslettersService);
+        NewslettersContainer newslettersContainer =
+                NewsletterUtils.createNewslettersContainer(newslettersService, awsConfig);
         model.addAttribute("newslettersContainer", newslettersContainer);
         model.addAttribute("localeContainer", ContainerUtils.createLocaleContainer());
         return "admin/manage-newsletters";

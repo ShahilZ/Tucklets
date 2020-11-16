@@ -1,5 +1,6 @@
 package com.tucklets.app.services;
 
+import com.tucklets.app.configs.AwsConfig;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Newsletter;
@@ -18,6 +19,9 @@ import java.util.List;
 
 @Service
 public class EmailService {
+
+    @Autowired
+    AwsConfig awsConfig;
 
     @Autowired
     JavaMailSender javaMailSender;
@@ -82,7 +86,7 @@ public class EmailService {
      * Sends newsletter email with the newsletter attached.
      */
     public void sendNewsletterEmail(List<Sponsor> sponsors, Newsletter newsletter) {
-        String newsletterLink = S3Utils.computeS3Key(newsletter.getFilename(), S3Utils.S3_NEWSLETTERS_BUCKET_BASE_URL);
+        String newsletterLink = S3Utils.computeS3Key(newsletter.getFilename(), awsConfig.getS3NewslettersBucketUrl());
 
         for (Sponsor sponsor : sponsors) {
             MimeMessagePreparator messagePreparator = message -> {
