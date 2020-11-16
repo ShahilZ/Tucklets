@@ -1,8 +1,11 @@
+@mixin confirmation-box-shadow {
+    box-shadow: 0px 0px 2px 8px #c9bbfb26;
+}
 
-.confirmation-body {
+.confirmation-summary {
     .confirmation-div {
-        height: 250px;
-        box-shadow: 0px 0px 2px 8px #c9bbfb26;
+        height: 150px;
+        @include confirmation-box-shadow;
         background-color: #ffff;
     
         .confirmation-table {
@@ -13,4 +16,18 @@
             }
         }
     }
+}
+
+.confirmation-check-div {
+    padding: 10px;
+    @include confirmation-box-shadow;
+}
+
+.confirmation-header {
+    color: #666666
+}
+
+.confirmation-submission-button {
+    display: flex;
+    justify-content: center;
 }

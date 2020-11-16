@@ -7,7 +7,8 @@ import '../../../static/scss/confirmation';
  */
 const ConfirmationTable = ({ i18n, sponsor, donation }) => {
     return (
-        <div className="confirmation-body container">
+        <div className="confirmation-summary">
+            <h4 className="confirmation-header">{i18n.t("confirm:personal")}</h4>
             <div className="confirmation-div">
                 <table className="confirmation-table">
                     <thead />
@@ -34,7 +35,7 @@ const ConfirmationTable = ({ i18n, sponsor, donation }) => {
                                 <span>{sponsor.email}</span>
                             </td>
                             <td>
-                                <span>{sponsor.address}</span>
+                                <span>{!!sponsor.address ? sponsor.address : i18n.t("confirm:not_provided")}</span>
                             </td>
                         </tr>
                         <tr className="confirmation-spacer"></tr>
@@ -55,7 +56,7 @@ const ConfirmationTable = ({ i18n, sponsor, donation }) => {
                                 <span>{i18n.t("confirm:form_sponsorship")}</span>
                             </td>
                             <td>
-                            <span>{i18n.t(`confirm:${donation.donationDuration}`)}</span>
+                            <span>{i18n.t(`confirm:${donation.donationDuration.toLowerCase()}`)}</span>
                             </td>
                             <td>
                                 <span>{donation.donationAmount}</span>

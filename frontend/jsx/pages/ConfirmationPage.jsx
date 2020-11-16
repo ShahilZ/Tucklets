@@ -25,7 +25,9 @@ const props = {
     /** The PayPal Client ID necessary to complete payment. */
     payPalClientId: PropTypes.string.isRequired,
     /** Boolean that indicates whether the user wants to pay by check */
-    willPayByCheck: PropTypes.bool.isRequired
+    willPayByCheck: PropTypes.bool.isRequired,
+    /** Handler that will submit the payment to the payment processor + backend. */
+    submitButtonHandler: PropTypes.func.isRequired
 }
 
 class ConfirmationPage extends Component {
@@ -40,13 +42,17 @@ class ConfirmationPage extends Component {
 
     }
 
+    componentDidMount(){ 
+        window.scrollTo(0,0);
+    }
+
 
     /**
      * Handler to render all selected children from the user.
      */
     renderSelectedChildren() {
         return (
-            <div className="container selected-children-div">
+            <div className="row container selected-children-div">
                 {this.props.selectedChildren.map((childContainer) => (
                     <div className="child-div col-12 col-sm-6 col-md-4" key={`child-id${childContainer.child.childId}`}>
                         <ChildImageContainer i18n={this.props.i18n} childContainer={childContainer} />
@@ -63,7 +69,19 @@ class ConfirmationPage extends Component {
     renderPayByCheckView() {
         return (
             <div>
-                Check
+                <h4 className="confirmation-header">{this.props.i18n.t("confirm:check_header")}</h4>
+                <div className="confirmation-check-div">
+                    <p>
+                        {this.props.i18n.t("confirm:check_directions")}
+                    </p>
+                    <div className="text-center">
+                        <p>{this.props.i18n.t("confirm:check_address_line_1")}</p>
+                        <p>{this.props.i18n.t("confirm:check_address_line_2")}</p>
+                    </div>
+                    <div className="confirmation-submission-button">
+                    <div className="btn btn-primary" onClick={this.props.submitButtonHandler}>{this.props.i18n.t("confirm:check_submit")}</div>
+                </div>
+                </div>
             </div>
         )
     }
@@ -95,9 +113,12 @@ class ConfirmationPage extends Component {
                         <p className="lead">{`${this.props.i18n.t("confirm:subtitle")}`}</p>
                     </div>
                 </div>
-                {this.renderSelectedChildren()}
-                <ConfirmationTable i18n={this.props.i18n} sponsor={this.props.sponsor} donation={this.props.donation} />
-                {paymentOptions}
+                <div className="container">
+                    <ConfirmationTable i18n={this.props.i18n} sponsor={this.props.sponsor} donation={this.props.donation} />
+                    <br />
+                    {paymentOptions}
+                    {/* {this.renderSelectedChildren()} */}
+                </div>
             </div>
         )
     }
