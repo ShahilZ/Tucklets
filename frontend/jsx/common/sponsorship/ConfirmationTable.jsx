@@ -5,10 +5,7 @@ import '../../../static/scss/confirmation';
 /**
  * Component used to generate the confirmation div/table.
  */
-
-
 const ConfirmationTable = ({ i18n, sponsor, donation }) => {
-
     return (
         <div className="confirmation-summary">
             <h4 className="confirmation-header">{i18n.t("confirm:personal")}</h4>

@@ -57,9 +57,6 @@ public class Sponsor {
     @Temporal(TemporalType.DATE)
     private Date deletionDate;
 
-    public Sponsor() {
-    }
-
     @PreUpdate
     void onUpdate() {
         this.setLastUpdateDate(new Date());
