@@ -76,14 +76,9 @@ class Main extends Component {
      */
     handleSponsorFormClick(values) {
         console.log("values from main.jsx:", values )
-
         let self = this;
         this.setState({ sponsor: values.sponsor });
-
         console.log("state from main.jsx:", this.state.sponsor )
-        //console.log("hellllllo");
-
-       
     }
 
     /**

@@ -67,7 +67,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                 </div>
                                 <Form.Row>
                                     <Form.Group md={6} as={Col} controlId="firstName">
-                                        <Form.Label>{`${i18n.t("sponsor_info:form_first_name")}`}</Form.Label>
+                                        <Form.Label>{i18n.t("sponsor_info:form_first_name")}</Form.Label>
                                         <Form.Control 
                                             type="text"
                                             name="sponsor.firstName"
@@ -80,12 +80,12 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                             isValid={getIn(touched, "sponsor.firstName") && !getIn(errors, "sponsor.firstName")}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            {`${i18n.t("sponsor_info:form_error_first_name")}`}
+                                            {i18n.t("sponsor_info:form_error_first_name")}
                                         </Form.Control.Feedback>
                                         <Form.Control.Feedback type="valid" />
                                     </Form.Group>
                                     <Form.Group md={6} as={Col} controlId="lastName">
-                                        <Form.Label>{`${i18n.t("sponsor_info:form_last_name")}`}</Form.Label>
+                                        <Form.Label>{i18n.t("sponsor_info:form_last_name")}</Form.Label>
                                         <Form.Control 
                                             type="text"
                                             name="sponsor.lastName"
@@ -96,14 +96,14 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                             placeholder={i18n.t("sponsor_info:form_placeholder_last_name")}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                            {`${i18n.t("sponsor_info:form_error_last_name")}`}
+                                            {i18n.t("sponsor_info:form_error_last_name")}
                                         </Form.Control.Feedback>
                                         <Form.Control.Feedback type="valid" />
                                     </Form.Group>
                                 </Form.Row>
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="email">
-                                        <Form.Label>{`${i18n.t("sponsor_info:form_email")}`}</Form.Label>
+                                        <Form.Label>{i18n.t("sponsor_info:form_email")}</Form.Label>
                                         <Form.Control 
                                             type="text" 
                                             name="sponsor.email"
@@ -114,7 +114,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                             placeholder={i18n.t("sponsor_info:form_placeholder_email")}
                                         />
                                         <Form.Control.Feedback type="invalid">
-                                           {`${i18n.t("sponsor_info:form_error_email")}`}
+                                           {i18n.t("sponsor_info:form_error_email")}
                                         </Form.Control.Feedback>
                                         <Form.Control.Feedback type="valid" />
                                     </Form.Group>
@@ -123,7 +123,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                 </Form.Row>
                                 <Form.Row>
                                     <Form.Group md={6} as={Col} controlId="phoneNumber">
-                                        <Form.Label>{`${i18n.t("sponsor_info:form_phone_number")}`}</Form.Label>   
+                                        <Form.Label>{i18n.t("sponsor_info:form_phone_number")}</Form.Label>   
                                         <Form.Control 
                                             placeholder={i18n.t("sponsor_info:form_placeholder_phone_number")}
                                             type="text"
@@ -133,7 +133,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                         />
                                     </Form.Group>
                                     <Form.Group md={6} as={Col} controlId="churchName">
-                                        <Form.Label>{`${i18n.t("sponsor_info:form_church_name")}`}</Form.Label>   
+                                        <Form.Label>{i18n.t("sponsor_info:form_church_name")}</Form.Label>   
                                         <Form.Control 
                                             placeholder={i18n.t("sponsor_info:form_placeholder_church_name")}
                                             type="text"
@@ -149,20 +149,20 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                         inline
                                         custom
                                         name="sponsor.subscribed"
-                                        id="subsribed"
+                                        id="subscribed"
                                         checked={values.sponsor.subscribed}
                                         type="checkbox"
-                                        onChange={() => setFieldValue("subscribed", !values.sponsor.subscribed)}
+                                        onChange={() => setFieldValue("sponsor.subscribed", !values.sponsor.subscribed)}
                                     />
                                 </Form.Group>
                             </Col>
                             <Col xl={6}>
                                 <div className="mb-3">
-                                    <h4>{`${i18n.t("sponsor_info:form_header_address")}`}</h4>
+                                    <h4>{i18n.t("sponsor_info:form_header_address")}</h4>
                                 </div>
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="streetAddress">
-                                        <Form.Label>Street Address</Form.Label>
+                                        <Form.Label>{i18n.t("sponsor_info:form_street_address")}</Form.Label>
                                         <Form.Control 
                                             placeholder="Street name, number, P.O box, Apt #"
                                             name="sponsor.address.streetAddress"
@@ -173,7 +173,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                 </Form.Row>
                                 <Form.Row>
                                     <Form.Group md={6} as={Col} controlId="country">
-                                        <Form.Label>Country/Region</Form.Label>
+                                        <Form.Label>{i18n.t("sponsor_info:form_country")}</Form.Label>
                                         <Form.Control 
                                             name="sponsor.address.country"
                                             value={values.sponsor.address.country}
@@ -181,7 +181,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                         />
                                     </Form.Group>
                                     <Form.Group md={6} as={Col} controlId="city">
-                                        <Form.Label>City</Form.Label>
+                                        <Form.Label>{i18n.t("sponsor_info:form_city")}</Form.Label>
                                         <Form.Control 
                                             name="sponsor.address.city"
                                             value={values.sponsor.address.city}
@@ -191,7 +191,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                 </Form.Row>
                                 <Form.Row>
                                     <Form.Group as={Col} controlId="state">
-                                        <Form.Label>State</Form.Label>
+                                        <Form.Label>{i18n.t("sponsor_info:form_state")}</Form.Label>
                                         <Form.Control 
                                             name="sponsor.address.state"
                                             value={values.sponsor.address.state}
@@ -199,7 +199,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                         />
                                     </Form.Group>
                                     <Form.Group as={Col} controlId="zip">
-                                        <Form.Label>Zip</Form.Label>
+                                        <Form.Label>{i18n.t("sponsor_info:form_zip")}</Form.Label>
                                         <Form.Control 
                                             name="sponsor.address.zip"
                                             value={values.sponsor.address.zip}
@@ -213,7 +213,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                             <Col>
                                 <Form.Group>
                                     <Form.Check 
-                                        label={`${i18n.t("sponsor_info:form_pay_by_check_checkbox")}`}
+                                        label={i18n.t("sponsor_info:form_pay_by_check_checkbox")}
                                         name="sponsor.payByCheck"
                                         id="payByCheck"
                                         inline
@@ -226,7 +226,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                             </Col>
                         </Row>
                         <Row className="ml-3 sponsor-form-bottom">
-                            <Button className="sponsor-form-btn btn button-primary" type="submit">{`${i18n.t("sponsor_info:form_submit")}`}</Button>
+                            <Button className="sponsor-form-btn btn button-primary" type="submit">{i18n.t("sponsor_info:form_submit")}</Button>
                         </Row>
                     </Form>
                 )}
