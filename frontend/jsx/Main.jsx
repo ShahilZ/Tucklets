@@ -16,7 +16,7 @@ import DonatePage from './pages/DonatePage';
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
-import { DonationDuration } from './common/utils/donation';
+import { DonationDuration, PaymentMethod } from './common/utils/enum';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import '../static/css/bootstrap-agency-theme.css';
@@ -44,9 +44,13 @@ class Main extends Component {
                 subscribed: false,
                 phoneNumber: "",
             },
-            donation: {donationAmount: 0, donationDuration: DonationDuration.ONCE },
-            allowDonationDurationChange: true,
-            payPalClientId: ""
+            donation: {
+                donationAmount: 0, 
+                donationDuration: DonationDuration.ONCE,
+                paymentMethod: PaymentMethod.PAYPAL }, // default payment method is Paypal. Other options include Check
+            // allowDonationDurationChange: true,
+            payPalClientId: "",
+            willPayByCheck: false // this will be used to determine the paymentMethod above.
         };
 
         // Bind handlers here
@@ -74,11 +78,16 @@ class Main extends Component {
      * Handler for the Sponsor Form 'NEXT' button click. 
      * Takes in 'values' object which contains an object of fields to values on the form.
      */
-    handleSponsorFormClick(values) {
-        console.log("values from main.jsx:", values )
+    handleSponsorFormClick(history) {
         let self = this;
-        this.setState({ sponsor: values.sponsor });
-        console.log("state from main.jsx:", this.state.sponsor )
+        return (values) => {
+            values.donation.paymentMethod = values.willPayByCheck ? PaymentMethod.CHECK : PaymentMethod.PAYPAL;
+            self.setState({ 
+                sponsor: values.sponsor, 
+                donation: values.donation 
+            });
+            history.push("confirm");
+        }
     }
 
     /**
@@ -128,7 +137,7 @@ class Main extends Component {
                 self.setState({ 
                     selectedChildren: response.data.children, 
                     donation: { donationAmount: response.data.donation.donationAmount, donationDuration: DonationDuration.MONTHLY},
-                    allowDonationDurationChange: false
+                    //allowDonationDurationChange: false
                 });
                 // Manually change route after successful response from backend.
                 history.push("/sponsor-info/");
@@ -146,7 +155,7 @@ class Main extends Component {
     handleDonationClick(amount, donationDuration, history) {
         this.setState({ 
             donation: { donationAmount: parseInt(amount), donationDuration: donationDuration },
-            allowDonationDurationChange: true
+            //allowDonationDurationChange: true
         });
         // Manually change route after successful validation.
         history.push("/sponsor-info/");
@@ -181,8 +190,9 @@ class Main extends Component {
                             i18n={i18n} 
                             handleSelectedLocaleChange={this.handleSelectedLocaleChange}
                             payPalClientId={this.state.payPalClientId}
-                            allowDonationDurationChange={this.state.allowDonationDurationChange}
+                            //allowDonationDurationChange={this.state.allowDonationDurationChange}
                             sponsor={this.state.sponsor}
+                            willPayByCheck={this.state.willPayByCheck}
                             sponsorFormClickHandler={this.handleSponsorFormClick}
                         />
                     </Route>
@@ -193,7 +203,7 @@ class Main extends Component {
                             i18n={i18n} 
                             handleSelectedLocaleChange={this.handleSelectedLocaleChange}
                             payPalClientId={this.state.payPalClientId}
-                            willPayByCheck={true}
+                            willPayByCheck={this.state.donation.paymentMethod == PaymentMethod.CHECK}
                             sponsor={this.state.sponsor}
                             submitButtonHandler={this.handleSponsorshipSubmission}
                         />

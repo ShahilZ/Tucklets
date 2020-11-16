@@ -5,6 +5,7 @@
     "description": "你可支持一位或多位的學生和老師",
     "form_header_personal": "個人資料",
     "form_header_address": "地址",
+    "form_header_donation": "Donation",
     "form_first_name": "名字 *",
     "form_last_name": "姓氏 *",
     "form_email": "電郵 *",
