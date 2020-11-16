@@ -50,7 +50,7 @@ class Main extends Component {
         // Handlers for sponsorship flows.
         this.handleSponsorChildSubmission = this.handleSponsorChildSubmission.bind(this);
         this.sponsorInfoChangeHandler = this.sponsorInfoChangeHandler.bind(this);
-        this.sponsorInfoSubmitHandler = this.sponsorInfoSubmitHandler.bind(this);
+        this.handleSponsorshipSubmission = this.handleSponsorshipSubmission.bind(this);
     }
 
     /**
@@ -81,11 +81,11 @@ class Main extends Component {
     /**
      * Handler for the sponsor info submission button.
      */
-    sponsorInfoSubmitHandler() {
+    handleSponsorshipSubmission() {
         let self = this;
         console.log(this.state);
         let selectedChildIds = [];
-        this.props.selectedChildren.map((childContainer) => selectedChildIds.push(childContainer.child.childId));
+        this.state.selectedChildren.map((childContainer) => selectedChildIds.push(childContainer.child.childId));
         axios.post('/sponsor-info/submit/', {
             sponsor: this.state.sponsor,
             donation: this.state.donation,
@@ -192,6 +192,7 @@ class Main extends Component {
                             payPalClientId={this.state.payPalClientId}
                             willPayByCheck={true}
                             sponsor={this.state.sponsor}
+                            submitButtonHandler={this.handleSponsorshipSubmission}
                         />
                     </Route>
                     <Route exact path="/thank-you/">
@@ -205,7 +206,7 @@ class Main extends Component {
                         <br />
                         <OurStoryPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
                         <br />
-                        <NewslettersPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} /> 
+                        {/* <NewslettersPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />  */}
                         <br />
                         <DonatePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} handleDonationClick={this.handleDonationClick}  />
                         <br />

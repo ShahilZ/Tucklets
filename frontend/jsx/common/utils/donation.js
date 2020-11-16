@@ -1,4 +1,4 @@
 export const DonationDuration = {
-    ONCE: "once",
-    MONTHLY: "monthly"
+    ONCE: "ONCE",
+    MONTHLY: "MONTHLY"
 };

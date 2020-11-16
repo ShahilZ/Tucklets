@@ -13,4 +13,5 @@ public class Constants {
     public static final String CHILD_QR_CODE_BASE = "https://tucklets.herokuapp.com/sponsor-info/?childId=";
     public static final String CHILDREN_EXPORT_FILENAME = "children-export.pdf";
     public static final String DEFAULT_IMAGE_LOCATION = "test-kid.png";
+    public static final String MISSING_PHOTO_URL = "missing_photo_child.jpg";
 }

@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 public enum PaymentMethod
 {
-    PAYPAL(1);
+    CHECK(0), PAYPAL(1);
 
     private int paymentMethodValue;
 

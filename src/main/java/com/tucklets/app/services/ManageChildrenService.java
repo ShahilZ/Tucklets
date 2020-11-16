@@ -80,11 +80,15 @@ public class ManageChildrenService {
                 var age = CalculationUtils.calculateAge(child.getBirthYear());
                 childDetailsContainer.setAge(age);
                 childDetailsContainer.setChild(child);
-                // Fetch image location.
+                // Fetch image location
                 ChildAdditionalDetail additionalDetails =
                         childAdditionalDetailService.fetchChildAdditionalDetailById(child.getChildId());
+                String imageLocation = additionalDetails != null
+                        ? additionalDetails.getImageLocation()
+                        : Constants.MISSING_PHOTO_URL;
                 childDetailsContainer.setChildImageLocation(
-                    S3Utils.computeS3Key(additionalDetails.getImageLocation(), S3Utils.S3_IMAGES_BUCKET_BASE_URL));
+                        S3Utils.computeS3Key(imageLocation, S3Utils.S3_IMAGES_BUCKET_BASE_URL)
+                );
                 childContainerList.add(childDetailsContainer);
             }
         }
