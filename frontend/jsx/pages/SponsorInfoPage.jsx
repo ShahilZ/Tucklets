@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import DonationButtonGroup from '../common/DonationButtonGroup';
 import {Jumbotron, Form, Button, InputGroup, FormControl, Col, Row } from 'react-bootstrap';
-import SponsorForm from '../common/SponsorForm';
+import SponsorForm from '../common/sponsorship/SponsorForm';
 
 import '../../static/scss/basic.scss';
 import '../../static/scss/sponsor-info.scss';
@@ -23,8 +23,8 @@ const props = {
     payPalClientId: PropTypes.string.isRequired,
     /** Whether donation duration can be updated. */
     allowDonationDurationChange: PropTypes.bool.isRequired,
-    /** Handler for sponsor info changes */
-    sponsorInfoChangeHandler: PropTypes.func.isRequired
+    /** Handler for when Sponsor form 'NEXT' button is clicked */
+    sponsorFormClickHandler: PropTypes.func.isRequired
 }
 
 class SponsorInfoPage extends Component {
@@ -69,7 +69,12 @@ class SponsorInfoPage extends Component {
                         <h1 className="text-center text-md-left">{`${this.props.i18n.t("sponsor_info:title")}`}</h1>
                     </div>
                 </Jumbotron>
-                <SponsorForm i18n={this.props.i18n}/>
+                <SponsorForm 
+                    i18n={this.props.i18n} 
+                    sponsor={this.props.sponsor} 
+                    donation={this.props.donation} 
+                    sponsorFormClickHandler={this.props.sponsorFormClickHandler}
+                />
 
 
                 <div className="sponsor-info-div">

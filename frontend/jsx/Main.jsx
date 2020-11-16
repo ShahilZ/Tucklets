@@ -33,8 +33,16 @@ class Main extends Component {
                 firstName: "",
                 lastName: "",
                 email: "",
-                address: "",
-                churchName: ""
+                address: { 
+                    streetAddress: "", 
+                    city: "",
+                    zip: "",
+                    state: "",
+                    country: "" 
+                },
+                churchName: "",
+                subscribed: false,
+                phoneNumber: "",
             },
             donation: {donationAmount: 0, donationDuration: DonationDuration.ONCE },
             allowDonationDurationChange: true,
@@ -49,8 +57,8 @@ class Main extends Component {
         this.donationDurationChangeHandler = this.donationDurationChangeHandler.bind(this);
         // Handlers for sponsorship flows.
         this.handleSponsorChildSubmission = this.handleSponsorChildSubmission.bind(this);
-        this.sponsorInfoChangeHandler = this.sponsorInfoChangeHandler.bind(this);
         this.handleSponsorshipSubmission = this.handleSponsorshipSubmission.bind(this);
+        this.handleSponsorFormClick = this.handleSponsorFormClick.bind(this);
     }
 
     /**
@@ -62,20 +70,20 @@ class Main extends Component {
         i18n.changeLanguage(selectedLocale);
     }
 
-    /**
-     * Handler for sponsor info changes.
+     /**
+     * Handler for the Sponsor Form 'NEXT' button click. 
+     * Takes in 'values' object which contains an object of fields to values on the form.
      */
-    sponsorInfoChangeHandler(field) {
+    handleSponsorFormClick(values) {
+        console.log("values from main.jsx:", values )
+
         let self = this;
-        return (event) => {
-            let newValue = event.target.value;
-            self.setState(prevState => ({
-                sponsor: {
-                    ...prevState.sponsor,
-                    [field]: newValue
-                },
-            }));
-        }
+        this.setState({ sponsor: values.sponsor });
+
+        console.log("state from main.jsx:", this.state.sponsor )
+        //console.log("hellllllo");
+
+       
     }
 
     /**
@@ -180,7 +188,7 @@ class Main extends Component {
                             payPalClientId={this.state.payPalClientId}
                             allowDonationDurationChange={this.state.allowDonationDurationChange}
                             sponsor={this.state.sponsor}
-                            sponsorInfoChangeHandler={this.sponsorInfoChangeHandler}
+                            sponsorFormClickHandler={this.handleSponsorFormClick}
                         />
                     </Route>
                     <Route exact path="/sponsor-info/confirm/">

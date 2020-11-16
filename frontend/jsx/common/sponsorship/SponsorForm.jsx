@@ -1,75 +1,63 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import { Formik, useField, useFormikContext } from 'formik';
+import { getIn, Formik, useField, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import { DonationDuration } from '../../common/utils/donation';
 
 
-import '../../static/scss/basic.scss';
-import '../../static/scss/sponsor-info.scss';
+
+import '../../../static/scss/basic.scss';
+import '../../../static/scss/sponsor-info.scss';
 
 
 // Schema for yup
 const validationSchema = Yup.object().shape({
-    firstName: Yup.string()
-        .required(),
-    lastName: Yup.string()
-        .required(),
-    email: Yup.string()
-        .required()
-        .email(),
-    address: Yup.string(),
-    churchName: Yup.string(),
-    subscribed: false,
-    phoneNumber: Yup.string(),
-    streetAddress: Yup.string(),
-    city: Yup.string(),
-    zip: Yup.string(),
-    state: Yup.string(),
-    country: Yup.string() 
+    sponsor: Yup.object().shape({
+        firstName: Yup.string()
+            .required(),
+        lastName: Yup.string()
+            .required(),
+        email: Yup.string()
+            .required()
+            .email(),
+        churchName: Yup.string(),
+        phoneNumber: Yup.string(),
+        address: Yup.object().shape({
+            streetAddress: Yup.string(),
+            city: Yup.string(),
+            zip: Yup.string(),
+            state: Yup.string(),
+            country: Yup.string() 
+        }) 
+    })
   });
 
-const handleSubmitSponsorForm = (event) => {
-    const form = event.currentTarget;
-    const form1 = event.target;
-    console.log("event.currentTarget: ", form);
-    console.log("event.target: ", form1);
-    //{() => this.props.history.push("confirm")}
-}
 
-
-const SponsorForm = ({ i18n }) => {
+const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
+   
     return (
         <div className="sponsor-info-div">
             <div className="container">
             <Formik
                 // sets initial values for the form inputs
                 initialValues={{
-                    firstName: "",
-                    lastName: "",
-                    email: "",
-                    address: "",
-                    churchName: "",
-                    subscribed: false,
-                    phoneNumber: "",
-                    streetAddress: "",
-                    city: "",
-                    zip: "",
-                    state: "",
-                    country: "" }}
+                    sponsor: sponsor,
+                    donation: donation
+                    }}
                 validationSchema={validationSchema}
+                onSubmit={(values) => {sponsorFormClickHandler(values)} }
             >
                 {/* Callback functions containing Formik state and methods that handle common form actions */} 
                 { ({values, 
                     errors, 
                     touched, 
                     handleChange, 
-                    handleSubmit = {handleSubmitSponsorForm}, 
+                    handleSubmit, 
                     setFieldValue  }) => (
                         
                     <Form onSubmit={handleSubmit}> 
-                    {console.log("values: ", values)}
                         <Row>
                             {/* mb-4 means margin-botton to $spacer * 1.5. $spacer defined in bootstrap css
                             Look at https://getbootstrap.com/docs/4.0/utilities/spacing/ for more info. */}
@@ -82,14 +70,14 @@ const SponsorForm = ({ i18n }) => {
                                         <Form.Label>{`${i18n.t("sponsor_info:form_first_name")}`}</Form.Label>
                                         <Form.Control 
                                             type="text"
-                                            name="firstName"
-                                            value={values.firstName}
+                                            name="sponsor.firstName"
+                                            value={values.sponsor.firstName}
                                             onChange={handleChange}
                                             placeholder={i18n.t("sponsor_info:form_placeholder_first_name")}
                                             /* Check if the firstName field has been touched and
                                              if there is an error, if so add the .is_invalid bootstrap class */
-                                            isInvalid={touched.firstName && errors.firstName}
-                                            isValid={touched.firstName && !errors.firstName}
+                                            isInvalid={getIn(touched, "sponsor.firstName") && getIn(errors, "sponsor.firstName")}
+                                            isValid={getIn(touched, "sponsor.firstName") && !getIn(errors, "sponsor.firstName")}
                                         />
                                         <Form.Control.Feedback type="invalid">
                                             {`${i18n.t("sponsor_info:form_error_first_name")}`}
@@ -100,11 +88,11 @@ const SponsorForm = ({ i18n }) => {
                                         <Form.Label>{`${i18n.t("sponsor_info:form_last_name")}`}</Form.Label>
                                         <Form.Control 
                                             type="text"
-                                            name="lastName"
-                                            value={values.lastName}
+                                            name="sponsor.lastName"
+                                            value={values.sponsor.lastName}
                                             onChange={handleChange}
-                                            isInvalid={touched.lastName && errors.lastName}
-                                            isValid={touched.lastName && !errors.lastName}
+                                            isInvalid={getIn(touched, "sponsor.lastName") && getIn(errors, "sponsor.lastName")}
+                                            isValid={getIn(touched, "sponsor.lastName") && !getIn(errors, "sponsor.lastName")}
                                             placeholder={i18n.t("sponsor_info:form_placeholder_last_name")}
                                         />
                                         <Form.Control.Feedback type="invalid">
@@ -118,11 +106,11 @@ const SponsorForm = ({ i18n }) => {
                                         <Form.Label>{`${i18n.t("sponsor_info:form_email")}`}</Form.Label>
                                         <Form.Control 
                                             type="text" 
-                                            name="email"
-                                            value={values.email}
+                                            name="sponsor.email"
+                                            value={values.sponsor.email}
                                             onChange={handleChange}
-                                            isInvalid={touched.email && errors.email}
-                                            isValid={touched.email && !errors.email}
+                                            isInvalid={getIn(touched, "sponsor.email") && getIn(errors, "sponsor.email")}
+                                            isValid={getIn(touched, "sponsor.email") && !getIn(errors, "sponsor.email")}
                                             placeholder={i18n.t("sponsor_info:form_placeholder_email")}
                                         />
                                         <Form.Control.Feedback type="invalid">
@@ -139,8 +127,8 @@ const SponsorForm = ({ i18n }) => {
                                         <Form.Control 
                                             placeholder={i18n.t("sponsor_info:form_placeholder_phone_number")}
                                             type="text"
-                                            name="phoneNumber"
-                                            value={values.phoneNumber}
+                                            name="sponsor.phoneNumber"
+                                            value={values.sponsor.phoneNumber}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
@@ -149,8 +137,8 @@ const SponsorForm = ({ i18n }) => {
                                         <Form.Control 
                                             placeholder={i18n.t("sponsor_info:form_placeholder_church_name")}
                                             type="text"
-                                            name="churchName"
-                                            value={values.churchName}
+                                            name="sponsor.churchName"
+                                            value={values.sponsor.churchName}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
@@ -160,11 +148,11 @@ const SponsorForm = ({ i18n }) => {
                                         label={i18n.t("sponsor_info:form_newsletters_subscription_checkbox")}
                                         inline
                                         custom
-                                        name="subscribed"
+                                        name="sponsor.subscribed"
                                         id="subsribed"
-                                        checked={values.subscribed}
+                                        checked={values.sponsor.subscribed}
                                         type="checkbox"
-                                        onChange={() => setFieldValue("subscribed", !values.subscribed)}
+                                        onChange={() => setFieldValue("subscribed", !values.sponsor.subscribed)}
                                     />
                                 </Form.Group>
                             </Col>
@@ -177,8 +165,8 @@ const SponsorForm = ({ i18n }) => {
                                         <Form.Label>Street Address</Form.Label>
                                         <Form.Control 
                                             placeholder="Street name, number, P.O box, Apt #"
-                                            name="streetAddress"
-                                            value={values.streetAddress}
+                                            name="sponsor.address.streetAddress"
+                                            value={values.sponsor.address.streetAddress}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
@@ -187,16 +175,16 @@ const SponsorForm = ({ i18n }) => {
                                     <Form.Group md={6} as={Col} controlId="country">
                                         <Form.Label>Country/Region</Form.Label>
                                         <Form.Control 
-                                            name="country"
-                                            value={values.country}
+                                            name="sponsor.address.country"
+                                            value={values.sponsor.address.country}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
                                     <Form.Group md={6} as={Col} controlId="city">
                                         <Form.Label>City</Form.Label>
                                         <Form.Control 
-                                            name="city"
-                                            value={values.city}
+                                            name="sponsor.address.city"
+                                            value={values.sponsor.address.city}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
@@ -205,16 +193,16 @@ const SponsorForm = ({ i18n }) => {
                                     <Form.Group as={Col} controlId="state">
                                         <Form.Label>State</Form.Label>
                                         <Form.Control 
-                                            name="state"
-                                            value={values.state}
+                                            name="sponsor.address.state"
+                                            value={values.sponsor.address.state}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
                                     <Form.Group as={Col} controlId="zip">
                                         <Form.Label>Zip</Form.Label>
                                         <Form.Control 
-                                            name="zip"
-                                            value={values.zip}
+                                            name="sponsor.address.zip"
+                                            value={values.sponsor.address.zip}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
@@ -226,13 +214,13 @@ const SponsorForm = ({ i18n }) => {
                                 <Form.Group>
                                     <Form.Check 
                                         label={`${i18n.t("sponsor_info:form_pay_by_check_checkbox")}`}
-                                        name="payByCheck"
+                                        name="sponsor.payByCheck"
                                         id="payByCheck"
                                         inline
                                         custom
                                         type="checkbox"
-                                        checked={values.payByCheck}
-                                        onChange={() => setFieldValue("payByCheck", !values.payByCheck)}
+                                        checked={values.sponsor.payByCheck}
+                                        onChange={() => setFieldValue("payByCheck", !values.sponsor.payByCheck)}
                                     />
                                 </Form.Group>
                             </Col>
