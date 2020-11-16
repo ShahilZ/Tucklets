@@ -1,7 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types';
 
-import { DonationDuration } from '../common/utils/donation';
+import { DonationDuration } from './utils/enums';
 
 import '../../static/scss/donation.scss';
 
@@ -16,10 +16,11 @@ const props = {
     /** Whether a label needs to be generated or not. */
     shouldDisplayLabel: PropTypes.bool.isRequired,
     /** Whether the donation duration should be able to be changed. If so, only display the monthly duration option. */
-    shouldAllowDonationDurationChanges: PropTypes.bool.isRequired
+    //shouldAllowDonationDurationChanges: PropTypes.bool.isRequired
 }
  
-const DonationButtonGroup = ({ i18n, donationDurationChangeHandler, currentDonationDuration, shouldDisplayLabel, shouldAllowDonationDurationChanges }) => {
+const DonationButtonGroup = ({ i18n, donationDurationChangeHandler, currentDonationDuration, shouldDisplayLabel }) => {
+    let shouldAllowDonationDurationChanges = true;
     // Check if the currentDonationDuration is for one time. If it is, style accordingly.
     let isOneTimeDurationSelected = currentDonationDuration == DonationDuration.ONCE;
     let oneTimeDurationStyling = `col-md-6 btn btn-info donation-duration-button ${isOneTimeDurationSelected ? 'donation-duration-selected' : ''} `;

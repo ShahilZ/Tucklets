@@ -22,7 +22,9 @@ const props = {
     /** The PayPal Client ID necessary to complete payment. */
     payPalClientId: PropTypes.string.isRequired,
     /** Whether donation duration can be updated. */
-    allowDonationDurationChange: PropTypes.bool.isRequired,
+    //allowDonationDurationChange: PropTypes.bool.isRequired,
+    /** The boolean willPayByCheck determines if payment is by check or not. */
+    willPayByCheck: PropTypes.bool.isRequired,
     /** Handler for when Sponsor form 'NEXT' button is clicked */
     sponsorFormClickHandler: PropTypes.func.isRequired
 }
@@ -32,33 +34,12 @@ class SponsorInfoPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           
-            donation: {
-                donationAmount: props.donationAmount,
-                donationDuration: props.donationDuration,
-                // default to 0 for now.
-                paymentMethod: 0
-            }
-         };
-
-        this.paypalSuccessHandler = this.paypalSuccessHandler.bind(this);
+        };
     }
 
     componentDidMount(){ 
         window.scrollTo(0,0);
     }
-
-
-    /**
-     * Success handler for PayPal submission.
-     */
-    paypalSuccessHandler() {
-        let self = this;
-        return (details, data) => {
-            self.sponsorInfoSubmitHandler();
-        }
-    }
-    
 
     render() {
         // TODO: user refreshes the page or somehow gets here without going through the flow, redirect to the main page.
@@ -73,7 +54,8 @@ class SponsorInfoPage extends Component {
                     i18n={this.props.i18n} 
                     sponsor={this.props.sponsor} 
                     donation={this.props.donation} 
-                    sponsorFormClickHandler={this.props.sponsorFormClickHandler}
+                    willPayByCheck={this.props.willPayByCheck}
+                    sponsorFormClickHandler={this.props.sponsorFormClickHandler(this.props.history)}
                 />
 
 
@@ -91,7 +73,6 @@ class SponsorInfoPage extends Component {
                             /> */}
                             <label htmlFor="donation-amount">{`${this.props.i18n.t("sponsor_info:form_amount")}`}</label>
                             <input type="text" id="donation-amount" readOnly value={this.props.donation.donationAmount} />
-                            <div className="btn btn-secondary" onClick={() => this.props.history.push("confirm")}>Next</div>
                         </fieldset>
                     </form>
                 </div>

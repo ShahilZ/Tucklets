@@ -1,10 +1,8 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
 
-import { getIn, Formik, useField, useFormikContext } from 'formik';
+import { getIn, Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import { DonationDuration } from '../../common/utils/donation';
 
 
 
@@ -35,7 +33,7 @@ const validationSchema = Yup.object().shape({
   });
 
 
-const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
+const SponsorForm = ({ i18n, sponsor, donation, willPayByCheck, sponsorFormClickHandler }) => {
    
     return (
         <div className="sponsor-info-div">
@@ -44,8 +42,9 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                 // sets initial values for the form inputs
                 initialValues={{
                     sponsor: sponsor,
-                    donation: donation
-                    }}
+                    donation: donation,
+                    willPayByCheck: willPayByCheck
+                }}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {sponsorFormClickHandler(values)} }
             >
@@ -55,15 +54,20 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                     touched, 
                     handleChange, 
                     handleSubmit, 
-                    setFieldValue  }) => (
+                    setFieldValue }) => (
                         
                     <Form onSubmit={handleSubmit}> 
+                        <Row>
+                            <div className="mb-3">
+                                <h4>{i18n.t("sponsor_info:form_header_donation")}</h4>
+                            </div>
+                        </Row>
                         <Row>
                             {/* mb-4 means margin-botton to $spacer * 1.5. $spacer defined in bootstrap css
                             Look at https://getbootstrap.com/docs/4.0/utilities/spacing/ for more info. */}
                             <Col xl={6} className="mb-1">
                                 <div className="mb-3">
-                                    <h4>{`${i18n.t("sponsor_info:form_header_personal")}`}</h4>
+                                    <h4>{i18n.t("sponsor_info:form_header_personal")}</h4>
                                 </div>
                                 <Form.Row>
                                     <Form.Group md={6} as={Col} controlId="firstName">
@@ -214,13 +218,12 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                 <Form.Group>
                                     <Form.Check 
                                         label={i18n.t("sponsor_info:form_pay_by_check_checkbox")}
-                                        name="sponsor.payByCheck"
-                                        id="payByCheck"
+                                        name="willPayByCheck"
+                                        id="willPayByCheck"
                                         inline
                                         custom
                                         type="checkbox"
-                                        checked={values.sponsor.payByCheck}
-                                        onChange={() => setFieldValue("payByCheck", !values.sponsor.payByCheck)}
+                                        onClick={() => setFieldValue("willPayByCheck", !values.willpayByCheck)}
                                     />
                                 </Form.Group>
                             </Col>

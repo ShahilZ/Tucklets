@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
 
 import { DonationButtonGroup } from '../common/DonationButtonGroup';
-import { DonationDuration } from '../common/utils/donation';
+import { DonationDuration } from '../common/utils/enums';
 
 import '../../static/scss/info.scss';
 
