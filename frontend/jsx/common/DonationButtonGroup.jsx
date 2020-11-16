@@ -1,7 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types';
 
-import { DonationDuration } from './utils/enum';
+import { DonationDuration } from './utils/enums';
 
 import '../../static/scss/donation.scss';
 

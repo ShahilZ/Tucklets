@@ -16,7 +16,7 @@ import DonatePage from './pages/DonatePage';
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
-import { DonationDuration, PaymentMethod } from './common/utils/enum';
+import { DonationDuration, PaymentMethod } from './common/utils/enums';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import '../static/css/bootstrap-agency-theme.css';
