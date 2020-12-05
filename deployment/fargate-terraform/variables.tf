@@ -58,17 +58,17 @@ variable "service_name" {
 }
 
 variable "service_desired_task_count" {
-  default     = 2
+  default     = 1
   description = "Desired number of tasks"
 }
 
 variable "service_task_cpu_count" {
-  default     = 256
+  default     = 512
   description = "Number of cpus for service task"
 }
 
 variable "service_task_memory" {
-  default     = 1024
+  default     = 2048
   description = "Memory size for task"
 }
 

@@ -34,7 +34,7 @@ resource "aws_lb_target_group" "ecs_https_target_group" {
   health_check {
     healthy_threshold   = "5"
     unhealthy_threshold = "3"
-    interval            = "45"
+    interval            = "30"
     matcher             = "200"
     path                = "/health"
     port                = "traffic-port"
