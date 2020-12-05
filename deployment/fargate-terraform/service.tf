@@ -43,12 +43,6 @@ data "template_file" "container_image" {
     image_name             = var.app_name
     ecr_repo               = aws_ecr_repository.tucklets_ecr.repository_url
     version_tag            = var.version_tag
-    port_url               = var.port_url
-    service_email          = var.service_email
-    service_email_password = var.service_email_password
-    postgres_user          = var.postgres_user
-    postgres_creds         = var.postgres_creds
-    ssl_key_store_password = var.ssl_key_store_password
     paypal_client_id       = var.paypal_client_id
   }
 }

@@ -1,0 +1,5 @@
+aws:
+  secretsmanager:
+    prefix: /secret
+    name: tucklets
+    failFast: true

@@ -21,30 +21,6 @@
     "networkMode": "awsvpc",
     "environment": [
       {
-        "name": "PORT_URL",
-        "value": "${port_url}"
-      },
-      {
-        "name": "SERVICE_EMAIL",
-        "value": "${service_email}"
-      },
-      {
-        "name": "SERVICE_EMAIL_PASSWORD",
-        "value": "${service_email_password}"
-      },
-      {
-        "name": "POSTGRES_USER",
-        "value": "${postgres_user}"
-      },
-      {
-        "name": "POSTGRES_CREDS",
-        "value": "${postgres_creds}"
-      },
-      {
-        "name": "SSL_KEY_STORE_PASSWORD",
-        "value": "${ssl_key_store_password}"
-      },
-      {
         "name": "PAYPAL_CLIENT_ID",
         "value": "${paypal_client_id}"
       }
