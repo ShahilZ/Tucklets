@@ -78,10 +78,6 @@ variable "domain_name" {
   default     = "tucklets.net"
 }
 
-variable "ssl_key_store_password" {
-  description = "Password for HTTPS key"
-}
-
 // App variables
 variable "app_name" {
   default     = "tucklets"
@@ -92,25 +88,6 @@ variable "version_tag" {
   description = "Version tag of the built image (passed in via pipeline)"
 }
 
-variable "port_url" {
-  description = "Port URL for postgres"
-}
-
-variable "service_email" {
-  description = "Email address used by the service to send emails"
-}
-
-variable "service_email_password" {
-  description = "Password for the email used by the service"
-}
-
-variable "postgres_user" {
-  description = "Postgres username"
-}
-
-variable "postgres_creds" {
-  description = "Postgres user's password"
-}
 
 variable "paypal_client_id" {
   description = "Paypal client id"

@@ -3,10 +3,11 @@
 // Assumes role for other Amazon services.
 resource "aws_iam_role" "ecs_task_role" {
   name                = "${var.service_name}-task-role"
-  assume_role_policy  = data.aws_iam_policy_document.ecs_service_policy.json
+  assume_role_policy  = data.aws_iam_policy_document.ecs_service_assume_role_policy.json
 }
 
-data "aws_iam_policy_document" "ecs_service_policy" {
+# Default policy for assumeRole (so ECS can use any task role).
+data "aws_iam_policy_document" "ecs_service_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -20,4 +21,23 @@ data "aws_iam_policy_document" "ecs_service_policy" {
 // Default AWS Task Execution Role.
 data "aws_iam_role" "task_execution_role" {
   name = "ecsTaskExecutionRole"
+}
+
+// Policy for actual service task role
+data "aws_iam_policy_document" "ecs_task_role_policy_document" {
+  statement {
+    effect = "Allow"
+    actions   = [
+      "secretsmanager:GetResourcePolicy",
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:DescribeSecret",
+      "secretsmanager:ListSecretVersionIds"]
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy" "ecs_task_role_policy" {
+  name        = "${var.app_name}-task-role-policy"
+  policy = data.aws_iam_policy_document.ecs_task_role_policy_document.json
+  role = aws_iam_role.ecs_task_role.id
 }
