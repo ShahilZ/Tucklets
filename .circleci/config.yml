@@ -94,6 +94,9 @@ jobs:
         # Must be relative path from root
           paths:
             - build/libs
+#       Store reports as build artifacts.
+      - store_artifacts:
+        path: build/reports
   terraform-apply:
       docker:
         - image: hashicorp/terraform:light
