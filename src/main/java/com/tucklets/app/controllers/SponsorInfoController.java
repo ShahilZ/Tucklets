@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.constraints.Email;
 import java.util.Arrays;
 import java.util.List;
 
@@ -123,12 +124,14 @@ public class SponsorInfoController {
             List<Child> children = childService.fetchChildByIds(childIds);
             childAndSponsorAssociationService.createAssociation(children, sponsor, donation.getDonationDuration());
             childService.setSponsoredChildren(children);
-            emailService.sendConfirmationEmail(sponsor, children, donation);
+            emailService.sendConfirmationEmail(sponsor, children, donation, sponsor.getEmail());
+            emailService.sendConfirmationEmail(sponsor, children, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
 
         }
         else {
             // TODO: Generic sponsorship flow; send different email.
-            emailService.sendGenericConfirmationEmail(sponsor, donation);
+            emailService.sendGenericConfirmationEmail(sponsor, donation, sponsor.getEmail());
+            emailService.sendGenericConfirmationEmail(sponsor, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
         }
 
         return ResponseEntity.ok(GSON.toJson(sponsorStatus));

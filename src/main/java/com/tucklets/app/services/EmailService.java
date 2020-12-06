@@ -15,10 +15,15 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.List;
 
 @Service
 public class EmailService {
+
+    // Email address for president of Tucklets (most emails should be forwarded to this email address).
+    public static final String PRESIDENT_EMAIL_ADDRESS = "president@tucklets.net";
 
     @Autowired
     AwsConfig awsConfig;
@@ -35,26 +40,20 @@ public class EmailService {
     /**
      * Generic thank you email for donors.
      */
-    public void sendGenericConfirmationEmail(Sponsor sponsor, Donation donation) {
+    public void sendGenericConfirmationEmail(Sponsor sponsor, Donation donation, String toEmailAddress) {
         // from recipient is defined in application.properties
         MimeMessagePreparator messagePreparator = message -> {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setTo(sponsor.getEmail());
-            helper.setSubject("Tucklets - Thank you supporting children in Kenya! ");
-            String emailContent = buildThankYouContent(sponsor, donation);
-            helper.setText(emailContent, true);
+            MimeMessageHelper helper = createGenericConfirmationMessageHelper(message, sponsor, donation);
+            helper.setTo(toEmailAddress);
         };
         javaMailSender.send(messagePreparator);
     }
 
-    public void sendConfirmationEmail(Sponsor sponsor, List<Child> children, Donation donation) {
+    public void sendConfirmationEmail(Sponsor sponsor, List<Child> children, Donation donation, String toEmailAddress) {
         // from recipient is defined in application.properties
         MimeMessagePreparator messagePreparator = message -> {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setTo(sponsor.getEmail());
-            helper.setSubject("Tucklets - Thank you sponsoring a child! ");
-            String emailContent = buildThankYouContentWithChildren(sponsor, children, donation);
-            helper.setText(emailContent, true);
+            MimeMessageHelper helper = createChildrenConfirmationMessageHelper(message, sponsor, children, donation);
+            helper.setTo(toEmailAddress);
 
         };
         javaMailSender.send(messagePreparator);
@@ -112,5 +111,33 @@ public class EmailService {
         context.setVariable("newsletterLink", newsletterLink);
 
         return templateEngine.process("emails/newsletter-email", context);
+    }
+
+    /**
+     * Creates a message helper for the confirmation email (for sponsoring a child).
+     */
+    private MimeMessageHelper createChildrenConfirmationMessageHelper(
+            MimeMessage message, Sponsor sponsor, List<Child> children, Donation donation)
+            throws MessagingException
+    {
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setSubject("Tucklets - Thank you for sponsoring a child! ");
+        String emailContent = buildThankYouContentWithChildren(sponsor, children, donation);
+        helper.setText(emailContent, true);
+        return helper;
+    }
+
+    /**
+     * Creates a message helper for the confirmation email (generic confirmation email).
+     */
+    private MimeMessageHelper createGenericConfirmationMessageHelper(
+            MimeMessage message, Sponsor sponsor, Donation donation)
+            throws MessagingException
+    {
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setSubject("Tucklets - Thank you for sponsoring a child! ");
+        String emailContent = buildThankYouContent(sponsor, donation);
+        helper.setText(emailContent, true);
+        return helper;
     }
 }
