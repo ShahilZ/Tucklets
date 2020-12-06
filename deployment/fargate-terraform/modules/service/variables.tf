@@ -21,7 +21,7 @@ variable "service_task_memory" {
 
 variable "ecr_url" {
   description = "Repository url for ECR"
-  type        = "string"
+  type        = string
 }
 
 

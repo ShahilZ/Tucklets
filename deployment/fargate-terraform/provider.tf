@@ -8,10 +8,14 @@ terraform {
     dynamodb_table = "tucklets-terraform-state-locks-table"
     encrypt        = true
   }
+  required_providers {
+    aws = {
+      version = "~> 2.12"
+    }
+  }
 }
 
 provider "aws" {
-  version = "~> 2.12"
   region = var.aws_region
 
   assume_role {
