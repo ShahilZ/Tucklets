@@ -1,10 +1,9 @@
 package com.tucklets.app.configs;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 public class AwsConfig {
 
     private final String s3ImagesBucketName;
