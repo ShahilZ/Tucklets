@@ -16,3 +16,14 @@ resource "aws_route53_record" "cert_validation" {
   records = [aws_acm_certificate.default.domain_validation_options.0.resource_record_value]
   ttl = 60
 }
+
+resource "aws_route53_record" "mail_exchange" {
+  zone_id                  = aws_route53_zone.tucklets_public_zone.zone_id
+  type                     = "MX"
+  name                     = ""
+
+  records = [
+    "10 smtp.secureserver.net",
+    "10 mailstore1.secureserver.net",
+  ]
+}
