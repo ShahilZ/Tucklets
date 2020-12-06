@@ -3,8 +3,8 @@ resource "aws_route53_record" "service_record" {
   type                     = "A"
   name                     = ""
   alias {
-    name                   = aws_lb.ecs_lb.dns_name
-    zone_id                = aws_lb.ecs_lb.zone_id
+    name                   = var.lb_dns_name
+    zone_id                = var.lb_zone_id
     evaluate_target_health = true
   }
 }
