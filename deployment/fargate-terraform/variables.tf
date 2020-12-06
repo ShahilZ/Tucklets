@@ -78,6 +78,11 @@ variable "domain_name" {
   default     = "tucklets.net"
 }
 
+variable "record_ttl" {
+  description = "TTL (Time-to-live) for a DNS record"
+  default     = 60
+}
+
 // App variables
 variable "app_name" {
   default     = "tucklets"
