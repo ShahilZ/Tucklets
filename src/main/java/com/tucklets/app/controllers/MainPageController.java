@@ -1,4 +1,5 @@
 package com.tucklets.app.controllers;
+import com.tucklets.app.configs.SecretsConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,9 @@ public class MainPageController {
     @Autowired
     LocaleResolver localeResolver;
 
+    @Autowired
+    SecretsConfig secretsConfig;
+
     @GetMapping("/test")
     public Map<String, String> test(HttpServletRequest request) {
         Map<String, String> testResponse = new HashMap<>();
@@ -28,7 +32,7 @@ public class MainPageController {
     @GetMapping("/fetchConfigs")
     public Map<String, String> fetchConfigs() {
         Map<String, String> configsResponse = new HashMap<>();
-        configsResponse.put("paypal_client_id", System.getenv("PAYPAL_CLIENT_ID"));
+        configsResponse.put("paypal_client_id", secretsConfig.getPayPalClientId());
         return configsResponse;
     }
 }

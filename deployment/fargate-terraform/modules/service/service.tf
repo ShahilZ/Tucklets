@@ -43,6 +43,5 @@ data "template_file" "container_image" {
     image_name             = var.app_name
     ecr_repo               = var.ecr_url
     version_tag            = var.version_tag
-    paypal_client_id       = var.paypal_client_id
   }
 }

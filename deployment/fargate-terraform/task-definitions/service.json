@@ -19,11 +19,6 @@
       }
     ],
     "networkMode": "awsvpc",
-    "environment": [
-      {
-        "name": "PAYPAL_CLIENT_ID",
-        "value": "${paypal_client_id}"
-      }
-    ]
+    "environment": []
   }
 ]
