@@ -24,6 +24,11 @@ variable "ecr_url" {
   type        = string
 }
 
+variable "certificate_arn" {
+  description = "Certificate arn from default certificate provided by ACM."
+  type        = string
+}
+
 
 variable "app_name" {
   description = "Name of application"
