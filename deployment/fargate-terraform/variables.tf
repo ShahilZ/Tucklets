@@ -60,7 +60,3 @@ variable "app_name" {
 variable "version_tag" {
   description = "Version tag of the built image (passed in via pipeline)"
 }
-
-variable "paypal_client_id" {
-  description = "Paypal client id"
-}
