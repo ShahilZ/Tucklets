@@ -127,7 +127,7 @@ public class SponsorInfoController {
             childAndSponsorAssociationService.createAssociation(children, sponsor, donation.getDonationDuration());
             childService.setSponsoredChildren(children);
             emailService.sendConfirmationEmail(sponsor, children, donation, sponsor.getEmail());
-            emailService.sendConfirmationEmail(sponsor, children, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
+//            emailService.sendConfirmationEmail(sponsor, children, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
 
         }
         else {
@@ -148,7 +148,7 @@ public class SponsorInfoController {
         newSponsor.setFirstName(TextUtils.cleanString(originalSponsor.getFirstName()));
         newSponsor.setLastName(TextUtils.cleanString(originalSponsor.getLastName()));
         // Clean address fields.
-        newSponsor.setAddress(copyAndCleanSponsorAddress(newSponsor.getAddress()));
+        newSponsor.setAddress(copyAndCleanSponsorAddress(originalSponsor.getAddress()));
         newSponsor.setChurchName(TextUtils.cleanString(originalSponsor.getChurchName()));
         return newSponsor;
     }

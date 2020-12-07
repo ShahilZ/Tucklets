@@ -51,4 +51,14 @@ public class SponsorAddress {
     public String getCountry() {
         return country;
     }
+
+    /**
+     * Custom toString() method to print out the address.
+     */
+
+    public String toString() {
+        return String.format(
+                "%s \n %s \n %s, %s %s \n %s",
+                streetAddress1, streetAddress2, city, state, zipCode, country);
+    }
 }

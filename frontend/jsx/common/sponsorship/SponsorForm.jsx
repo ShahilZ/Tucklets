@@ -202,11 +202,11 @@ const SponsorForm = ({ i18n, sponsor, donation, willPayByCheck, sponsorFormClick
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
-                                    <Form.Group as={Col} controlId="zip">
+                                    <Form.Group as={Col} controlId="zipCode">
                                         <Form.Label>{i18n.t("sponsor_info:form_zip")}</Form.Label>
                                         <Form.Control 
-                                            name="sponsor.address.zip"
-                                            value={values.sponsor.address.zip}
+                                            name="sponsor.address.zipCode"
+                                            value={values.sponsor.address.zipCode}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>
