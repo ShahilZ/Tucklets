@@ -5,8 +5,8 @@ resource "aws_security_group" "tucklets_db_access" {
 
   ingress {
     description = "Inbound rules"
-    from_port   = 5443
-    to_port     = 5443
+    from_port   = 5432
+    to_port     = 5432
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
 
