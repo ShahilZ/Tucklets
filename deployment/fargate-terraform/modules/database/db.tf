@@ -9,6 +9,9 @@ resource "aws_db_instance" "postgres" {
   username                  = local.db_creds.username
   password                  = local.db_creds.password
 
+  name                      = var.app_name
+
+
   # Must be set if we are not skipping final snapshots.
   final_snapshot_identifier = "tucklets-db-snapshot-final"
   parameter_group_name      = "default.postgres12"
