@@ -15,6 +15,7 @@ resource "aws_route53_record" "cert_validation" {
   type = aws_acm_certificate.default.domain_validation_options.0.resource_record_type
   zone_id = aws_route53_zone.tucklets_public_zone.zone_id
   records = [aws_acm_certificate.default.domain_validation_options.0.resource_record_value]
+  allow_overwrite = true
   ttl = var.record_ttl
 }
 
