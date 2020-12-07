@@ -38,8 +38,6 @@ public class SponsorService {
         Date today = new Date();
         sponsor.setCreationDate(today);
         sponsor.setLastUpdateDate(today);
-        // All sponsors will start out as "subscribed".
-        sponsor.setSubscribed(true);
         sponsorRepository.save(sponsor);
     }
 
@@ -50,6 +48,24 @@ public class SponsorService {
         Optional<Sponsor> sponsor = sponsorRepository.fetchSponsorById(sponsorId);
         sponsor.ifPresent(value -> value.setDeletionDate(new Date()));
         sponsorRepository.save(sponsor.get());
+    }
+
+    /**
+     * Set subscribed column to false. Should be called with another method to validate sponosr.
+     */
+    private void unsubscribeSponsorNewsletter(Sponsor sponsor) {
+        sponsor.setSubscribed(false);
+        sponsorRepository.save(sponsor);
+    }
+
+    /**
+     * Unsubscribes a sponsor from receiving newsletters. Do nothing if sponsor is empty.
+     */
+    public void unsubscribeSponsorFromNewsletter(String email) {
+        Optional<Sponsor> sponsorOptional = sponsorRepository.fetchSponsorByEmail(email);
+        if (sponsorOptional.isPresent()) {
+            unsubscribeSponsorNewsletter(sponsorOptional.get());
+        }
     }
 }
 

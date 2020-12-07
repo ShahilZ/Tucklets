@@ -13,6 +13,7 @@ import SponsorChildPage from './pages/SponsorChildPage';
 import SponsorInfoPage from './pages/SponsorInfoPage';
 import SponsorThankYouPage from './pages/SponsorThankYouPage';
 import DonatePage from './pages/DonatePage';
+import UnsubscribePage from './pages/UnsubscribePage'
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
@@ -52,7 +53,7 @@ class Main extends Component {
                 paymentMethod: PaymentMethod.PAYPAL }, // default payment method is Paypal. Other options include Check
             // allowDonationDurationChange: true,
             payPalClientId: "",
-            willPayByCheck: false // this will be used to determine the paymentMethod above.
+            willPayByCheck: false, // this will be used to determine the paymentMethod above.
         };
 
         // Bind handlers here
@@ -83,6 +84,7 @@ class Main extends Component {
     handleSponsorFormClick(history) {
         let self = this;
         return (values) => {
+            console.log(values.sponsor);
             values.donation.paymentMethod = values.willPayByCheck ? PaymentMethod.CHECK : PaymentMethod.PAYPAL;
             self.setState({ 
                 sponsor: values.sponsor, 
@@ -166,6 +168,7 @@ class Main extends Component {
         history.push("/sponsor-info/");
     }
 
+
     /**
      * Handler for donation duration changes.
      */
@@ -216,6 +219,9 @@ class Main extends Component {
                     <Route exact path="/thank-you/">
                         <SponsorThankYouPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} 
                         />
+                    </Route>
+                    <Route exact path="/unsubscribe/">
+                        <UnsubscribePage i18n={i18n} />
                     </Route>
                     <Route exact path="/">
                         <HomePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />
