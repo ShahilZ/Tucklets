@@ -10,6 +10,6 @@ resource "aws_db_instance" "postgres" {
 
   parameter_group_name = "defafult.postgres12"
   publicly_accessible  = true
-  vpc_security_group_ids = []
+  vpc_security_group_ids = [aws_security_group.tucklets_db_access.id]
 
 }
