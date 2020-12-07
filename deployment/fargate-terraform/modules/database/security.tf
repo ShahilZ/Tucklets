@@ -19,8 +19,5 @@ resource "aws_security_group" "tucklets_db_access" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = {
-    Name = "tucklets-db-access-sg"
-  }
+  
 }
