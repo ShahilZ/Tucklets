@@ -8,3 +8,9 @@ module "tucklets_service" {
   app_name = var.app_name
   version_tag = var.version_tag
 }
+
+module "tucklets_db" {
+  source = "./modules/database"
+
+  app_name = var.app_name
+}
