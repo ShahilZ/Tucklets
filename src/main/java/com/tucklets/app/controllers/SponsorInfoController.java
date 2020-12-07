@@ -127,7 +127,7 @@ public class SponsorInfoController {
             childAndSponsorAssociationService.createAssociation(children, sponsor, donation.getDonationDuration());
             childService.setSponsoredChildren(children);
             emailService.sendConfirmationEmail(sponsor, children, donation, sponsor.getEmail());
-//            emailService.sendConfirmationEmail(sponsor, children, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
+            emailService.sendConfirmationEmail(sponsor, children, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
 
         }
         else {
