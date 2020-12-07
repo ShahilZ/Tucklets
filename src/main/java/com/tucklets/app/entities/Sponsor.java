@@ -37,7 +37,7 @@ public class Sponsor {
     private String email;
 
     @Column(name = "address")
-    private String address;
+    private SponsorAddress address;
 
     @Column(name = "subscribed", nullable = false)
     private boolean subscribed;
@@ -102,11 +102,11 @@ public class Sponsor {
         this.email = email;
     }
 
-    public String getAddress() {
+    public SponsorAddress getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(SponsorAddress address) {
         this.address = address;
     }
 

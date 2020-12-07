@@ -6,8 +6,10 @@ import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Sponsor;
+import com.tucklets.app.entities.SponsorAddress;
 import com.tucklets.app.entities.enums.DonationDuration;
 import com.tucklets.app.entities.enums.SponsorInfoStatus;
+import com.tucklets.app.entities.enums.State;
 import com.tucklets.app.services.AmountService;
 import com.tucklets.app.services.ChildAndSponsorAssociationService;
 import com.tucklets.app.services.ChildService;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.constraints.Email;
 import java.util.Arrays;
 import java.util.List;
 
@@ -123,12 +126,14 @@ public class SponsorInfoController {
             List<Child> children = childService.fetchChildByIds(childIds);
             childAndSponsorAssociationService.createAssociation(children, sponsor, donation.getDonationDuration());
             childService.setSponsoredChildren(children);
-            emailService.sendConfirmationEmail(sponsor, children, donation);
+            emailService.sendConfirmationEmail(sponsor, children, donation, sponsor.getEmail());
+            emailService.sendConfirmationEmail(sponsor, children, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
 
         }
         else {
             // TODO: Generic sponsorship flow; send different email.
-            emailService.sendGenericConfirmationEmail(sponsor, donation);
+            emailService.sendGenericConfirmationEmail(sponsor, donation, sponsor.getEmail());
+            emailService.sendGenericConfirmationEmail(sponsor, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
         }
 
         return ResponseEntity.ok(GSON.toJson(sponsorStatus));
@@ -142,9 +147,30 @@ public class SponsorInfoController {
         newSponsor.setEmail(TextUtils.cleanString(originalSponsor.getEmail()));
         newSponsor.setFirstName(TextUtils.cleanString(originalSponsor.getFirstName()));
         newSponsor.setLastName(TextUtils.cleanString(originalSponsor.getLastName()));
-        newSponsor.setAddress(TextUtils.cleanString(originalSponsor.getAddress()));
+        // Clean address fields.
+        newSponsor.setAddress(copyAndCleanSponsorAddress(originalSponsor.getAddress()));
         newSponsor.setChurchName(TextUtils.cleanString(originalSponsor.getChurchName()));
         return newSponsor;
+    }
+
+    /**
+     * Helper method to clean the address (if one was provided)
+     */
+    private SponsorAddress copyAndCleanSponsorAddress(SponsorAddress address) {
+        // if address is null, return empty address.
+        if (address == null) {
+            return new SponsorAddress();
+        }
+        String streetAddress1 = TextUtils.cleanString(address.getStreetAddress1());
+        String streetAddress2 = TextUtils.cleanString(address.getStreetAddress2());
+        String city = TextUtils.cleanString(address.getCity());
+        // Validate state.
+        State state = State.CA;
+        String zipCode = TextUtils.cleanString(address.getZipCode());
+        String country = TextUtils.cleanString(address.getCountry());
+
+        return new SponsorAddress(streetAddress1, streetAddress2, city, state, zipCode, country);
+
     }
 
 }

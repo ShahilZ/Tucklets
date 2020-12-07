@@ -34,10 +34,12 @@ class Main extends Component {
                 lastName: "",
                 email: "",
                 address: { 
-                    streetAddress: "", 
+                    streetAddress1: "",
+                    streetAddress2: "", 
                     city: "",
-                    zip: "",
-                    state: "",
+                    zipCode: "",
+                    // TODO: Update
+                    state: "CA",
                     country: "" 
                 },
                 churchName: "",
@@ -93,24 +95,27 @@ class Main extends Component {
     /**
      * Handler for the sponsor info submission button.
      */
-    handleSponsorshipSubmission() {
+    handleSponsorshipSubmission(history) {
         let self = this;
         console.log(this.state);
-        let selectedChildIds = [];
-        this.state.selectedChildren.map((childContainer) => selectedChildIds.push(childContainer.child.childId));
-        axios.post('/sponsor-info/submit/', {
-            sponsor: this.state.sponsor,
-            donation: this.state.donation,
-            children: selectedChildIds
+        return () => {
+            let selectedChildIds = [];
+            self.state.selectedChildren.map((childContainer) => selectedChildIds.push(childContainer.child.childId));
+            axios.post('/sponsor-info/submit/', {
+                sponsor: self.state.sponsor,
+                donation: self.state.donation,
+                children: selectedChildIds
+    
+            })
+            .then(function (response) {
+                console.log(response);
+                history.push("/thank-you/");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
 
-        })
-        .then(function (response) {
-            console.log(response);
-            self.props.history.push("/thank-you/");
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
     }
 
 

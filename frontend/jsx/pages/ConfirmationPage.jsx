@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { PayPalButton } from 'react-paypal-button-v2';
 
 import ChildImageContainer from '../common/sponsorship/ChildImageContainer';
@@ -79,7 +79,7 @@ class ConfirmationPage extends Component {
                         <p>{this.props.i18n.t("confirm:check_address_line_2")}</p>
                     </div>
                     <div className="confirmation-submission-button">
-                    <div className="btn btn-primary" onClick={this.props.submitButtonHandler}>{this.props.i18n.t("confirm:check_submit")}</div>
+                    <div className="btn btn-primary" onClick={this.props.submitButtonHandler(this.props.history)}>{this.props.i18n.t("confirm:check_submit")}</div>
                 </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@ class ConfirmationPage extends Component {
     renderPayPalButtons() {
         return (
             <PayPalButton
-            amount={this.props.donationAmount}
+            amount={this.props.donation.donationAmount}
             shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
             onSuccess={() => console.log("Success")}
             options={{
@@ -129,4 +129,4 @@ class ConfirmationPage extends Component {
 
 ConfirmationPage.props = props;
 
-export default ConfirmationPage;
+export default withRouter(ConfirmationPage);
