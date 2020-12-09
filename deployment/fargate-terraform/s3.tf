@@ -60,7 +60,7 @@ resource "aws_s3_bucket_policy" "public_read_dev" {
   policy = <<POLICY
 {
   "Version": "2012-10-17",
-  "Id": "prod_tucklets_public_policy",
+  "Id": "dev_tucklets_public_policy",
   "Statement": [
     {
       "Sid":"PublicRead",

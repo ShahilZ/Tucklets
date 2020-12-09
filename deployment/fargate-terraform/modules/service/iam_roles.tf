@@ -31,7 +31,9 @@ data "aws_iam_policy_document" "ecs_task_role_policy_document" {
       "secretsmanager:GetResourcePolicy",
       "secretsmanager:GetSecretValue",
       "secretsmanager:DescribeSecret",
-      "secretsmanager:ListSecretVersionIds"]
+      "secretsmanager:ListSecretVersionIds",
+      "s3:*Object"
+    ]
     resources = ["*"]
   }
 }

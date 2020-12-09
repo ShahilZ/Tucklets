@@ -27,5 +27,11 @@ public class LoginController {
     public String verifyLogin(@RequestParam String username, @RequestParam String password) {
         return loginService.isValidAdmin(username, password) ? "redirect:admin/children-dashboard/" : "unauthorized";
     }
+
+    @GetMapping(value = "/admin/")
+    public String adminLogin() {
+        return "redirect:children-dashboard/";
+    }
+
 }
 
