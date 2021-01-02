@@ -111,14 +111,20 @@ $ gradlew.bat bootRun # Runs the project
 
 
 ### Frontend
+###### Developing locally with Thymeleaf: 
+No additional setup needed.  Thymeleaf is a server side template engine, meaning that we can run our backend and frontend code on the same development server. In effect, all backend/frontend changes will require restarting the server.  
+
+
+###### Developing locally with ReactJS:
+*Who wants to restart their server for just frontend changes???*
 
 Prerequisites: 
   - Everything from backend section because we will be running the backend server in the background.
   - Download VisualCode (recommended frontend IDE)
   
 Running locally:
-  1. In terminal `gradlew.bat bootRun` - this runs the backend server
-  2. In terminal, run the following command:
+  1. In terminal (in root directory) `gradlew.bat bootRun` - this runs the backend server
+  2. In another terminal (in root directory), run the following command:
   `gradlew.bat frontend:start`
     .This command executes the frontend gradle task that will install all frontend dependencies such as node, npm, package.json dependencies. 
   3. View changes by navigating to http://localhost:3000/ 
