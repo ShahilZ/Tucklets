@@ -140,6 +140,7 @@ https://www.pgadmin.org/download/
   - Click Object -> Create -> Server ...
   - We just need to input information in the General and Connection tabs. Match the following images:
  ![Image of ](https://github.com/ShahilZ/Tucklets/blob/master/src/main/resources/static/images/readme/postgres-setup-general.JPG)
+ The next image requires 'password', please email Shahil or Claudia for the password. 
  ![Image of ](https://github.com/ShahilZ/Tucklets/blob/master/src/main/resources/static/images/readme/postgres-setup-connection.JPG)
 
 4. Once your backend server is running, it will create the tables in Postgres.  
