@@ -30,6 +30,8 @@ resource "aws_lb_target_group" "ecs_https_target_group" {
     type                = "lb_cookie"
     enabled             = true
   }
+  
+  slow_start = 90 # Give service some time to spin up.
 
   health_check {
     healthy_threshold   = "5"
