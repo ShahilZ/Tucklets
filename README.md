@@ -158,6 +158,9 @@ https://www.pgadmin.org/download/
  The next image requires 'password', please email Shahil or Claudia for the password. 
  ![Image of ](https://github.com/ShahilZ/Tucklets/blob/master/src/main/resources/static/images/readme/postgres-setup-connection.JPG)
 4. Add a Database
+  - Right click Database -> Create -> Database ...
+  - Input "Tucklets" as Database name 
+   ![Image of ](https://github.com/ShahilZ/Tucklets/blob/master/src/main/resources/static/images/readme/postgres-setup-db.JPG)
 5. Once your backend server is running, it will create the tables in Postgres.  
  ![Image of ](https://github.com/ShahilZ/Tucklets/blob/master/src/main/resources/static/images/readme/postgres-sql-view.JPG)
 
