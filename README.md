@@ -59,7 +59,7 @@ $ git checkout -b your_branch_name    # Creates a new branch and switches you to
 $ git status    # to see you changed files
 $ git add src/filename.java    # path may differ depending on which directory you are in. Add all files you want to submit. Use  "$ git add . " if you want to add all files.
 $ git commit -m "your_descriptive_message" 
-# git push origin your_branch_name    # Changes will now be pushed to the remote branch so people can view those changes. Navigate to the GitHub website to see if your changes was successfully pushed.
+# git push -u origin your_branch_name    # Changes will now be pushed to the remote branch so people can view those changes. Navigate to the GitHub website to see if your changes was successfully pushed.
 
 ```
 5. On the GitHub website, create a Pull Request (PR) for review.
@@ -71,6 +71,7 @@ Please download the following:
 - JDK 11 
 - IntelliJ 
 - Postgres - https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+- PgAdmin - see "Database Connection" section below 
 
 #### Gradle
 When invoking gradle commands, be sure to invoke the gradle wrappers:  
@@ -98,6 +99,7 @@ Common tasks used:
 4. Now you are ready to run the TuckletsApplication. Click on the green 'play' icon in the top right bar.
 5. You'll see a bunch of stuff running in the 'Run Output'. When you see " Tomcat initialized with port(s): 8443 (https)", application has been successfully built. 
 4. You can browse the application on https://localhost:8443/
+5. If you get "Connection is not Private", and the proceeed to https:localhost:8443/ option is not available, you will need to allow access to localhost on the web browser.  For chrome, go to chrome://flags/#allow-insecure-localhost to allow localhost to show. 
 
 ###### Running via Terminal
 1. Verify current working directory is at the root directory of the project. 
@@ -107,7 +109,14 @@ $ gradlew.bat build # Runs Gradle build
 $ gradlew.bat bootRun # Runs the project
 ```
 3. Verify output matches what is described in step 5 of "Running via IntelliJ".
-4. Navigate to https://localhost:8443/ on your browser.
+4. Navigate to https://localhost:8443/ on your browser
+5. If you get "Connection is not Private", and the proceeed to https:localhost:8443/ option is not available, you will need to allow access to localhost on the web browser.  For chrome, go to chrome://flags/#allow-insecure-localhost to allow localhost to show. 
+
+###### Notes: 
+- Internal website for admins: https://localhost:8443/admin/children-dashboard/,  https://localhost:8443/admin/children-dashboard/
+  - Navigate to https://localhost:8443/info/resetAdmins  to create the admin user in your local database
+  - Contact Claudia/Shahil for login credentials
+
 
 
 ### Frontend
@@ -148,8 +157,8 @@ https://www.pgadmin.org/download/
  ![Image of ](https://github.com/ShahilZ/Tucklets/blob/master/src/main/resources/static/images/readme/postgres-setup-general.JPG)
  The next image requires 'password', please email Shahil or Claudia for the password. 
  ![Image of ](https://github.com/ShahilZ/Tucklets/blob/master/src/main/resources/static/images/readme/postgres-setup-connection.JPG)
-
-4. Once your backend server is running, it will create the tables in Postgres.  
+4. Add a Database
+5. Once your backend server is running, it will create the tables in Postgres.  
  ![Image of ](https://github.com/ShahilZ/Tucklets/blob/master/src/main/resources/static/images/readme/postgres-sql-view.JPG)
 
 Please reach out to Shahil or Claudia for any questions regarding setup. 
