@@ -70,8 +70,12 @@ test {
 }
 
 task integrationTest(type: Test) {
+	description = 'Runs the integration tests.'
+	group = 'verification'
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
 	classpath = sourceSets.integrationTest.runtimeClasspath
+
+	shouldRunAfter test
 
 	useJUnitPlatform()
 }
@@ -95,5 +99,8 @@ bootJar {
 		into 'frontend/static/img'
 	}
 }
+
+// Add integration test to task :check
+check.dependsOn integrationTest
 
 processResources.dependsOn('frontend:webpack')
