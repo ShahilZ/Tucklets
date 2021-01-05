@@ -57,8 +57,6 @@ class SponsorInfoPage extends Component {
                     willPayByCheck={this.props.willPayByCheck}
                     sponsorFormClickHandler={this.props.sponsorFormClickHandler(this.props.history)}
                 />
-
-
                 <div className="sponsor-info-div">
                     <form id="sponsor-info-form" className="sponsor-info-form">
                     

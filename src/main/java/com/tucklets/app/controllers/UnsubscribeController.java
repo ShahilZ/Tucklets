@@ -2,6 +2,7 @@ package com.tucklets.app.controllers;
 
 import com.tucklets.app.services.SponsorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +22,9 @@ public class UnsubscribeController {
     }
 
     @PostMapping(value = "/submit")
-    public String unsubscribe(@RequestBody String email) {
-
+    @ResponseBody
+    public ResponseEntity<String> unsubscribe(@RequestBody String email) {
         sponsorService.unsubscribeSponsorFromNewsletter(email);
-        return "success";
+        return ResponseEntity.ok("Successfully unsubscribed.");
     }
 }

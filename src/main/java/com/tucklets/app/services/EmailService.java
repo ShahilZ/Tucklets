@@ -1,6 +1,7 @@
 package com.tucklets.app.services;
 
 import com.tucklets.app.configs.AwsConfig;
+import com.tucklets.app.configs.AppConfig;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Newsletter;
@@ -27,6 +28,9 @@ public class EmailService {
 
     @Autowired
     AwsConfig awsConfig;
+
+    @Autowired
+    AppConfig appConfig;
 
     @Autowired
     JavaMailSender javaMailSender;
@@ -86,13 +90,14 @@ public class EmailService {
      */
     public void sendNewsletterEmail(List<Sponsor> sponsors, Newsletter newsletter) {
         String newsletterLink = S3Utils.computeS3Key(newsletter.getFilename(), awsConfig.getS3NewslettersBucketUrl());
+        String unsubscribeLink = appConfig.getDomainUrl() + "unsubscribe";
 
         for (Sponsor sponsor : sponsors) {
             MimeMessagePreparator messagePreparator = message -> {
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
                 helper.setTo(sponsor.getEmail());
                 helper.setSubject("Tucklets - Please check out our new newsletter! ");
-                String emailContent = buildNewsletterEmail(sponsor, newsletterLink);
+                String emailContent = buildNewsletterEmail(sponsor, newsletterLink, unsubscribeLink);
                 helper.setText(emailContent, true);
             };
             javaMailSender.send(messagePreparator);
@@ -105,10 +110,11 @@ public class EmailService {
      * @param sponsor that the email will be sent to.
      * @return htmlString used to the email content.
      */
-    private String buildNewsletterEmail (Sponsor sponsor, String newsletterLink) {
+    private String buildNewsletterEmail (Sponsor sponsor, String newsletterLink, String unsubscribeLink) {
         Context context = new Context();
         context.setVariable("sponsor", sponsor);
         context.setVariable("newsletterLink", newsletterLink);
+        context.setVariable("unsubscribeLink", unsubscribeLink);
 
         return templateEngine.process("emails/newsletter-email", context);
     }

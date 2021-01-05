@@ -1,7 +1,6 @@
 {
     "title": "Unsubscribe",
-    "email_heading" : "Please enter your email to unsubscribe:",
+    "email_heading" : "We're sorry to see you go! Please enter your email to unsubscribe from all Tucklets newsletters.",
     "unsubscribe": "Unsubscribe",
-    "successfully_unsubscribed": "You have been unsubscribed from all Tucklets Newsletters."
-
+    "successfully_unsubscribed": "Unsubscribed successfully!"
 }
