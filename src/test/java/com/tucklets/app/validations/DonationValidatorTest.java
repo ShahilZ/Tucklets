@@ -1,10 +1,8 @@
 package com.tucklets.app.validations;
 
 import com.tucklets.app.entities.Donation;
-import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.enums.DonationDuration;
 import com.tucklets.app.entities.enums.PaymentMethod;
-import com.tucklets.app.entities.enums.SponsorInfoStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 

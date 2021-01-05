@@ -72,6 +72,8 @@ test {
 task integrationTest(type: Test) {
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
 	classpath = sourceSets.integrationTest.runtimeClasspath
+
+	useJUnitPlatform()
 }
 
 
@@ -95,7 +97,3 @@ bootJar {
 }
 
 processResources.dependsOn('frontend:webpack')
-
-// Add integrationTests to checks/test
-check.dependsOn integrationTest
-integrationTest.mustRunAfter test

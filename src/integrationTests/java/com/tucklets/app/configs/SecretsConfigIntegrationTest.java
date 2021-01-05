@@ -1,13 +1,12 @@
 package com.tucklets.app.configs;
 
-import com.tucklets.app.configs.SecretsConfig;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-public class SecretsConfigIntegTest {
+@SpringBootTest(classes = SecretsConfig.class)
+public class SecretsConfigIntegrationTest {
 
     @Autowired
     SecretsConfig secretsConfig;
