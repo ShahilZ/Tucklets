@@ -114,11 +114,11 @@ jobs:
   integration-test:
     docker:
       - image: circleci/openjdk:11-jdk
-      - steps:
-          - checkout
-          - run:
-              name: integration-test
-              command: gradle integrationTest
+    steps:
+      - checkout
+      - run:
+          name: integration-test
+          command: gradle integrationTest
       - store_test_results:
           path: build/test-results
 
