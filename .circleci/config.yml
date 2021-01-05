@@ -13,7 +13,7 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - integration-test
+      - integration-test:
           filters:
             branches:
               only:
