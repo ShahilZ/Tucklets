@@ -13,6 +13,11 @@ workflows:
   build-and-deploy:
     jobs:
       - build
+      - integration-test:
+          filters:
+            branches:
+              only:
+                - master
       - aws-ecr/build-and-push-image:
           filters:
             branches:
@@ -97,9 +102,26 @@ jobs:
         # Must be relative path from root
           paths:
             - build/libs
-#       Store reports as build artifacts.
+
+      # Store reports as build artifacts.
       - store_artifacts:
           path: build/reports
+
+      # Store unit test results.
+      - store_test_results:
+          path: build/test-results
+
+  integration-test:
+    docker:
+      - image: circleci/openjdk:11-jdk
+    steps:
+      - checkout
+      - run:
+          name: integration-test
+          command: gradle integrationTest
+      - store_test_results:
+          path: build/test-results
+
   terraform-apply:
       docker:
         - image: hashicorp/terraform:light

@@ -1,6 +1,7 @@
 package com.tucklets.app.utils;
 
 import org.apache.commons.text.StringEscapeUtils;
+import org.thymeleaf.util.StringUtils;
 
 public class TextUtils {
 
@@ -11,6 +12,10 @@ public class TextUtils {
      */
     public static String cleanString(String text) {
         String strippedText = lowerAndStrip(text);
+        // If string is empty, return it.
+        if (StringUtils.isEmpty(strippedText)) {
+            return null;
+        }
         // Escapes the string and removes all escaped characters.
         String escapedText = StringEscapeUtils.escapeJava(strippedText);
         // Remove any suspicious characters.
@@ -21,6 +26,9 @@ public class TextUtils {
      * Lowers and strips the string of whitespace.
      */
     public static String lowerAndStrip(String text) {
+        if (StringUtils.isEmpty(text)) {
+            return null;
+        }
         // Removes whitespace and lowercases the string.
         return text.strip().toLowerCase();
     }

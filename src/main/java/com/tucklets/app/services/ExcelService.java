@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public  class ExcelService {
+public class ExcelService {
 
     @Autowired
     ChildService childService;
