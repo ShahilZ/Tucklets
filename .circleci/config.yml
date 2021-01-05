@@ -97,7 +97,8 @@ jobs:
         # Must be relative path from root
           paths:
             - build/libs
-#       Store reports as build artifacts.
+      - run: gradle check
+      # Store reports as build artifacts.
       - store_artifacts:
           path: build/reports
 

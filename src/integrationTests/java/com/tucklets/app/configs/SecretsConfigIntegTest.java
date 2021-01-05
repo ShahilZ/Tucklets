@@ -1,4 +1,4 @@
-package com.tucklets.app;
+package com.tucklets.app.configs;
 
 import com.tucklets.app.configs.SecretsConfig;
 import org.junit.Assert;
