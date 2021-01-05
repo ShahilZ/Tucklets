@@ -102,8 +102,8 @@ jobs:
           path: build/reports
 
       - store_test_results:
-          path: build/reports
-          
+          path: build/test-results
+
   terraform-apply:
       docker:
         - image: hashicorp/terraform:light
