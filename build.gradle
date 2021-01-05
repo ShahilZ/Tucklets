@@ -12,6 +12,23 @@ repositories {
 	mavenCentral()
 }
 
+// Add source set for integration tests.
+sourceSets {
+	integrationTest {
+		java {
+			compileClasspath += main.output + test.output
+			runtimeClasspath += main.output + test.output
+			srcDir file('src/integrationTests/java')
+		}
+		resources.srcDir file('src/integrationTests/resources')
+	}
+}
+
+configurations {
+	integrationTestCompile.extendsFrom testCompile
+	integrationTestRuntime.extendsFrom testRuntime
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -24,6 +41,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.11'
 	compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
 	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
@@ -39,11 +57,21 @@ dependencies {
 	// Integration with AWS Secrets Manager
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws-secrets-manager-config', version: '2.2.5.RELEASE'
 
+	// Integration Test
+	integrationTestCompile 'org.assertj:assertj-core:3.18.1'
+	integrationTestCompile 'org.springframework.boot:spring-boot-starter-test'
+
+
 
 }
 
 test {
 	useJUnitPlatform()
+}
+
+task integrationTest(type: Test) {
+	testClassesDirs = sourceSets.integrationTest.output.classesDirs
+	classpath = sourceSets.integrationTest.runtimeClasspath
 }
 
 
@@ -68,3 +96,6 @@ bootJar {
 
 processResources.dependsOn('frontend:webpack')
 
+// Add integrationTests to checks/test
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test

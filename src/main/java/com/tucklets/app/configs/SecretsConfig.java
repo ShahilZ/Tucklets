@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class SecretsConfig {
     private final String payPalClientId;
 
-    /* There are the variables stored in AWS Secrets Manager*/
+    /* These are the variables stored in AWS Secrets Manager */
     public SecretsConfig(@Value("${paypal_client_id}") String payPalClientId)
     {
         this.payPalClientId = payPalClientId;
