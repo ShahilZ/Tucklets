@@ -38,3 +38,12 @@
         @include donation-selected-color;
     }
 }
+
+.donation-info-container {
+    box-shadow: 0px 0px 2px 8px #c9bbfb26;
+    background-color: #fff;
+
+    .donation-information-form {
+        padding: 15px;
+    }
+}

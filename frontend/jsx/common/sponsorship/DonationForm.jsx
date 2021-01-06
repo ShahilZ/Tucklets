@@ -21,20 +21,14 @@ const props = {
 
 
 
-const DonationForm = ({ i18n, donation, handleDonationClick, handleDonationDurationChange, handlePaymentMethodChange }) => {
+const DonationForm = ({ i18n, donation, handleDonationDurationChange, handlePaymentMethodChange }) => {
    
     return (
-        <div className="sponsor-info-div">
-            <div className="container">
-                <Form>
+        <div className="donation-info-div">
+            <div className="container donation-info-container">
+                <Form className="donation-info-form">
                     <Row>
-                        <div className="mb-3">
-                            <h4>{i18n.t("donate:form_header_donation_info")}</h4>
-                            <p>{i18n.t("donate:donate-description")}</p>
-                        </div>
-                    </Row>
-                    <Row>
-                        <Form.Group md={6} as={Col} controlId="amount">
+                        <Form.Group md={3} as={Col} controlId="amount">
                             <Form.Label>{i18n.t("donate:form_amount")}</Form.Label>
                             <Form.Control readOnly 
                                 type="number"
@@ -63,7 +57,7 @@ const DonationForm = ({ i18n, donation, handleDonationClick, handleDonationDurat
 
                     </Row>
                     <Row>
-                        <Form.Group md={6} as={Col} controlId="payment-method">
+                        <Form.Group md={3} as={Col} controlId="payment-method">
                             <Form.Label>{i18n.t("donate:form_payment_method")}</Form.Label>
                             <DonationToggle 
                                 i18n={i18n}
@@ -74,12 +68,7 @@ const DonationForm = ({ i18n, donation, handleDonationClick, handleDonationDurat
                             />
                         </Form.Group>
                     </Row>
-
-
-                    <Row className="ml-3 sponsor-form-bottom">
-                        <Button className="sponsor-form-btn btn button-primary" type="submit">{i18n.t("sponsor_info:form_submit")}</Button>
-                    </Row>
-                    </Form>
+                </Form>
             </div>
         </div>
     );

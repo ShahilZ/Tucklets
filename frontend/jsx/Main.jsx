@@ -86,7 +86,6 @@ class Main extends Component {
     handleSponsorFormClick(history) {
         let self = this;
         return (values) => {
-            values.donation.paymentMethod = values.willPayByCheck ? PaymentMethod.CHECK : PaymentMethod.PAYPAL;
             self.setState({ 
                 sponsor: values.sponsor, 
                 donation: values.donation 
@@ -224,7 +223,6 @@ class Main extends Component {
                             i18n={i18n}
                             handleSelectedLocaleChange={this.handleSelectedLocaleChange}
                             donation={this.state.donation}
-                            handleDonationClick={this.handleDonationClick}
                             handleDonationDurationChange={this.donationDurationChangeHandler}
                             handlePaymentMethodChange={this.paymentMethodChangeHandler}
 
@@ -239,7 +237,6 @@ class Main extends Component {
                             i18n={i18n} 
                             handleSelectedLocaleChange={this.handleSelectedLocaleChange}
                             payPalClientId={this.state.payPalClientId}
-                            willPayByCheck={this.state.donation.paymentMethod == PaymentMethod.CHECK}
                             sponsor={this.state.sponsor}
                             submitButtonHandler={this.handleSponsorshipSubmission}
                         />

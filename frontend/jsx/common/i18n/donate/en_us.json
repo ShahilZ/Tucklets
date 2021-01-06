@@ -18,8 +18,8 @@
   "form_payment_method": "Payment Method",
   
   "donate-monthly-text": "Recurring monthly",
-  "donate-yearly-text": "One-time annual contribution",
-  "donate-yearly_recurring-text": "Recurring annual contribution",
+  "donate-yearly-text": "One-time annual",
+  "donate-yearly_recurring-text": "Recurring annual",
   "donate-check-text": "Check",
   "donate-paypal-text": "PayPal"
 
