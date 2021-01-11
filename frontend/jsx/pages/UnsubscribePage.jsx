@@ -32,28 +32,24 @@ class UnsubscribePage extends Component {
         this.state = {
             showUnsubscribedSuccessfulMessage: false
         };
-
         this.handleUnsubscribeClick = this.handleUnsubscribeClick.bind(this);
     }
 
-      /***
-     * Handler that submits unsubscriptions 
+    /***
+     * Handler that submits unsubscriptions
      */
     handleUnsubscribeClick(email) {
         let self = this;
-        // I had to add headers's Content-Type to 'text-plain' in order for the backend endpoint, unsubscribe/submit/, to accept a string as the parameter. 
+        // I had to add headers's Content-Type to 'text-plain' in order for the backend endpoint, unsubscribe/submit/, to accept a string as the parameter.
         axios.post('/unsubscribe/submit/', email, { headers: {'Content-Type' : 'text/plain'}})
         .then(function (response) {
-            console.log(response);
-            self.setState({ 
+            self.setState({
                 showUnsubscribedSuccessfulMessage: true
             });
-            //alert("You have been successfully unsubscribed.");
         })
         .catch(function (error) {
             console.log(error);
         });
-
     }
 
     render() {
@@ -69,14 +65,14 @@ class UnsubscribePage extends Component {
                     validationSchema={validationSchema}
                     onSubmit={(values) => {this.handleUnsubscribeClick(values.email)} }
                 >
-                    {/* Callback functions containing Formik state and methods that handle common form actions */} 
-                    { ({values, 
-                        errors, 
-                        touched, 
-                        handleChange, 
+                    {/* Callback functions containing Formik state and methods that handle common form actions */}
+                    { ({values,
+                        errors,
+                        touched,
+                        handleChange,
                         handleSubmit }) => (
-                            
-                        <Form onSubmit={handleSubmit}> 
+
+                        <Form onSubmit={handleSubmit}>
                             <Row>
                                 <div className="mb-3">
                                     <h4>{this.props.i18n.t("unsubscribe:title")}</h4>
@@ -85,8 +81,8 @@ class UnsubscribePage extends Component {
                             <Row>
                                 <Form.Group as={Col} controlId="email">
                                     <Form.Label> {this.props.i18n.t("unsubscribe:email_heading")} </Form.Label>
-                                    <Form.Control 
-                                        type="text" 
+                                    <Form.Control
+                                        type="text"
                                         name="email"
                                         value={values.email}
                                         onChange={handleChange}
@@ -101,7 +97,7 @@ class UnsubscribePage extends Component {
                             </Row>
                             <Row className="ml-3 sponsor-form-bottom">
                                     <Button className="sponsor-form-btn btn button-primary" type="submit">{this.props.i18n.t("unsubscribe:unsubscribe")}</Button>
-                                    { this.state.showUnsubscribedSuccessfulMessage && 
+                                    { this.state.showUnsubscribedSuccessfulMessage &&
                                     <div className="success-message">
                                         <p>{this.props.i18n.t("unsubscribe:successfully_unsubscribed")}</p>
                                     </div>
@@ -110,13 +106,11 @@ class UnsubscribePage extends Component {
                         </Form>
                     )}
                 </Formik>
-               
             </div>
         </div>
         );
     }
-
-}             
+}
 
 UnsubscribePage.propTypes = props;
 

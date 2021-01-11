@@ -5,15 +5,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-    private final String domainUrl;
+    private final String tuckletsBaseUrl;
 
     /* These are the variables stored in application.properties*/
-    public AppConfig(@Value("${domain.url}") String domainUrl)
+    public AppConfig(@Value("${tucklets.base.url}") String tuckletsBaseUrl)
     {
-        this.domainUrl = domainUrl;
+        this.tuckletsBaseUrl = tuckletsBaseUrl;
     }
 
-    public String getDomainUrl() {
-        return domainUrl;
+    public String getTuckletsBaseUrl() {
+        return tuckletsBaseUrl;
     }
 }

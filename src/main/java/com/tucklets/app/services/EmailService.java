@@ -90,7 +90,7 @@ public class EmailService {
      */
     public void sendNewsletterEmail(List<Sponsor> sponsors, Newsletter newsletter) {
         String newsletterLink = S3Utils.computeS3Key(newsletter.getFilename(), awsConfig.getS3NewslettersBucketUrl());
-        String unsubscribeLink = appConfig.getDomainUrl() + "unsubscribe";
+        String unsubscribeLink = appConfig.getTuckletsBaseUrl() + "unsubscribe";
 
         for (Sponsor sponsor : sponsors) {
             MimeMessagePreparator messagePreparator = message -> {

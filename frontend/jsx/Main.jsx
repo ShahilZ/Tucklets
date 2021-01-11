@@ -53,7 +53,7 @@ class Main extends Component {
                 paymentMethod: PaymentMethod.PAYPAL }, // default payment method is Paypal. Other options include Check
             // allowDonationDurationChange: true,
             payPalClientId: "",
-            willPayByCheck: false, // this will be used to determine the paymentMethod above.
+            willPayByCheck: false // this will be used to determine the paymentMethod above.
         };
 
         // Bind handlers here
@@ -84,7 +84,6 @@ class Main extends Component {
     handleSponsorFormClick(history) {
         let self = this;
         return (values) => {
-            console.log(values.sponsor);
             values.donation.paymentMethod = values.willPayByCheck ? PaymentMethod.CHECK : PaymentMethod.PAYPAL;
             self.setState({ 
                 sponsor: values.sponsor, 
@@ -99,7 +98,6 @@ class Main extends Component {
      */
     handleSponsorshipSubmission(history) {
         let self = this;
-        console.log(this.state);
         return () => {
             let selectedChildIds = [];
             self.state.selectedChildren.map((childContainer) => selectedChildIds.push(childContainer.child.childId));
@@ -110,7 +108,6 @@ class Main extends Component {
     
             })
             .then(function (response) {
-                console.log(response);
                 history.push("/thank-you/");
             })
             .catch(function (error) {
