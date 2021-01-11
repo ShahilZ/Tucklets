@@ -22,4 +22,7 @@ public interface SponsorRepository extends CrudRepository<Sponsor, Long>, JpaRep
 
     @Query("select s from Sponsor s where s.subscribed is true and s.deletionDate is null")
     List<Sponsor> fetchSubscribedSponsors();
+
+    @Query("select s from Sponsor s where s.email = :email")
+    Optional<Sponsor> fetchSponsorByEmail(@Param("email") String email);
 }

@@ -13,6 +13,7 @@ import SponsorChildPage from './pages/SponsorChildPage';
 import SponsorInfoPage from './pages/SponsorInfoPage';
 import SponsorThankYouPage from './pages/SponsorThankYouPage';
 import DonatePage from './pages/DonatePage';
+import UnsubscribePage from './pages/UnsubscribePage'
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
@@ -97,7 +98,6 @@ class Main extends Component {
      */
     handleSponsorshipSubmission(history) {
         let self = this;
-        console.log(this.state);
         return () => {
             let selectedChildIds = [];
             self.state.selectedChildren.map((childContainer) => selectedChildIds.push(childContainer.child.childId));
@@ -108,7 +108,6 @@ class Main extends Component {
     
             })
             .then(function (response) {
-                console.log(response);
                 history.push("/thank-you/");
             })
             .catch(function (error) {
@@ -166,6 +165,7 @@ class Main extends Component {
         history.push("/sponsor-info/");
     }
 
+
     /**
      * Handler for donation duration changes.
      */
@@ -216,6 +216,9 @@ class Main extends Component {
                     <Route exact path="/thank-you/">
                         <SponsorThankYouPage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} 
                         />
+                    </Route>
+                    <Route exact path="/unsubscribe/">
+                        <UnsubscribePage i18n={i18n} />
                     </Route>
                     <Route exact path="/">
                         <HomePage i18n={i18n} handleSelectedLocaleChange={this.handleSelectedLocaleChange} />

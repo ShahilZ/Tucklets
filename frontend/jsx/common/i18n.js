@@ -25,6 +25,8 @@ import sponsor_info_en_us from './i18n/sponsor-info/en_us.json';
 import sponsor_info_zh_tw from './i18n/sponsor-info/zh_tw.json';
 import sponsor_thank_you_en_us from './i18n/sponsor-thank-you/en_us.json';
 import sponsor_thank_you_zh_tw from './i18n/sponsor-thank-you/zh_tw.json';
+import unsubscribe_en_us from './i18n/unsubscribe/en_us.json';
+import unsubscribe_zh_tw from './i18n/unsubscribe/zh_tw.json';
 
 
 i18n
@@ -50,7 +52,8 @@ i18n
           navigation: navigation_en_us,
           sponsorship: sponsorship_en_us,
           sponsor_info: sponsor_info_en_us,
-          sponsor_thank_you: sponsor_thank_you_en_us
+          sponsor_thank_you: sponsor_thank_you_en_us,
+          unsubscribe: unsubscribe_en_us,
       },
       zh: {
           about: about_zh_tw,
@@ -65,6 +68,7 @@ i18n
           sponsorship: sponsorship_zh_tw,
           sponsor_info: sponsor_info_zh_tw,
           sponsor_thank_you: sponsor_thank_you_zh_tw,
+          unsubscribe: unsubscribe_zh_tw,
       }
   }});
 

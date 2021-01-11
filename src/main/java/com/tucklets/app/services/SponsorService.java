@@ -3,6 +3,7 @@ package com.tucklets.app.services;
 import com.tucklets.app.db.repositories.SponsorRepository;
 import com.tucklets.app.entities.Sponsor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -38,8 +39,6 @@ public class SponsorService {
         Date today = new Date();
         sponsor.setCreationDate(today);
         sponsor.setLastUpdateDate(today);
-        // All sponsors will start out as "subscribed".
-        sponsor.setSubscribed(true);
         sponsorRepository.save(sponsor);
     }
 
@@ -50,6 +49,25 @@ public class SponsorService {
         Optional<Sponsor> sponsor = sponsorRepository.fetchSponsorById(sponsorId);
         sponsor.ifPresent(value -> value.setDeletionDate(new Date()));
         sponsorRepository.save(sponsor.get());
+    }
+
+    /**
+     * Set subscribed column to false. Should be called with another method to validate sponosr.
+     */
+    private void unsubscribeSponsorNewsletter(Sponsor sponsor) {
+        sponsor.setSubscribed(false);
+        sponsorRepository.save(sponsor);
+    }
+
+    /**
+     * Unsubscribes a sponsor from receiving newsletters. Do nothing if email does not correspond
+     * to a sponsor in our db. This is to avoid giving too much info to the user.
+     */
+    public void unsubscribeSponsorFromNewsletter(String email) {
+        Optional<Sponsor> sponsorOptional = sponsorRepository.fetchSponsorByEmail(email);
+        if (sponsorOptional.isPresent()) {
+            unsubscribeSponsorNewsletter(sponsorOptional.get());
+        }
     }
 }
 

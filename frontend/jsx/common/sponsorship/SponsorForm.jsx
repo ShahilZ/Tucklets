@@ -153,10 +153,10 @@ const SponsorForm = ({ i18n, sponsor, donation, willPayByCheck, sponsorFormClick
                                         inline
                                         custom
                                         name="sponsor.subscribed"
-                                        id="subscribed"
+                                        id="sponsor.subscribed"
                                         checked={values.sponsor.subscribed}
                                         type="checkbox"
-                                        onChange={() => setFieldValue("sponsor.subscribed", !values.sponsor.subscribed)}
+                                        onClick={() => setFieldValue("sponsor.subscribed", !values.sponsor.subscribed)}
                                     />
                                 </Form.Group>
                             </Col>

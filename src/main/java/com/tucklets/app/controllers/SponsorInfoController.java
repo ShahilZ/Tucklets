@@ -150,6 +150,7 @@ public class SponsorInfoController {
         // Clean address fields.
         newSponsor.setAddress(copyAndCleanSponsorAddress(originalSponsor.getAddress()));
         newSponsor.setChurchName(TextUtils.cleanString(originalSponsor.getChurchName()));
+        newSponsor.setSubscribed(originalSponsor.isSubscribed());
         return newSponsor;
     }
 
