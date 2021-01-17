@@ -215,7 +215,7 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                             </Col>
                         </Row>
                         <Row className="ml-3 sponsor-form-bottom">
-                            <Button className="sponsor-form-btn btn button-primary" type="submit">{i18n.t("sponsor_info:form_submit")}</Button>
+                            <Button className="sponsor-form-btn" type="submit">{i18n.t("sponsor_info:form_submit")}</Button>
                         </Row>
                     </Form>
                 )}

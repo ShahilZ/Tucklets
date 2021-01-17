@@ -174,12 +174,27 @@ class Main extends Component {
     donationDurationChangeHandler(donationDuration) {
         let self = this;
         return () => {
-            self.setState(prevState => ({
-                donation: {
-                    ...prevState.donation,
-                    donationDuration: donationDuration
-                },
-            }));
+            axios.get('/info/changeDonationDuration', {
+                params: {
+                    amount: self.state.donation.donationAmount,
+                    donationDuration: donationDuration.value,
+                    prevDuration: self.state.donation.donationDuration.value
+                }
+    
+            })
+            .then(function (response) {
+                self.setState(prevState => ({
+                    donation: {
+                        ...prevState.donation,
+                        donationDuration: donationDuration,
+                        donationAmount: response.data.amount
+
+                    },
+                }));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         }
     }
 

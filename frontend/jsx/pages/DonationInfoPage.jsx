@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
 
-
-import { DonationButtonGroup } from '../common/DonationButtonGroup';
-import { DonationDuration } from '../common/utils/enums';
 import DonationForm from '../common/sponsorship/DonationForm';
 
 import '../../static/scss/info.scss';
@@ -47,7 +43,7 @@ class DonationInfoPage extends Component {
     render() {
         let donationAmountClassName = `form-control ${this.state.amountHasErrors ? 'is-invalid' : ''}`;
         return (
-            <div className="donation-info-div bg-light">
+            <div className="donation-info-div container bg-light">
                 <div className="jumbotron jumbotron-fluid">
                     <div className="container">
                         <h1 className="display-4">{`${this.props.i18n.t("donate:form_header_donation_info")}`}</h1>
@@ -61,7 +57,9 @@ class DonationInfoPage extends Component {
                     handlePaymentMethodChange={this.props.handlePaymentMethodChange}                
                 />
                 <br />
-                <Button className="sponsor-form-btn btn button-primary" onClick={this.donationSelectionHandler(this.props.history)}>{this.props.i18n.t("sponsor_info:form_submit")}</Button>
+                <Row className="donation-submission-div">
+                    <Button className="donation-information-btn btn button-primary" onClick={this.donationSelectionHandler(this.props.history)}>{this.props.i18n.t("sponsor_info:form_submit")}</Button>
+                </Row>
 
             </div>
 
