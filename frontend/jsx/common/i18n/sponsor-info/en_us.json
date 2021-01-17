@@ -5,7 +5,6 @@
     "description": "You can sponsor one or more children or teacher from the list below.",
     "form_header_personal": "Personal Information",
     "form_header_address": "Address",
-    "form_header_donation": "Donation",
     "form_first_name": "First Name *",
     "form_last_name": "Last Name *",
     "form_email": "Email *",
@@ -31,10 +30,6 @@
 
     "form_newsletters_subscription_checkbox": "Subscribe me to receive Tucklets newsletters",
     "form_pay_by_check_checkbox": "I want to pay by check",
-
-    "form_header_donation_info": "Donation Information",
-    "form_duration": "Duration",
-    "form_amount": "Amount",
     
     "form_submit": "NEXT"
 }

@@ -14,6 +14,7 @@ import SponsorInfoPage from './pages/SponsorInfoPage';
 import SponsorThankYouPage from './pages/SponsorThankYouPage';
 import DonatePage from './pages/DonatePage';
 import UnsubscribePage from './pages/UnsubscribePage'
+import DonationInfoPage from './pages/DonationInfoPage';
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
@@ -49,7 +50,7 @@ class Main extends Component {
             },
             donation: {
                 donationAmount: 0, 
-                donationDuration: DonationDuration.ONCE,
+                donationDuration: DonationDuration.MONTHLY,
                 paymentMethod: PaymentMethod.PAYPAL }, // default payment method is Paypal. Other options include Check
             // allowDonationDurationChange: true,
             payPalClientId: "",
@@ -62,6 +63,7 @@ class Main extends Component {
         // Handlers for donation updates
         this.handleDonationClick = this.handleDonationClick.bind(this);
         this.donationDurationChangeHandler = this.donationDurationChangeHandler.bind(this);
+        this.paymentMethodChangeHandler = this.paymentMethodChangeHandler.bind(this);
         // Handlers for sponsorship flows.
         this.handleSponsorChildSubmission = this.handleSponsorChildSubmission.bind(this);
         this.handleSponsorshipSubmission = this.handleSponsorshipSubmission.bind(this);
@@ -140,11 +142,12 @@ class Main extends Component {
                 console.log(response);
                 self.setState({ 
                     selectedChildren: response.data.children, 
-                    donation: { donationAmount: response.data.donation.donationAmount, donationDuration: DonationDuration.MONTHLY},
+                    donation: { donationAmount: response.data.donation.donationAmount, donationDuration: DonationDuration.MONTHLY, paymentMethod: PaymentMethod.PAYPAL},
                     //allowDonationDurationChange: false
                 });
                 // Manually change route after successful response from backend.
-                history.push("/sponsor-info/");
+                // history.push("/sponsor-info/");
+                history.push("/sponsor-info/donation-info/")
             })
             .catch(function (error) {
                 console.log(error);
@@ -181,6 +184,21 @@ class Main extends Component {
         }
     }
 
+    /**
+     * Handler for payment method changes.
+     */
+    paymentMethodChangeHandler(paymentMethod) {
+        let self = this;
+        return () => {
+            self.setState(prevState => ({
+                donation: {
+                    ...prevState.donation,
+                    paymentMethod: paymentMethod
+                },
+            }));
+        }
+    }
+
 
     render() {
         return (
@@ -200,6 +218,19 @@ class Main extends Component {
                             willPayByCheck={this.state.willPayByCheck}
                             sponsorFormClickHandler={this.handleSponsorFormClick}
                         />
+                    </Route>
+                    <Route exact path="/sponsor-info/donation-info/">
+                        <DonationInfoPage
+                            i18n={i18n}
+                            handleSelectedLocaleChange={this.handleSelectedLocaleChange}
+                            donation={this.state.donation}
+                            handleDonationClick={this.handleDonationClick}
+                            handleDonationDurationChange={this.donationDurationChangeHandler}
+                            handlePaymentMethodChange={this.paymentMethodChangeHandler}
+
+
+                        />
+
                     </Route>
                     <Route exact path="/sponsor-info/confirm/">
                         <ConfirmationPage 

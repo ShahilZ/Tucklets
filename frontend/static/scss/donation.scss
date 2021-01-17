@@ -22,3 +22,19 @@
     }
 
 }
+
+.btn.btn-info.donation-button {
+    border-radius: 0.25rem;
+    
+    &:hover {
+        @include donation-selected-color;
+    }
+
+    &:focus {
+        @include donation-selected-color;
+    }
+
+    &.default {
+        @include donation-selected-color;
+    }
+}

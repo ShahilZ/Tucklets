@@ -5,7 +5,6 @@
     "description": "你可支持一位或多位的學生和老師",
     "form_header_personal": "個人資料",
     "form_header_address": "地址",
-    "form_header_donation": "Donation",
     "form_first_name": "名字 *",
     "form_last_name": "姓氏 *",
     "form_email": "電郵 *",
@@ -31,10 +30,6 @@
 
     "form_newsletters_subscription_checkbox": "Subscribe me to receive Tucklets newsletters",
     "form_pay_by_check_checkbox": "I want to pay by check",
-
-    "form_header_donation_info": "捐贈资料",
-    "form_amount": "总数",
-    "form_duration": "期限",
     
     "form_submit": "下一步"
 }

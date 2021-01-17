@@ -9,5 +9,17 @@
   "address": "地址",
   "duration": "Duration",
   "donate-once": "捐一次",
-  "donate-monthly": "每月捐款"
+  "donate-monthly": "每月捐款",
+  "donate-description": "Thanks for choosing to sponsor one of our students! We are grateful for your generosity. Below, we have a few ways for you to support your child!",
+  
+  "form_header_donation_info": "捐贈资料",
+  "form_amount": "总数",
+  "form_duration": "期限",
+  "form_payment_method": "Payment Method",
+  
+  "donate-monthly-text": "Recurring monthly",
+  "donate-yearly-text": "One-time annual contribution",
+  "donate-yearly_recurring-text": "Recurring annual contribution",
+  "donate-check-text": "Check",
+  "donate-paypal-text": "PayPal"
 }
