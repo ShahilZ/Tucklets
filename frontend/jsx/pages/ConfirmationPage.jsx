@@ -6,6 +6,7 @@ import { PayPalButton } from 'react-paypal-button-v2';
 import ChildImageContainer from '../common/sponsorship/ChildImageContainer';
 import ConfirmationTable from '../common/sponsorship/ConfirmationTable';
 
+import { PaymentMethod } from '../common/utils/enums.js';
 
 import '../../static/scss/basic.scss';
 import '../../static/scss/confirmation.scss';
@@ -24,8 +25,6 @@ const props = {
     selectedChildren: PropTypes.array,
     /** The PayPal Client ID necessary to complete payment. */
     payPalClientId: PropTypes.string.isRequired,
-    /** Boolean that indicates whether the user wants to pay by check */
-    willPayByCheck: PropTypes.bool.isRequired,
     /** Handler that will submit the payment to the payment processor + backend. */
     submitButtonHandler: PropTypes.func.isRequired
 }
@@ -104,7 +103,7 @@ class ConfirmationPage extends Component {
 
     render() {
         // TODO: user refreshes the page or somehow gets here without going through the flow, redirect to the main page.
-        let paymentOptions = this.props.willPayByCheck ? this.renderPayByCheckView() :  this.renderPayPalButtons();
+        let paymentOptions = this.props.donation.paymentMethod === PaymentMethod.CHECK ? this.renderPayByCheckView() :  this.renderPayPalButtons();
         return (
             <div id="confirmation" className="bg-light">
                 <div className="jumbotron jumbotron-fluid">

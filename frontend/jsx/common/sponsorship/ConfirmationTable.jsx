@@ -61,7 +61,7 @@ const ConfirmationTable = ({ i18n, sponsor, donation }) => {
                                 <span>{i18n.t("confirm:form_sponsorship")}</span>
                             </td>
                             <td>
-                            <span>{i18n.t(`confirm:${donation.donationDuration.toLowerCase()}`)}</span>
+                            <span>{i18n.t(`confirm:${donation.donationDuration.value.toLowerCase()}`)}</span>
                             </td>
                             <td>
                                 <span>{donation.donationAmount}</span>

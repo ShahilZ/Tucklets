@@ -61,7 +61,7 @@ class SponsorInfoPage extends Component {
                     <form id="sponsor-info-form" className="sponsor-info-form">
                     
                         <fieldset>
-                            <legend><span className="sponsor-info-section-number">2</span><span>{`${this.props.i18n.t("sponsor_info:form_header_donation_info")}`}</span></legend>
+                            <legend><span className="sponsor-info-section-number">2</span><span>{`${this.props.i18n.t("donate:form_header_donation_info")}`}</span></legend>
                             {/* <DonationButtonGroup
                                 i18n={this.props.i18n}
                                 donationDurationChangeHandler={this.donationDurationChangeHandler}

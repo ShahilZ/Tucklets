@@ -33,7 +33,7 @@ const validationSchema = Yup.object().shape({
   });
 
 
-const SponsorForm = ({ i18n, sponsor, donation, willPayByCheck, sponsorFormClickHandler }) => {
+const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
    
     return (
         <div className="sponsor-info-div">
@@ -42,8 +42,7 @@ const SponsorForm = ({ i18n, sponsor, donation, willPayByCheck, sponsorFormClick
                 // sets initial values for the form inputs
                 initialValues={{
                     sponsor: sponsor,
-                    donation: donation,
-                    willPayByCheck: willPayByCheck
+                    donation: donation
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values) => {sponsorFormClickHandler(values)} }
@@ -58,9 +57,11 @@ const SponsorForm = ({ i18n, sponsor, donation, willPayByCheck, sponsorFormClick
                         
                     <Form onSubmit={handleSubmit}> 
                         <Row>
-                            <div className="mb-3">
-                                <h4>{i18n.t("sponsor_info:form_header_donation")}</h4>
-                            </div>
+                            <Col xl={6} className="mb-1">
+                                <div className="mb-3">
+                                    <h4>{i18n.t("donate:form_header_donation_info")}</h4>
+                                </div>
+                            </Col>
                         </Row>
                         <Row>
                             {/* mb-4 means margin-botton to $spacer * 1.5. $spacer defined in bootstrap css
@@ -213,23 +214,8 @@ const SponsorForm = ({ i18n, sponsor, donation, willPayByCheck, sponsorFormClick
                                 </Form.Row>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col>
-                                <Form.Group>
-                                    <Form.Check 
-                                        label={i18n.t("sponsor_info:form_pay_by_check_checkbox")}
-                                        name="willPayByCheck"
-                                        id="willPayByCheck"
-                                        inline
-                                        custom
-                                        type="checkbox"
-                                        onClick={() => setFieldValue("willPayByCheck", !values.willpayByCheck)}
-                                    />
-                                </Form.Group>
-                            </Col>
-                        </Row>
                         <Row className="ml-3 sponsor-form-bottom">
-                            <Button className="sponsor-form-btn btn button-primary" type="submit">{i18n.t("sponsor_info:form_submit")}</Button>
+                            <Button className="sponsor-form-btn" type="submit">{i18n.t("sponsor_info:form_submit")}</Button>
                         </Row>
                     </Form>
                 )}

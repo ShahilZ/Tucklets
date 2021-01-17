@@ -11,10 +11,13 @@ public enum DonationDuration
 //    THREE_YEAR(2, "sponsor-info.donationDuration.THREE_YEARS"),
 //    INDEFINITE(3, "sponsor-info.donationDuration.INDEFINITE"),
 //    SIX_MONTHS(0, "sponsor-info.donationDuration.SIX_MONTHS");
-    ONCE("once"),
-    MONTHLY("monthly");
+    ONCE("ONCE"),
+    MONTHLY("MONTHLY"),
+    ANNUAL("YEARLY"),
+    ANNUAL_RECURRING("YEARLY_RECURRING");
 
-    private String donationDurationText;
+
+    private final String donationDurationText;
 
     DonationDuration(String donationDurationText) {
         this.donationDurationText = donationDurationText;

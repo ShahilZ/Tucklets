@@ -22,3 +22,37 @@
     }
 
 }
+
+.btn.btn-info.donation-button {
+    border-radius: 0.25rem;
+    
+    &:hover {
+        @include donation-selected-color;
+    }
+
+    &:focus {
+        @include donation-selected-color;
+    }
+
+    &.default {
+        @include donation-selected-color;
+    }
+}
+
+.donation-info-container {
+    box-shadow: 0px 0px 2px 8px #c9bbfb26;
+    background-color: #fff;
+
+    .donation-information-form {
+        padding: 15px;
+    }
+}
+
+.donation-submission-div {
+    display: flex;
+    justify-content: center;;
+
+    .donation-information-btn {
+        width: 200px;
+    }
+}

@@ -9,8 +9,18 @@
   "address": "Address",
   "duration": "Duration",
   "donate-once": "ONCE",
-  "donate-monthly": "MONTHLY"
-
+  "donate-monthly": "MONTHLY",
+  "donate-description": "Thanks for choosing to sponsor one of our students! We are grateful for your generosity. Below, we have a few ways for you to support your child!",
   
+  "form_header_donation_info": "Donation Information",
+  "form_duration": "Duration",
+  "form_amount": "Amount",
+  "form_payment_method": "Payment Method",
+  
+  "donate-monthly-text": "Recurring monthly",
+  "donate-yearly-text": "One-time annual",
+  "donate-yearly_recurring-text": "Recurring annual",
+  "donate-check-text": "Check",
+  "donate-paypal-text": "PayPal"
 
 }
