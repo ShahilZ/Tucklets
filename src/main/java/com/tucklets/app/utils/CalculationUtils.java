@@ -22,13 +22,16 @@ public class CalculationUtils {
     public static BigDecimal calculateAmount(
             DonationDuration desiredDuration, DonationDuration prevDuration, BigDecimal amount)
     {
+        // Going to monthly duration from a yearly one.
         if (desiredDuration == DonationDuration.MONTHLY
                 && (prevDuration == DonationDuration.ANNUAL || prevDuration == DonationDuration.ANNUAL_RECURRING)) {
             return amount.divide(BigDecimal.valueOf(12), RoundingMode.CEILING);
         }
+        // Going to a yearly duration from a monthly selection.
         else if (desiredDuration != DonationDuration.MONTHLY && prevDuration == DonationDuration.MONTHLY){
             return BigDecimal.valueOf(12).multiply(amount);
         }
+        // All other cases do not require an amount adjustment.
         else {
             return amount;
         }
