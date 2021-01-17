@@ -19,12 +19,14 @@ public class CalculationUtils {
     /**
      * Computes the amount based on the selected donation duration.
      */
-    public static BigDecimal calculateAmount(DonationDuration duration, DonationDuration prevDuration, BigDecimal amount) {
-        if (duration == DonationDuration.MONTHLY
+    public static BigDecimal calculateAmount(
+            DonationDuration desiredDuration, DonationDuration prevDuration, BigDecimal amount)
+    {
+        if (desiredDuration == DonationDuration.MONTHLY
                 && (prevDuration == DonationDuration.ANNUAL || prevDuration == DonationDuration.ANNUAL_RECURRING)) {
             return amount.divide(BigDecimal.valueOf(12), RoundingMode.CEILING);
         }
-        else if (duration != DonationDuration.MONTHLY && prevDuration == DonationDuration.MONTHLY){
+        else if (desiredDuration != DonationDuration.MONTHLY && prevDuration == DonationDuration.MONTHLY){
             return BigDecimal.valueOf(12).multiply(amount);
         }
         else {

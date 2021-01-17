@@ -30,20 +30,20 @@ public class CalculationUtilsTest {
     }
 
     @Test
-    public void testYearlytoMonthly() {
+    public void testYearlyToMonthly() {
         BigDecimal amount = new BigDecimal(720);
         Assertions.assertEquals(
                 BigDecimal.valueOf(60),
                 CalculationUtils.calculateAmount(
-                        DonationDuration.ANNUAL,
                         DonationDuration.MONTHLY,
+                        DonationDuration.ANNUAL,
                         amount));
 
         Assertions.assertEquals(
                 BigDecimal.valueOf(60),
                 CalculationUtils.calculateAmount(
-                        DonationDuration.ANNUAL_RECURRING,
                         DonationDuration.MONTHLY,
+                        DonationDuration.ANNUAL_RECURRING,
                         amount));
 
     }
