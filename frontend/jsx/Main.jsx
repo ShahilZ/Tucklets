@@ -240,8 +240,6 @@ class Main extends Component {
                             donation={this.state.donation}
                             handleDonationDurationChange={this.donationDurationChangeHandler}
                             handlePaymentMethodChange={this.paymentMethodChangeHandler}
-
-
                         />
 
                     </Route>

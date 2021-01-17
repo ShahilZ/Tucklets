@@ -103,7 +103,6 @@ class ConfirmationPage extends Component {
 
     render() {
         // TODO: user refreshes the page or somehow gets here without going through the flow, redirect to the main page.
-        console.log(this.props.paymentMethod);
         let paymentOptions = this.props.donation.paymentMethod === PaymentMethod.CHECK ? this.renderPayByCheckView() :  this.renderPayPalButtons();
         return (
             <div id="confirmation" className="bg-light">

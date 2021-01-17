@@ -24,8 +24,6 @@ const DonationToggle = ({ i18n, donation, donationField, options, onClickHandler
             ))}
         </div>
     )
-
-
 }
 
 export default DonationToggle;
