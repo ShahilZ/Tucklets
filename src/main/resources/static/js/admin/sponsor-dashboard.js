@@ -14,7 +14,7 @@ function handleDeleteSponsor(sponsorId) {
     console.log(sponsorId);
     let sponsorRow = $('#sponsor-row' + sponsorId);
     $.ajax({
-        url: '/admin/remove-sponsor/',
+        url: '/admin/sponsor-dashboard/remove-sponsor/',
         type: 'DELETE',
         data: {"sponsorId": sponsorId},
         success: function(sponsorInfoResponse) {

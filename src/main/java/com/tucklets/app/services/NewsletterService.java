@@ -32,6 +32,8 @@ public class NewsletterService {
     @Autowired
     SimpleS3Service simpleS3Service;
 
+    private static final String S3_NEWSLETTERS_DIRECTORY = "newsletters/";
+
     /**
      * Adds a newsletter to the database.
      */
@@ -55,14 +57,18 @@ public class NewsletterService {
            // Found a newsletter with the same name.
             return;
         }
+        String newsletterLocation = S3_NEWSLETTERS_DIRECTORY + filename;
         // Upload file.
         simpleS3Service.uploadFile(
-            filename,
+            newsletterLocation,
             S3Utils.convertMultiPartToFile(file),
-            awsConfig.getS3NewslettersBucketName());
+            awsConfig.getS3BucketName());
+
+        // Compute the newsletter url to store in db.
+        String newsletterUrl = S3Utils.computeS3Key(filename, awsConfig.getS3NewslettersBucketUrl());
 
         // Store metadata in db.
-        addNewsletter(new Newsletter(file.getOriginalFilename(), new Date()));
+        addNewsletter(new Newsletter(file.getOriginalFilename(), new Date(), newsletterUrl));
     }
 
     /**
@@ -74,7 +80,7 @@ public class NewsletterService {
         if (newsletterOptional.isPresent()) {
             Newsletter newsletter = newsletterOptional.get();
             String newsletterLocation = newsletter.getFilename();
-            simpleS3Service.deleteFile(newsletterLocation, awsConfig.getS3NewslettersBucketName());
+            simpleS3Service.deleteFile(newsletterLocation, awsConfig.getS3BucketName());
             newsletterRepository.delete(newsletter);
         }
         else {
