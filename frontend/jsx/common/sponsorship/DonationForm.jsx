@@ -18,13 +18,16 @@ const props = {
     /** Handler for updating donation amount. */
     handleDonationDurationChange: PropTypes.func.isRequired,
     /** Handler for updating the payment method */
-    handlePaymentMethodChange: PropTypes.func.isRequired
+    handlePaymentMethodChange: PropTypes.func.isRequired,
+    /** Boolean that determines whether the amount input field should be read-only. */
+    isAmountFieldDisabled: PropTypes.bool,
+    /** Boolean that indicates whether this form should show limited donation duration options or not. */
+    showLimitedDonationDurationOptions: PropTypes.bool.isRequired
 }
 
 
 
-const DonationForm = ({ i18n, donation, handleDonationDurationChange, handlePaymentMethodChange }) => {
-   
+const DonationForm = ({ i18n, donation, handleDonationDurationChange, handlePaymentMethodChange, isAmountFieldDisabled, showLimitedDonationDurationOptions, handleDonationAmountChange }) => {
     return (
         <div className="donation-info-div">
             <div className="container">
@@ -37,10 +40,12 @@ const DonationForm = ({ i18n, donation, handleDonationDurationChange, handlePaym
                             <Form.Row>
                                 <Form.Group md={3} as={Col} controlId="amount">
                                     <Form.Label>{i18n.t("donate:form_amount")}</Form.Label>
-                                    <Form.Control readOnly 
+                                    <Form.Control 
                                         type="text"
                                         name="donation.amount"
-                                        value={donation.donationAmount}              
+                                        value={donation.donationAmount}
+                                        readOnly={isAmountFieldDisabled} 
+                                        onChange={handleDonationAmountChange}          
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         {i18n.t("sponsor_info:form_error_first_name")}
@@ -59,19 +64,38 @@ const DonationForm = ({ i18n, donation, handleDonationDurationChange, handlePaym
                                     />
                                 </Form.Group>
                             </Form.Row>
-                            <Form.Row>
-                                <Form.Group md={6} as={Col} controlId="duration">
-                                <Form.Label>{i18n.t("donate:form_duration")}</Form.Label>
-                                <br />
-                                <DonationToggle 
-                                    i18n={i18n}
-                                    donation={donation}
-                                    donationField="donationDuration"
-                                    options={[DonationDuration.MONTHLY, DonationDuration.YEARLY, DonationDuration.YEARLY_RECURRING]}
-                                    onClickHandler={handleDonationDurationChange}
-                                />
-                                </Form.Group>
-                            </Form.Row>
+                            {
+                                showLimitedDonationDurationOptions &&
+                                <Form.Row>
+                                    <Form.Group md={6} as={Col} controlId="duration">
+                                    <Form.Label>{i18n.t("donate:form_duration")}</Form.Label>
+                                    <br />
+                                    <DonationToggle 
+                                        i18n={i18n}
+                                        donation={donation}
+                                        donationField="donationDuration"
+                                        options={[DonationDuration.MONTHLY, DonationDuration.ONCE]}
+                                        onClickHandler={handleDonationDurationChange}
+                                    />
+                                    </Form.Group>
+                                </Form.Row>
+                            }
+                            {
+                                !showLimitedDonationDurationOptions &&
+                                <Form.Row>
+                                    <Form.Group md={6} as={Col} controlId="duration">
+                                    <Form.Label>{i18n.t("donate:form_duration")}</Form.Label>
+                                    <br />
+                                    <DonationToggle 
+                                        i18n={i18n}
+                                        donation={donation}
+                                        donationField="donationDuration"
+                                        options={[DonationDuration.MONTHLY, DonationDuration.YEARLY, DonationDuration.YEARLY_RECURRING]}
+                                        onClickHandler={handleDonationDurationChange}
+                                    />
+                                    </Form.Group>
+                                </Form.Row>
+                            }
                         </Col>
                     </Row>
                 </Form>

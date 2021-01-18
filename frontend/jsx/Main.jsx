@@ -17,7 +17,7 @@ import UnsubscribePage from './pages/UnsubscribePage'
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
-import { DonationDuration, PaymentMethod } from './common/utils/enums';
+import { DonationDuration, DonationOrigin, PaymentMethod } from './common/utils/enums';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import '../static/css/bootstrap-agency-theme.css';
@@ -52,6 +52,7 @@ class Main extends Component {
                 donationDuration: DonationDuration.MONTHLY,
                 paymentMethod: PaymentMethod.PAYPAL }, // default payment method is Paypal. Other options include Check
             payPalClientId: "",
+            donationOrigin: DonationOrigin.DONATE_PAGE
         };
 
         // Bind handlers here
@@ -61,6 +62,7 @@ class Main extends Component {
         this.handleDonationClick = this.handleDonationClick.bind(this);
         this.donationDurationChangeHandler = this.donationDurationChangeHandler.bind(this);
         this.paymentMethodChangeHandler = this.paymentMethodChangeHandler.bind(this);
+        this.donationAmountChangeHandler = this.donationAmountChangeHandler.bind(this);
         // Handlers for sponsorship flows.
         this.handleSponsorChildSubmission = this.handleSponsorChildSubmission.bind(this);
         this.handleSponsorshipSubmission = this.handleSponsorshipSubmission.bind(this);
@@ -134,15 +136,13 @@ class Main extends Component {
                 }
             })
             .then(function (response) {
-                console.log(response);
                 self.setState({ 
                     selectedChildren: response.data.children, 
                     donation: { donationAmount: response.data.donation.donationAmount, donationDuration: DonationDuration.MONTHLY, paymentMethod: PaymentMethod.PAYPAL },
-                    //allowDonationDurationChange: false
+                    donationOrigin: DonationOrigin.SPONSORSHIP
                 });
                 // Manually change route after successful response from backend.
                 history.push("/sponsor-info/");
-                // history.push("/sponsor-info/donation-info/")
             })
             .catch(function (error) {
                 console.log(error);
@@ -155,41 +155,75 @@ class Main extends Component {
      * Handler that leads user from donate to sponsor info page.
      */
     handleDonationClick(amount, donationDuration, history) {
-        this.setState({ 
-            donation: { donationAmount: parseInt(amount), donationDuration: donationDuration },
-        });
+        this.setState(prevState => ({ 
+            donation: {
+                ...prevState.donation, 
+                donationAmount: parseInt(amount), 
+                donationDuration: donationDuration
+
+            },
+            donationOrigin: DonationOrigin.DONATE_PAGE
+        }));
         // Manually change route after successful validation.
         history.push("/sponsor-info/");
     }
 
+        /***
+     * Handler that leads user from donate to sponsor info page.
+     */
+    donationAmountChangeHandler(event) {
+        amount = !event.target.value ? 0 : event.target.value;
+        this.setState(prevState => ({ 
+            donation: {
+                ...prevState.donation, 
+                donationAmount: parseInt(amount), 
+
+            },
+        }));
+    }
+
+
 
     /**
      * Handler for donation duration changes.
+     * If the user is coming directly from the "donate page", then skip the backend request to update the amount.
      */
     donationDurationChangeHandler(donationDuration) {
         let self = this;
         return () => {
-            axios.get('/info/changeDonationDuration', {
-                params: {
-                    amount: self.state.donation.donationAmount,
-                    donationDuration: donationDuration.value,
-                    prevDuration: self.state.donation.donationDuration.value
-                }
-    
-            })
-            .then(function (response) {
+            // If user is coming from donate page, then just set state and continue.
+            if (self.state.donationOrigin === DonationOrigin.DONATE_PAGE) {
                 self.setState(prevState => ({
                     donation: {
                         ...prevState.donation,
                         donationDuration: donationDuration,
-                        donationAmount: response.data.amount
-
                     },
                 }));
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            }
+            else {
+                axios.get('/info/changeDonationDuration', {
+                    params: {
+                        amount: self.state.donation.donationAmount,
+                        donationDuration: donationDuration.value,
+                        prevDuration: self.state.donation.donationDuration.value
+                    }
+        
+                })
+                .then(function (response) {
+                    self.setState(prevState => ({
+                        donation: {
+                            ...prevState.donation,
+                            donationDuration: donationDuration,
+                            donationAmount: response.data.amount
+    
+                        },
+                    }));
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+
         }
     }
 
@@ -224,9 +258,10 @@ class Main extends Component {
                             payPalClientId={this.state.payPalClientId}
                             sponsor={this.state.sponsor}
                             sponsorFormClickHandler={this.handleSponsorFormClick}
-                            donation={this.state.donation}
                             handleDonationDurationChange={this.donationDurationChangeHandler}
                             handlePaymentMethodChange={this.paymentMethodChangeHandler}
+                            donationOrigin={this.state.donationOrigin}
+                            handleDonationAmountChange={this.donationAmountChangeHandler}
                         />
                     </Route>
                     <Route exact path="/sponsor-info/confirm/">
