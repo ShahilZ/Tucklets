@@ -16,14 +16,14 @@ public class CalculationUtilsTest {
         Assertions.assertEquals(
                 BigDecimal.valueOf(720),
                 CalculationUtils.calculateAmount(
-                        DonationDuration.ANNUAL,
+                        DonationDuration.YEARLY,
                         DonationDuration.MONTHLY,
                         amount));
 
         Assertions.assertEquals(
                 BigDecimal.valueOf(720),
                 CalculationUtils.calculateAmount(
-                        DonationDuration.ANNUAL_RECURRING,
+                        DonationDuration.YEARLY_RECURRING,
                         DonationDuration.MONTHLY,
                         amount));
 
@@ -36,14 +36,14 @@ public class CalculationUtilsTest {
                 BigDecimal.valueOf(60),
                 CalculationUtils.calculateAmount(
                         DonationDuration.MONTHLY,
-                        DonationDuration.ANNUAL,
+                        DonationDuration.YEARLY,
                         amount));
 
         Assertions.assertEquals(
                 BigDecimal.valueOf(60),
                 CalculationUtils.calculateAmount(
                         DonationDuration.MONTHLY,
-                        DonationDuration.ANNUAL_RECURRING,
+                        DonationDuration.YEARLY_RECURRING,
                         amount));
 
     }
@@ -54,15 +54,15 @@ public class CalculationUtilsTest {
         Assertions.assertEquals(
                 BigDecimal.valueOf(720),
                 CalculationUtils.calculateAmount(
-                        DonationDuration.ANNUAL,
-                        DonationDuration.ANNUAL,
+                        DonationDuration.YEARLY_RECURRING,
+                        DonationDuration.YEARLY,
                         amount));
 
         Assertions.assertEquals(
                 BigDecimal.valueOf(720),
                 CalculationUtils.calculateAmount(
-                        DonationDuration.ANNUAL_RECURRING,
-                        DonationDuration.ANNUAL,
+                        DonationDuration.YEARLY_RECURRING,
+                        DonationDuration.YEARLY,
                         amount));
 
     }

@@ -1,26 +1,34 @@
 package com.tucklets.app.entities.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
+import java.util.Map;
 import java.util.stream.Stream;
 
 
 public enum PaymentMethod
 {
-    CHECK(0), PAYPAL(1);
+    CHECK("CHECK"), PAYPAL("PAYPAL");
 
-    private int paymentMethodValue;
+    private String paymentMethodText;
 
-    PaymentMethod(int paymentMethodValue) {
-        this.paymentMethodValue = paymentMethodValue;
+    PaymentMethod(String paymentMethodText) {
+        this.paymentMethodText = paymentMethodText;
     }
 
-    public int getPaymentMethodValue() {
-        return paymentMethodValue;
+    public String getPaymentMethodText() {
+        return paymentMethodText;
     }
 
-    public static PaymentMethod of(int paymentMethodValue) {
+    public static PaymentMethod of(String paymentMethodText) {
         return Stream.of(PaymentMethod.values())
-                .filter(p -> p.getPaymentMethodValue() == paymentMethodValue)
+                .filter(p -> p.getPaymentMethodText().equals(paymentMethodText))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    @JsonCreator
+    public static PaymentMethod forValue(Map<String, String> jsonObject) {
+        return PaymentMethod.of(jsonObject.get("value"));
     }
 }

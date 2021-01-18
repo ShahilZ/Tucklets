@@ -3,14 +3,15 @@ package com.tucklets.app.containers;
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Sponsor;
+import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.List;
 
 public class SponsorInfoContainer {
 
-    private Donation donation;
-    private Sponsor sponsor;
-    private List<ChildDetailsContainer> children;
+    private final Donation donation;
+    private final Sponsor sponsor;
+    private final List<ChildDetailsContainer> children;
 
     public SponsorInfoContainer(
         Donation donation,
@@ -29,16 +30,9 @@ public class SponsorInfoContainer {
         return sponsor;
     }
 
-    public void setSponsor(Sponsor sponsor) {
-        this.sponsor = sponsor;
-    }
-
     public List<ChildDetailsContainer> getChildren() {
         return children;
     }
 
-    public void setChildren(List<ChildDetailsContainer> children) {
-        this.children = children;
-    }
 
 }

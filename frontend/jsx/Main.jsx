@@ -137,7 +137,7 @@ class Main extends Component {
                 console.log(response);
                 self.setState({ 
                     selectedChildren: response.data.children, 
-                    donation: { donationAmount: response.data.donation.donationAmount, donationDuration: DonationDuration.MONTHLY, paymentMethod: PaymentMethod.PAYPAL},
+                    donation: { donationAmount: response.data.donation.donationAmount, donationDuration: DonationDuration.MONTHLY, paymentMethod: PaymentMethod.PAYPAL },
                     //allowDonationDurationChange: false
                 });
                 // Manually change route after successful response from backend.
@@ -157,7 +157,6 @@ class Main extends Component {
     handleDonationClick(amount, donationDuration, history) {
         this.setState({ 
             donation: { donationAmount: parseInt(amount), donationDuration: donationDuration },
-            //allowDonationDurationChange: true
         });
         // Manually change route after successful validation.
         history.push("/sponsor-info/");

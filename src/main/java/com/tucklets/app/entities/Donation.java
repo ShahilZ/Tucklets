@@ -41,7 +41,7 @@ public class Donation {
 
     @Column(name = "payment_method", updatable = false, nullable = false)
     @Basic
-    private int paymentMethodValue;
+    private String paymentMethodText;
 
     @Transient
     private PaymentMethod paymentMethod;
@@ -57,7 +57,7 @@ public class Donation {
     @PrePersist
     void onCreate() {
         if (paymentMethod != null) {
-            this.paymentMethodValue = paymentMethod.getPaymentMethodValue();
+            this.paymentMethodText = paymentMethod.getPaymentMethodText();
         }
         if (donationDuration != null) {
             this.donationDurationText = donationDuration.getDonationDuration();
@@ -66,9 +66,7 @@ public class Donation {
 
     @PostLoad
     void fillTransient() {
-        if (paymentMethodValue > 0) {
-            this.paymentMethod = PaymentMethod.of(paymentMethodValue);
-        }
+        this.paymentMethod = PaymentMethod.of(paymentMethodText);
         this.donationDuration = DonationDuration.of(donationDurationText);
     }
 
@@ -103,12 +101,12 @@ public class Donation {
         this.donationDuration = donationDuration;
     }
 
-    public int getPaymentMethodValue() {
-        return paymentMethodValue;
+    public String getPaymentMethodText() {
+        return paymentMethodText;
     }
 
-    public void setPaymentMethodValue(int paymentMethodValue) {
-        this.paymentMethodValue = paymentMethodValue;
+    public void setPaymentMethodText(String paymentMethodText) {
+        this.paymentMethodText = paymentMethodText;
     }
 
     public PaymentMethod getPaymentMethod() {
