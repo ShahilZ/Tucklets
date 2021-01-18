@@ -27,50 +27,52 @@ const DonationForm = ({ i18n, donation, handleDonationDurationChange, handlePaym
    
     return (
         <div className="donation-info-div">
-            <div className="container donation-info-container">
+            <div className="container">
                 <Form className="donation-info-form">
                     <Row>
-                        <Form.Group md={3} as={Col} controlId="amount">
-                            <Form.Label>{i18n.t("donate:form_amount")}</Form.Label>
-                            <Form.Control readOnly 
-                                type="text"
-                                name="donation.amount"
-                                value={donation.donationAmount}              
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                {i18n.t("sponsor_info:form_error_first_name")}
-                            </Form.Control.Feedback>
-                            <Form.Control.Feedback type="valid" />
-                        </Form.Group>
-                    </Row>
-
-                    <Row>
-                        <Form.Group md={6} as={Col} controlId="duration">
-                            <Form.Label>{i18n.t("donate:form_duration")}</Form.Label>
-                            <br />
-                            <DonationToggle 
-                                i18n={i18n}
-                                donation={donation}
-                                donationField="donationDuration"
-                                options={[DonationDuration.MONTHLY, DonationDuration.YEARLY, DonationDuration.YEARLY_RECURRING]}
-                                onClickHandler={handleDonationDurationChange}
-                            />
-
-                        </Form.Group>
-
-                    </Row>
-                    <Row>
-                        <Form.Group md={3} as={Col} controlId="payment-method">
-                            <Form.Label>{i18n.t("donate:form_payment_method")}</Form.Label>
-                            <br />
-                            <DonationToggle 
-                                i18n={i18n}
-                                donation={donation}
-                                donationField="paymentMethod"
-                                options={[PaymentMethod.PAYPAL, PaymentMethod.CHECK]}
-                                onClickHandler={handlePaymentMethodChange}
-                            />
-                        </Form.Group>
+                        <Col xl={6} className="mb-1">
+                            <div className="mb-3">
+                                <h4>{i18n.t("donate:form_header_donation_info")}</h4>
+                            </div>
+                            <Form.Row>
+                                <Form.Group md={3} as={Col} controlId="amount">
+                                    <Form.Label>{i18n.t("donate:form_amount")}</Form.Label>
+                                    <Form.Control readOnly 
+                                        type="text"
+                                        name="donation.amount"
+                                        value={donation.donationAmount}              
+                                    />
+                                    <Form.Control.Feedback type="invalid">
+                                        {i18n.t("sponsor_info:form_error_first_name")}
+                                    </Form.Control.Feedback>
+                                    <Form.Control.Feedback type="valid" />
+                                </Form.Group>
+                                <Form.Group md={3} as={Col} controlId="payment-method">
+                                    <Form.Label>{i18n.t("donate:form_payment_method")}</Form.Label>
+                                    <br />
+                                    <DonationToggle 
+                                        i18n={i18n}
+                                        donation={donation}
+                                        donationField="paymentMethod"
+                                        options={[PaymentMethod.PAYPAL, PaymentMethod.CHECK]}
+                                        onClickHandler={handlePaymentMethodChange}
+                                    />
+                                </Form.Group>
+                            </Form.Row>
+                            <Form.Row>
+                                <Form.Group md={6} as={Col} controlId="duration">
+                                <Form.Label>{i18n.t("donate:form_duration")}</Form.Label>
+                                <br />
+                                <DonationToggle 
+                                    i18n={i18n}
+                                    donation={donation}
+                                    donationField="donationDuration"
+                                    options={[DonationDuration.MONTHLY, DonationDuration.YEARLY, DonationDuration.YEARLY_RECURRING]}
+                                    onClickHandler={handleDonationDurationChange}
+                                />
+                                </Form.Group>
+                            </Form.Row>
+                        </Col>
                     </Row>
                 </Form>
             </div>

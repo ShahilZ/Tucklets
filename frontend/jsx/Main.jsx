@@ -14,7 +14,6 @@ import SponsorInfoPage from './pages/SponsorInfoPage';
 import SponsorThankYouPage from './pages/SponsorThankYouPage';
 import DonatePage from './pages/DonatePage';
 import UnsubscribePage from './pages/UnsubscribePage'
-import DonationInfoPage from './pages/DonationInfoPage';
 import Footer from './common/Footer';
 import i18n from './common/i18n';
 
@@ -52,9 +51,7 @@ class Main extends Component {
                 donationAmount: 0, 
                 donationDuration: DonationDuration.MONTHLY,
                 paymentMethod: PaymentMethod.PAYPAL }, // default payment method is Paypal. Other options include Check
-            // allowDonationDurationChange: true,
             payPalClientId: "",
-            willPayByCheck: false // this will be used to determine the paymentMethod above.
         };
 
         // Bind handlers here
@@ -88,7 +85,6 @@ class Main extends Component {
         return (values) => {
             self.setState({ 
                 sponsor: values.sponsor, 
-                donation: values.donation 
             });
             history.push("confirm");
         }
@@ -145,8 +141,8 @@ class Main extends Component {
                     //allowDonationDurationChange: false
                 });
                 // Manually change route after successful response from backend.
-                // history.push("/sponsor-info/");
-                history.push("/sponsor-info/donation-info/")
+                history.push("/sponsor-info/");
+                // history.push("/sponsor-info/donation-info/")
             })
             .catch(function (error) {
                 console.log(error);
@@ -227,21 +223,12 @@ class Main extends Component {
                             i18n={i18n} 
                             handleSelectedLocaleChange={this.handleSelectedLocaleChange}
                             payPalClientId={this.state.payPalClientId}
-                            //allowDonationDurationChange={this.state.allowDonationDurationChange}
                             sponsor={this.state.sponsor}
-                            willPayByCheck={this.state.willPayByCheck}
                             sponsorFormClickHandler={this.handleSponsorFormClick}
-                        />
-                    </Route>
-                    <Route exact path="/sponsor-info/donation-info/">
-                        <DonationInfoPage
-                            i18n={i18n}
-                            handleSelectedLocaleChange={this.handleSelectedLocaleChange}
                             donation={this.state.donation}
                             handleDonationDurationChange={this.donationDurationChangeHandler}
                             handlePaymentMethodChange={this.paymentMethodChangeHandler}
                         />
-
                     </Route>
                     <Route exact path="/sponsor-info/confirm/">
                         <ConfirmationPage 

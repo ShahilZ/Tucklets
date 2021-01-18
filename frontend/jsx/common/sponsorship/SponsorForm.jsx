@@ -4,8 +4,6 @@ import { getIn, Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 
-
-
 import '../../../static/scss/basic.scss';
 import '../../../static/scss/sponsor-info.scss';
 
@@ -33,7 +31,7 @@ const validationSchema = Yup.object().shape({
   });
 
 
-const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
+const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler, handleDonationDurationChange, handlePaymentMethodChange }) => {
    
     return (
         <div className="sponsor-info-div">
@@ -53,16 +51,9 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                     touched, 
                     handleChange, 
                     handleSubmit, 
-                    setFieldValue }) => (
+                    setFieldValue}) => (
                         
                     <Form onSubmit={handleSubmit}> 
-                        <Row>
-                            <Col xl={6} className="mb-1">
-                                <div className="mb-3">
-                                    <h4>{i18n.t("donate:form_header_donation_info")}</h4>
-                                </div>
-                            </Col>
-                        </Row>
                         <Row>
                             {/* mb-4 means margin-botton to $spacer * 1.5. $spacer defined in bootstrap css
                             Look at https://getbootstrap.com/docs/4.0/utilities/spacing/ for more info. */}
@@ -157,9 +148,9 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler }) => {
                                         id="sponsor.subscribed"
                                         checked={values.sponsor.subscribed}
                                         type="checkbox"
-                                        onClick={() => setFieldValue("sponsor.subscribed", !values.sponsor.subscribed)}
+                                        onChange={() => setFieldValue("sponsor.subscribed", !values.sponsor.subscribed)}
                                     />
-                                </Form.Group>
+                                </Form.Group>                           
                             </Col>
                             <Col xl={6}>
                                 <div className="mb-3">
