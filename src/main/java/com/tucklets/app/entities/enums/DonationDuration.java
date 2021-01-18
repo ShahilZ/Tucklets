@@ -1,6 +1,9 @@
 package com.tucklets.app.entities.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,8 +16,8 @@ public enum DonationDuration
 //    SIX_MONTHS(0, "sponsor-info.donationDuration.SIX_MONTHS");
     ONCE("ONCE"),
     MONTHLY("MONTHLY"),
-    ANNUAL("YEARLY"),
-    ANNUAL_RECURRING("YEARLY_RECURRING");
+    YEARLY("YEARLY"),
+    YEARLY_RECURRING("YEARLY_RECURRING");
 
 
     private final String donationDurationText;
@@ -39,5 +42,11 @@ public enum DonationDuration
      */
     public static List<DonationDuration> getAllDonationDurations() {
         return Stream.of(DonationDuration.values()).collect(Collectors.toList());
+    }
+
+
+    @JsonCreator
+    public static DonationDuration forValue(Map<String, String> jsonObject) {
+        return DonationDuration.of(jsonObject.get("value"));
     }
 }
