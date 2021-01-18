@@ -168,8 +168,8 @@ class Main extends Component {
         history.push("/sponsor-info/");
     }
 
-        /***
-     * Handler that leads user from donate to sponsor info page.
+    /***
+     * Handles amount changes on sponsor-info page (from donate page).
      */
     donationAmountChangeHandler(event) {
         amount = !event.target.value ? 0 : event.target.value;
@@ -181,8 +181,6 @@ class Main extends Component {
             },
         }));
     }
-
-
 
     /**
      * Handler for donation duration changes.
