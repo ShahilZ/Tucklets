@@ -9,4 +9,9 @@ export const DonationDuration = {
 export const PaymentMethod = {
     CHECK: {value: "CHECK", i18nKey: "check"},
     PAYPAL: {value: "PAYPAL", i18nKey: "paypal"}
-}
+};
+
+export const DonationOrigin = {
+    DONATE_PAGE: "DonationPage",
+    SPONSORSHIP: "Sponsor"
+};

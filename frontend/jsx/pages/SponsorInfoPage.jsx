@@ -10,6 +10,7 @@ import SponsorForm from '../common/sponsorship/SponsorForm';
 
 import '../../static/scss/basic.scss';
 import '../../static/scss/sponsor-info.scss';
+import { DonationOrigin } from '../common/utils/enums';
 
 const props = {
     /** i18n object to help with translations.*/
@@ -31,7 +32,11 @@ const props = {
     /** Handler for updating the donation duration. */
     handleDonationDurationChange: PropTypes.func.isRequired,
     /** Handler for updating the donation's payment method. */
-    handlePaymentMethodChange: PropTypes.func.isRequired
+    handlePaymentMethodChange: PropTypes.func.isRequired,
+    /** Enum that indicates which (UI) page the donation originated from. */
+    donationOrigin: PropTypes.string.isRequired,
+    /** Handler for updating the donation amount. */
+    handleDonationAmountChange: PropTypes.func,
 }
 
 class SponsorInfoPage extends Component {
@@ -48,6 +53,10 @@ class SponsorInfoPage extends Component {
 
     render() {
         // TODO: user refreshes the page or somehow gets here without going through the flow, redirect to the main page.
+
+        // If user originated from the donationPage, allow for donatoin amount to be changed + show limited donation duration options.
+        const isAmountFieldDisabled = this.props.donationOrigin === DonationOrigin.DONATE_PAGE ? false : true;
+        const showLimitedOptions = this.props.donationOrigin === DonationOrigin.DONATE_PAGE ? true : false;
         return (
             <div id="sponsor-info" className="sponsor-info">
                 <Jumbotron>
@@ -59,7 +68,10 @@ class SponsorInfoPage extends Component {
                     i18n={this.props.i18n}
                     donation={this.props.donation}
                     handleDonationDurationChange={this.props.handleDonationDurationChange}
-                    handlePaymentMethodChange={this.props.handlePaymentMethodChange}                
+                    handlePaymentMethodChange={this.props.handlePaymentMethodChange}        
+                    isAmountFieldDisabled={isAmountFieldDisabled}   
+                    showLimitedDonationDurationOptions={showLimitedOptions}
+                    handleDonationAmountChange={this.props.handleDonationAmountChange}
                 />
                 <br />
                 <SponsorForm 
@@ -67,6 +79,8 @@ class SponsorInfoPage extends Component {
                     sponsor={this.props.sponsor} 
                     donation={this.props.donation} 
                     sponsorFormClickHandler={this.props.sponsorFormClickHandler(this.props.history)}
+                    handleDonationDurationChange={this.props.handleDonationDurationChange}
+                    handlePaymentMethodChange={this.props.handlePaymentMethodChange}   
                 />
             </div>
         )

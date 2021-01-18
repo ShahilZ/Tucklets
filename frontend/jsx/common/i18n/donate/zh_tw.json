@@ -16,7 +16,8 @@
   "form_amount": "总数",
   "form_duration": "期限",
   "form_payment_method": "Payment Method",
-  
+
+  "donate-once-text": "One-time",
   "donate-monthly-text": "Recurring monthly",
   "donate-yearly-text": "One-time annual",
   "donate-yearly_recurring-text": "Recurring annual",
