@@ -33,6 +33,8 @@ public class ManageChildrenService {
     @Autowired
     SimpleS3Service simpleS3Service;
 
+    private static final String S3_IMAGES_DIRECTORY = "images/";
+
     /**
      * Handles the updates to the given childDetails object.
      */
@@ -63,9 +65,9 @@ public class ManageChildrenService {
             // Save image location.
             childAdditionalDetailService.addImageForChild(imageKey, child.getChildId());
             simpleS3Service.uploadFile(
-                imageKey,
-                S3Utils.convertMultiPartToFile(childDetails.getChildImageFile()),
-                awsConfig.getS3ImagesBucketName());
+                    S3_IMAGES_DIRECTORY + imageKey,
+                    S3Utils.convertMultiPartToFile(childDetails.getChildImageFile()),
+                    awsConfig.getS3BucketName());
         }
     }
 
@@ -89,10 +91,8 @@ public class ManageChildrenService {
                         childAdditionalDetailService.fetchChildAdditionalDetailById(child.getChildId());
                 String imageLocation = additionalDetails != null
                         ? additionalDetails.getImageLocation()
-                        : Constants.MISSING_PHOTO_URL;
-                childDetailsContainer.setChildImageLocation(
-                        S3Utils.computeS3Key(imageLocation, awsConfig.getS3ImagesBucketUrl())
-                );
+                        : S3Utils.computeS3Key(Constants.MISSING_PHOTO_URL, awsConfig.getS3ImagesBucketUrl());
+                childDetailsContainer.setChildImageLocation(imageLocation);
                 childContainerList.add(childDetailsContainer);
             }
         }
@@ -118,10 +118,9 @@ public class ManageChildrenService {
         ChildAdditionalDetail childAdditionalDetail =
                 childAdditionalDetailService.fetchChildAdditionalDetailById(child.getChildId());
         String imageLocation = childAdditionalDetail == null
-                ? Constants.DEFAULT_IMAGE_LOCATION
+                ? S3Utils.computeS3Key(Constants.MISSING_PHOTO_URL, awsConfig.getS3ImagesBucketUrl())
                 : childAdditionalDetail.getImageLocation();
-        childDetailsContainer.setChildImageLocation(
-            S3Utils.computeS3Key(imageLocation, awsConfig.getS3ImagesBucketUrl()));
+        childDetailsContainer.setChildImageLocation(imageLocation);
         return childDetailsContainer;
     }
 

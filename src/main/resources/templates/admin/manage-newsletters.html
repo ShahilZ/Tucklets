@@ -55,7 +55,7 @@
                     <input class="form-control upload-file-button" type="file" name="file" accept="application/pdf" onchange="handleUploadFile()">
                 </div>
                 <div>
-                    <input class="btn btn-primary upload-button" type="submit" value="Upload" disabled onclick="preventMultipleSubmissions()">
+                    <input class="btn btn-primary upload-button" type="submit" value="Upload" onsubmit="preventMultipleSubmissions()">
                 </div>
             </form>
         </div>

@@ -30,9 +30,10 @@ public class Newsletter {
 
     public Newsletter() {};
 
-    public Newsletter(String filename, Date uploadDate) {
+    public Newsletter(String filename, Date uploadDate, String newsletterLocation) {
         this.filename = filename;
         this.uploadDate = uploadDate;
+        this.newsletterLocation = newsletterLocation;
     }
 
     public Long getNewsletterId() {
@@ -49,10 +50,6 @@ public class Newsletter {
 
     public String getNewsletterLocation() {
         return newsletterLocation;
-    }
-
-    public void setNewsletterLocation(String newsletterLocation) {
-        this.newsletterLocation = newsletterLocation;
     }
 
 }
