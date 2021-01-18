@@ -1,7 +1,6 @@
 package com.tucklets.app.entities.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.List;
 import java.util.Map;
