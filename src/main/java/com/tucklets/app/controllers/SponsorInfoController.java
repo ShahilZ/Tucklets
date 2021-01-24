@@ -1,6 +1,7 @@
 package com.tucklets.app.controllers;
 
 import com.google.gson.Gson;
+import com.tucklets.app.configs.AppConfig;
 import com.tucklets.app.containers.SponsorInfoContainer;
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Child;
@@ -39,6 +40,9 @@ import java.util.List;
 public class SponsorInfoController {
 
     private static final Gson GSON = new Gson();
+
+    @Autowired
+    AppConfig appConfig;
 
     @Autowired
     SponsorService sponsorService;
@@ -126,13 +130,13 @@ public class SponsorInfoController {
             childAndSponsorAssociationService.createAssociation(children, sponsor, donation.getDonationDuration());
             childService.setSponsoredChildren(children);
             emailService.sendConfirmationEmail(sponsor, children, donation, sponsor.getEmail());
-            emailService.sendConfirmationEmail(sponsor, children, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
+            emailService.sendConfirmationEmail(sponsor, children, donation, appConfig.getPresidentEmail() );
 
         }
         else {
             // TODO: Generic sponsorship flow; send different email.
             emailService.sendGenericConfirmationEmail(sponsor, donation, sponsor.getEmail());
-            emailService.sendGenericConfirmationEmail(sponsor, donation, EmailService.PRESIDENT_EMAIL_ADDRESS);
+            emailService.sendGenericConfirmationEmail(sponsor, donation, appConfig.getPresidentEmail());
         }
 
         return ResponseEntity.ok(GSON.toJson(sponsorStatus));
