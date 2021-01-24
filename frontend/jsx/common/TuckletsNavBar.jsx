@@ -13,6 +13,8 @@ import '../../static/scss/basic.scss';
 
 
 const props = {
+    /** Currently selected locale */
+    selectedLocale: PropTypes.string.isRequired,
     /** Handler for updating the selected locale. */
     handleSelectedLocaleChange: PropTypes.func.isRequired,
     /** i18n object to help with translations.*/
@@ -94,7 +96,12 @@ class TuckletsNavBar extends Component {
                             <Link className="nav-link js-scroll-trigger" smooth to="/#newsletters" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:newsletters")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#donate" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:donate")}</Link>
                             <Link className="nav-link js-scroll-trigger" smooth to="/#sponsor-a-child" onClick={this.collapseNavBar}>{this.props.i18n.t("navigation:sponsor_navbar")}</Link>
-                            <LocaleChanger handleSelectedLocaleChange={this.props.handleSelectedLocaleChange} i18n={this.props.i18n} additionalClasses="nav-link js-scroll-trigger" />
+                            <LocaleChanger 
+                                handleSelectedLocaleChange={this.props.handleSelectedLocaleChange} 
+                                i18n={this.props.i18n} 
+                                additionalClasses="nav-link js-scroll-trigger" 
+                                selectedLocale={this.props.selectedLocale}
+                            />
                         </Nav>
                     </Navbar.Collapse>
                     </Container>

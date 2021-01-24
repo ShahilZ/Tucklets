@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import { PropTypes } from 'prop-types';
 import axios from 'axios';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { withCookies, Cookies } from 'react-cookie';
 
 import TuckletsNavBar from './common/TuckletsNavBar';
 import HomePage from './pages/HomePage';
@@ -23,11 +24,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../static/css/bootstrap-agency-theme.css';
 import '../static/scss/basic.scss';
 
+
+const props = {
+    cookies: PropTypes.instanceOf(Cookies).isRequired
+};
+
 class Main extends Component {
+
+
     constructor(props) {
         super(props);
         this.state = { 
-            selectedLocale: 'en-US', 
+            selectedLocale: i18n.language, 
             selectedChildren: [], 
             // Initialize donation amount for inital render.
             sponsor: {
@@ -74,8 +82,14 @@ class Main extends Component {
      */
     handleSelectedLocaleChange(event) {
         const selectedLocale = event.target.value;
-        this.setState({ selectedLocale: selectedLocale });
+        // Remove existing cookie if one exists.
+        if (this.props.cookies.get('i18next')) {
+            this.props.cookies.remove('i18next');
+        }
+        // Max age of cookie = 1 day.
+        this.props.cookies.set('i18next', selectedLocale, { path: '/', maxAge: 86400, secure: true, sameSite: 'strict' })
         i18n.changeLanguage(selectedLocale);
+        this.setState({ selectedLocale: selectedLocale });
     }
 
      /**
@@ -246,7 +260,7 @@ class Main extends Component {
             // Add padding-top to accommodate room for the navigation bar.
             <div className="tucklets-main tucklets-nav-padding">
                 <BrowserRouter>
-                    <TuckletsNavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} />
+                    <TuckletsNavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} selectedLocale={this.state.selectedLocale} />
                     <Route exact path="/sponsor-info/">
                         <SponsorInfoPage 
                             selectedChildren={this.state.selectedChildren} 
@@ -308,7 +322,6 @@ class Main extends Component {
     }
 }
 
-ReactDOM.render(
-    <Main />,
-    document.getElementById('tucklets-home')
-);
+Main.propTypes = props;
+
+export default withCookies(Main);

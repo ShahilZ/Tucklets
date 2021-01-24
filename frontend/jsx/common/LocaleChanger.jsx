@@ -6,6 +6,8 @@ import '../../static/scss/locales.scss';
 
 
 const props = {
+    /** Currently selected locale */
+    selectedLocale: PropTypes.string.isRequired,
     /** Handler for updating the selected locale. */
     handleSelectedLocaleChange: PropTypes.func.isRequired,
     /** i18n object to help with translations.*/
@@ -14,49 +16,20 @@ const props = {
     additionalClasses: PropTypes.string
 }
 
-class LocaleChanger extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { selectedLocale: '', supportedLocales: [] }
-        // Bind handlers
-        this.updateLocaleState = this.updateLocaleState.bind(this);
-    }
+const LocaleChanger = ({ selectedLocale, handleSelectedLocaleChange, i18n, additionalClasses }) => {
 
-    /**
-     * Handler that updates the state based on backend changes.
-     */
-    
-    updateLocaleState(selectedLocale, supportedLocales) {
-        this.setState({ selectedLocale: selectedLocale, supportedLocales: supportedLocales });
-    }
-
-    componentDidMount() {
-        axios.get('/info/locale')
-          .then((response) => {
-            // handle success
-            this.updateLocaleState(response.data.selectedLocale, response.data.supportedLocales);
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-          });
-    }
-
-    render() {
-        let localeList = this.state.supportedLocales.map(function(localeObject, index) {
-            return <option key={`${localeObject.locale}-${index}`} value={localeObject.localeString}> {`${localeObject.localeDisplayName}`} </option>
-        });
-        return (
-            <div className={`locale-changer ${this.props.additionalClasses}`}>
-                <select id="locale-changer" value={this.state.selectedLocale} onChange={this.props.handleSelectedLocaleChange}>
-                    {localeList}
-                </select>
-            </div>
-        );
-    }
+    return (
+        <div className={`locale-changer ${additionalClasses}`}>
+            <select id="locale-changer" value={selectedLocale} onChange={handleSelectedLocaleChange}>
+                <option value="en-US"> {`${i18n.t("locales:en_us")}`} </option>
+                <option value="zh-TW"> {`${i18n.t("locales:zh_tw")}`} </option>
+            </select>
+        </div>
+    )
 }
 
 LocaleChanger.propTypes = props;
+
 
 export default LocaleChanger;
 

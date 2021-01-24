@@ -1,4 +1,6 @@
 {
   "apptext": "你好，世界!",
-  "language": "Language"
+  "language": "Language",
+  "en_us": "英文",
+  "zh_tw": "中文"
 }

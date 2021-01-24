@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import detector from 'i18next-browser-languagedetector';
 
 import messages_zh_tw from './i18n/locales/zh_tw.json';
 import messages_en_us from './i18n/locales/en_us.json';
@@ -30,15 +31,17 @@ import unsubscribe_zh_tw from './i18n/unsubscribe/zh_tw.json';
 
 
 i18n
+  .use(detector)
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     ns: ['locales', 'about', 'our_story'],
+    fallbackLng: 'en',
     defaultNS: 'locales',
     interpolation: {
       // React already does escaping
       escapeValue: false,
     },
-    lng: 'en', // 'en' | 'es'
+    // lng: 'en', // 'en' | 'es'
     resources: {
       en: {
           about: about_en_us,

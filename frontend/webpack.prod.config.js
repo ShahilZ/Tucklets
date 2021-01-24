@@ -3,7 +3,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
     entry: [
-        './jsx/Main.jsx'
+        './jsx/Root.jsx'
     ],
     output: {
         filename: 'bundle.js'

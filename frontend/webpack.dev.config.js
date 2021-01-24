@@ -6,7 +6,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
     entry: [
         // entry point
-        './jsx/Main.jsx'
+        './jsx/Root.jsx'
     ],
     output: {
         path: path.join(__dirname, 'dist'),
