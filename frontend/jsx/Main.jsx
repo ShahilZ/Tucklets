@@ -88,8 +88,8 @@ class Main extends Component {
         }
         // Max age of cookie = 1 day.
         this.props.cookies.set('i18next', selectedLocale, { path: '/', maxAge: 86400, secure: true, sameSite: 'strict' })
-        this.setState({ selectedLocale: selectedLocale });
         i18n.changeLanguage(selectedLocale);
+        this.setState({ selectedLocale: selectedLocale });
     }
 
      /**
