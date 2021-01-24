@@ -28,7 +28,7 @@ const LocaleChanger = ({ selectedLocale, handleSelectedLocaleChange, i18n, addit
     )
 }
 
-
+LocaleChanger.propTypes = props;
 
 
 export default LocaleChanger;
