@@ -16,8 +16,8 @@ public class TextUtils {
         if (StringUtils.isEmpty(strippedText)) {
             return null;
         }
-        // Escapes the string and removes all escaped characters.
-        String escapedText = StringEscapeUtils.escapeJava(strippedText);
+        // Escapes the string and removes all escaped html characters.
+        String escapedText = StringEscapeUtils.escapeHtml4(strippedText);
         // Remove any suspicious characters.
         return escapedText.replaceAll("[\\\\<>/&;]", "");
     }
