@@ -23,9 +23,6 @@ import java.util.List;
 @Service
 public class EmailService {
 
-    // Email address for president of Tucklets (most emails should be forwarded to this email address).
-    public static final String PRESIDENT_EMAIL_ADDRESS = "president@tucklets.net";
-
     @Autowired
     AwsConfig awsConfig;
 
@@ -37,9 +34,6 @@ public class EmailService {
 
     @Autowired
     TemplateEngine templateEngine;
-
-    @Autowired
-    SimpleS3Service simpleS3Service;
 
     /**
      * Generic thank you email for donors.

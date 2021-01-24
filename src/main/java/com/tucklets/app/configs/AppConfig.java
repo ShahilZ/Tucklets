@@ -5,15 +5,24 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfig {
-    private final String tuckletsBaseUrl;
+
+    private final String baseUrl;
+    private final String presidentEmail;
 
     /* These are the variables stored in application.properties*/
-    public AppConfig(@Value("${tucklets.base.url}") String tuckletsBaseUrl)
+    public AppConfig(
+            @Value("${tucklets.base.url}") String baseUrl,
+            @Value("${tucklets.president.email}") String presidentEmail)
     {
-        this.tuckletsBaseUrl = tuckletsBaseUrl;
+        this.baseUrl = baseUrl;
+        this.presidentEmail = presidentEmail;
     }
 
     public String getTuckletsBaseUrl() {
-        return tuckletsBaseUrl;
+        return baseUrl;
+    }
+
+    public String getPresidentEmail() {
+        return presidentEmail;
     }
 }
