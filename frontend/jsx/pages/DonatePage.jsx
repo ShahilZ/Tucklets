@@ -30,9 +30,9 @@ class DonatePage extends Component {
 
     /** Handler for donation amount changes. When the amount becomes valid, remove any error styling there may be. */
     handleDonationAmountChange(event) {
-        if (!!event.target.value) {
-            this.setState({ donationAmount: event.target.value, amountHasErrors: false})
-        }
+        const amount = !event.target.value ? "" : event.target.value;
+        this.setState({ donationAmount: amount, amountHasErrors: false})
+        
     }
 
     /** Handler for submitting a donation. */
