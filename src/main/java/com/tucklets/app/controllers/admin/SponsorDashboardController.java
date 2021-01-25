@@ -1,24 +1,17 @@
 package com.tucklets.app.controllers.admin;
 
 
-import com.tucklets.app.containers.admin.ChildDetailsContainer;
-import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Sponsor;
-import com.tucklets.app.entities.enums.DonationDuration;
 import com.tucklets.app.entities.enums.PaymentMethod;
 import com.tucklets.app.services.ManageSponsorService;
 import com.tucklets.app.services.SponsorService;
 import com.tucklets.app.utils.ContainerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -40,8 +33,8 @@ public class SponsorDashboardController {
     }
 
     @DeleteMapping("/remove-sponsor")
-    public String removeChild(@RequestParam("sponsorId") Long sponsorId) {
-        sponsorService.deleteSponsor(sponsorId);
+    public String removeChild(@RequestParam("email") String email) {
+        sponsorService.deleteSponsor(email);
         return "success";
     }
 

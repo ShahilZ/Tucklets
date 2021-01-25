@@ -23,8 +23,23 @@
 
     <div class="children-table">
         <h4>Newsletters</h4>
+
+        <form class="form-group upload-children-form" th:action="@{/admin/newsletters/upload}" method="post" enctype="multipart/form-data">
+            <p class="import-directions-div">
+                <b>Please upload your newsletter here</b>
+            </p>
+            <div class="upload-area-div">
+                <span>Please upload a file (.pdf). Keep in mind that if you upload a newsletter with the same name, the newsletter will not get uploaded.</span>
+                <input class="form-control upload-file-button" type="file" name="file" accept="application/pdf" onchange="handleUploadFile()">
+            </div>
+            <div>
+                <input class="btn btn-primary upload-button" type="submit" value="Upload" onsubmit="preventMultipleSubmissions()">
+            </div>
+        </form>
+
         <input type="button" class="btn btn-primary upload-button" value="Email latest newsletter" th:onclick="handleEmailNewsletter()" />
         <span class="newsletter hidden-message">Email was sent successfully!</span>
+
         <table class="table table-striped table-bordered children-data-table">
             <thead>
             <tr>
@@ -44,21 +59,6 @@
             </tr>
             </tbody>
         </table>
-
-        <div class="container">
-            <form class="form-group upload-children-form" th:action="@{/admin/newsletters/upload}" method="post" enctype="multipart/form-data">
-                <p class="import-directions-div">
-                    <b>Please upload your newsletter here</b>
-                </p>
-                <div class="upload-area-div">
-                    <span>Please upload a file (.pdf). Keep in mind that if you upload a newsletter with the same name, the newsletter will not get uploaded.</span>
-                    <input class="form-control upload-file-button" type="file" name="file" accept="application/pdf" onchange="handleUploadFile()">
-                </div>
-                <div>
-                    <input class="btn btn-primary upload-button" type="submit" value="Upload" onsubmit="preventMultipleSubmissions()">
-                </div>
-            </form>
-        </div>
     </div>
 </div>
 </body>

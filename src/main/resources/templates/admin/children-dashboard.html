@@ -20,6 +20,13 @@
         </div>
     </div>
     <div class="children-table">
+
+        <div class="admin-tools-div">
+            <a th:href="@{/admin/children-dashboard/upload}" class="btn btn-primary upload-children-data-button">Upload Children Data</a>
+            <input type="button" class="btn btn-primary" value="Add Child" onclick="handleAddChildClick()" />
+            <input type="button" id="export-children-button" class="btn btn-primary" onclick="exportChildren()" value="Export" />
+        </div>
+
         <h4>Children Information</h4>
         <table class="table table-striped table-bordered children-data-table">
             <thead>
@@ -58,11 +65,7 @@
             </tbody>
         </table>
     </div>
-    <div class="admin-tools-div">
-        <a th:href="@{/admin/children-dashboard/upload}" class="btn btn-primary upload-children-data-button">Upload Children Data</a>
-        <input type="button" class="btn btn-primary" value="Add Child" onclick="handleAddChildClick()" />
-        <input type="button" id="export-children-button" class="btn btn-primary" onclick="exportChildren()" value="Export" />
-    </div>
+
     <div id="modify-child-modal-holder"></div>
 </div>
 </body>
