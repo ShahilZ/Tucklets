@@ -3,7 +3,6 @@ package com.tucklets.app.services;
 import com.tucklets.app.db.repositories.SponsorRepository;
 import com.tucklets.app.entities.Sponsor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -15,6 +14,9 @@ public class SponsorService {
 
     @Autowired
     SponsorRepository sponsorRepository;
+
+    @Autowired
+    ManageSponsorService manageSponsorService;
 
     /**
      * Fetches all active sponsors
@@ -35,18 +37,34 @@ public class SponsorService {
         return possibleSponsor.orElse(null);
     }
 
+    /**
+     * Returns Optional<Sponnsor> based on the provided email.
+     */
+    public Optional<Sponsor> fetchSponsorByEmail(String email) {
+        return sponsorRepository.fetchSponsorByEmail(email);
+    }
+
     public void addSponsor(Sponsor sponsor) {
         Date today = new Date();
-        sponsor.setCreationDate(today);
         sponsor.setLastUpdateDate(today);
+        Optional<Sponsor> existingSponsorOptional = sponsorRepository.fetchSponsorByEmail(sponsor.getEmail());
+        // Set creationDate if sponsor is not existing one.
+        if (existingSponsorOptional.isEmpty()) {
+            sponsor.setCreationDate(today);
+        }
+        else {
+            // Set existing fields since this is an existing sponsor.
+            manageSponsorService.addExistingFieldsToSponsor(sponsor, existingSponsorOptional.get());
+        }
+        // Create/update sponsor.
         sponsorRepository.save(sponsor);
     }
 
     /**
      * Soft deletes the child with the given id.
      */
-    public void deleteSponsor(Long sponsorId) {
-        Optional<Sponsor> sponsor = sponsorRepository.fetchSponsorById(sponsorId);
+    public void deleteSponsor(String email) {
+        Optional<Sponsor> sponsor = sponsorRepository.fetchSponsorByEmail(email);
         sponsor.ifPresent(value -> value.setDeletionDate(new Date()));
         sponsorRepository.save(sponsor.get());
     }

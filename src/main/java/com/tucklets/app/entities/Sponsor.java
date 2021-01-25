@@ -1,18 +1,14 @@
 package com.tucklets.app.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.PreUpdate;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Sponsor")
+@Table(
+        name = "Sponsor",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email", name = "uniqueEmaileConstraint")}
+)
 /**
  * Class representing the sponsor of a child. Columns should be self-explanatory.
  */

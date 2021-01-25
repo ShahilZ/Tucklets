@@ -1,22 +1,10 @@
 package com.tucklets.app.services;
 
-import com.tucklets.app.containers.admin.ChildDetailsContainer;
-import com.tucklets.app.db.repositories.ChildRepository;
-import com.tucklets.app.entities.Child;
-import com.tucklets.app.entities.ChildAdditionalDetail;
 import com.tucklets.app.entities.Sponsor;
-import com.tucklets.app.utils.CalculationUtils;
-import com.tucklets.app.utils.Constants;
-import com.tucklets.app.utils.S3Utils;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 
 @Service
@@ -28,12 +16,10 @@ public class ManageSponsorService {
     /**
      * Handles the updates to the given sponsor object.
      */
-    public void updateSponsor(Sponsor sponsor) throws IOException {
-        Sponsor existingSponsor = sponsorService.fetchSponsorById(sponsor.getSponsorId());
+    public void updateSponsor(Sponsor sponsor) {
+        Optional<Sponsor> existingSponsorOptional = sponsorService.fetchSponsorByEmail(sponsor.getEmail());
         // if existingSponsor is not null, then we are updating
-        if (existingSponsor != null) {
-            this.addExistingFieldsToSponsor(sponsor, existingSponsor);
-        }
+        existingSponsorOptional.ifPresent(value -> this.addExistingFieldsToSponsor(sponsor, value));
         //update the sponsor
         sponsorService.addSponsor(sponsor);
     }
