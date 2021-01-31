@@ -18,6 +18,8 @@ workflows:
             branches:
               only:
                 - master
+          requires:
+            - build
       - aws-ecr/build-and-push-image:
           filters:
             branches:
@@ -45,7 +47,22 @@ workflows:
 #          family: ${PROJECT_NAME}-service
 #          cluster-name: ${PROJECT_NAME}-cluster
 #          container-image-name-updates: container=${PROJECT_NAME}-image,tag=${CIRCLE_SHA1}
-
+      - flyway-info:
+          filters:
+              branches:
+                ignore:
+                  - master
+          requires:
+            - build
+            - -integration-test
+      - flyway-migrate:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build
+            - integration-test
       - terraform-plan:
           requires:
             - build
@@ -60,6 +77,7 @@ workflows:
                 - master
           requires:
             - aws-ecr/build-and-push-image
+            - flyway-migrate
 jobs:
   build:
     docker:
@@ -110,6 +128,20 @@ jobs:
       # Store unit test results.
       - store_test_results:
           path: build/test-results
+
+  flyway-info:
+    docker:
+      - image: circleci/openjdk:11-jdk
+      steps:
+        - checkout
+        - run: gradle flywayInfo
+
+  flyway-migrate:
+    docker:
+      - image: circleci/openjdk:11-jdk
+      steps:
+        - checkout
+        - run: gradle flywayMigrate
 
   integration-test:
     docker:
