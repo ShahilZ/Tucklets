@@ -57,6 +57,11 @@ dependencies {
 	// Integration with AWS Secrets Manager
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws-secrets-manager-config', version: '2.2.5.RELEASE'
 
+	// Spring Session
+	// https://mvnrepository.com/artifact/org.springframework.session/spring-session-jdbc
+	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.4.2'
+
+	
 	// Integration Test
 	integrationTestCompile 'org.assertj:assertj-core:3.18.1'
 	integrationTestCompile 'org.springframework.boot:spring-boot-starter-test'
