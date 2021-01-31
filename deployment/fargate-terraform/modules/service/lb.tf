@@ -26,11 +26,6 @@ resource "aws_lb_target_group" "ecs_https_target_group" {
   vpc_id                = data.aws_vpc.default.id
   target_type           = "ip"
 
-  stickiness {
-    type                = "lb_cookie"
-    enabled             = true
-  }
-
   health_check {
     healthy_threshold   = "5"
     unhealthy_threshold = "3"

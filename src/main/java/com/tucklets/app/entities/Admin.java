@@ -9,11 +9,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "Admin")
-public class Admin {
+public class Admin implements Serializable {
 
     @Id
     @SequenceGenerator(name = "admin_generator", initialValue = 6000, allocationSize = 1)
