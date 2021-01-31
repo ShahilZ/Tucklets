@@ -132,16 +132,16 @@ jobs:
   flyway-info:
     docker:
       - image: circleci/openjdk:11-jdk
-      steps:
-        - checkout
-        - run: gradle flywayInfo
+    steps:
+      - checkout
+      - run: gradle flywayInfo
 
   flyway-migrate:
     docker:
       - image: circleci/openjdk:11-jdk
-      steps:
-        - checkout
-        - run: gradle flywayMigrate
+    steps:
+      - checkout
+      - run: gradle flywayMigrate
 
   integration-test:
     docker:
