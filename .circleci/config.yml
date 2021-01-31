@@ -54,7 +54,7 @@ workflows:
                   - master
           requires:
             - build
-            - -integration-test
+            - integration-test
       - flyway-migrate:
           filters:
             branches:
