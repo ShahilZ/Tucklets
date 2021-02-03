@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id "org.flywaydb.flyway" version "7.5.0"
 }
 
 group = 'com.tucklets'
@@ -65,9 +66,8 @@ dependencies {
 	// Integration Test
 	integrationTestCompile 'org.assertj:assertj-core:3.18.1'
 	integrationTestCompile 'org.springframework.boot:spring-boot-starter-test'
-
-
 }
+
 
 test {
 	useJUnitPlatform()
