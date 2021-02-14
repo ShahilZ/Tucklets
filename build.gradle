@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id "com.avast.gradle.docker-compose" version "0.14.0"
 	id 'java'
 }
 
@@ -104,7 +105,30 @@ bootJar {
 	}
 }
 
+// Use task types
+task copyDockerFile(type: Copy) {
+	description = "Copies the Dockerfile from the project root dir to the build directory."
+	from "${projectDir}/Dockerfile"
+	into "${project.buildDir}/docker"
+}
+
+dockerCompose {
+	// Always recreate
+	forceRecreate = true
+	// Store container logs in build directory.
+	captureContainersOutputToFile = "$project.buildDir/logs/containers/containers.log"
+	useComposeFiles = ["$project.projectDir/deployment/docker-compose/docker-compose.yml"]
+
+	environment.put 'ENVIRONMENT', 'docker'
+	environment.put 'LOCAL_AWS_CREDS', "${System.properties['user.home']}/.aws/credentials"
+	environment.put 'FLYWAY_MIGRATIONS_DIR', "${projectDir}/src/main.resources/db/migration"
+	environment.put 'BUILD_DIR', "${project.buildDir}"
+	environment.put 'DOCKER_ROOT', "${project.buildDir}/docker"
+
+}
+
 // Add integration test to task :check
 check.dependsOn integrationTest
 
 processResources.dependsOn('frontend:webpack')
+processResources.dependsOn copyDockerFile

@@ -18,6 +18,18 @@ workflows:
             branches:
               only:
                 - master
+      - aws-ecr/build-image:
+          requires:
+            - integration-test
+          filters:
+            branches:
+              ignore:
+                - master
+          repo: ${PROJECT_NAME}-images
+          path: build
+          dockerfile: docker/Dockerfile
+          tag: ${CIRCLE_SHA1}
+
       - aws-ecr/build-and-push-image:
           filters:
             branches:
@@ -25,6 +37,8 @@ workflows:
                 - master
           requires:
             - build
+          path: build
+          dockerfile: docker/Dockerfile
           attach-workspace: true
           repo: ${PROJECT_NAME}-images
           tag: ${CIRCLE_SHA1}

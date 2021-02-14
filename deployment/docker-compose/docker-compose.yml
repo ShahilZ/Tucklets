@@ -1,0 +1,44 @@
+version: "3.4"
+services:
+  application:
+    build:
+      context: ${BUILD_DIR}
+      dockerfile: ${DOCKER_ROOT}/Dockerfile
+    container_name: tucklets-app
+    volumes:
+      - ${LOCAL_AWS_CREDS}:/root/.aws/credentials
+    healthcheck:
+      disable: true
+    ports:
+      - "8443:8443"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - AWS_PROFILE=tucklets
+      - AWS_REGION=us-west-2
+    depends_on:
+      - database
+
+  database:
+    container_name: postgres-docker
+    image: postgres:12.6
+    command: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=master
+      - POSTGRES_PASSWORD=master
+      - POSTGRES_DB=tucklets
+
+#  flyway:
+#    image: "flyway/flyway"
+#    container_name: flyway-migration
+#    environment:
+#      - FLYWYAY_URL=jdbc:postgresql://database:5432/tucklets
+#      - FLYWAY_USER=master
+#      - FLYWAY_PASSWORD=master
+#    command: -locations=filesystem:/flyway/migrations -connectRetries=60 migrate
+#    volumes:
+#      - ${FLYWAY_MIGRATIONS_DIR}:flyway/migrations/
+#    depends_on:
+#      - database

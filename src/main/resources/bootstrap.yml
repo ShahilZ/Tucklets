@@ -3,3 +3,5 @@ aws:
     prefix: /secret
     name: tucklets
     failFast: true
+    # Hardcode for now
+    region: us-west-2
