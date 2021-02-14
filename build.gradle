@@ -109,7 +109,7 @@ bootJar {
 task copyDockerFile(type: Copy) {
 	description = "Copies the Dockerfile from the project root dir to the build directory."
 	from "${projectDir}/Dockerfile"
-	into "${project.buildDir}/docker"
+	into "${project.buildDir}"
 }
 
 dockerCompose {
@@ -123,7 +123,7 @@ dockerCompose {
 	environment.put 'LOCAL_AWS_CREDS', "${System.properties['user.home']}/.aws/credentials"
 	environment.put 'FLYWAY_MIGRATIONS_DIR', "${projectDir}/src/main.resources/db/migration"
 	environment.put 'BUILD_DIR', "${project.buildDir}"
-	environment.put 'DOCKER_ROOT', "${project.buildDir}/docker"
+	environment.put 'DOCKER_ROOT', "${project.buildDir}"
 
 }
 
