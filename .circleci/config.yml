@@ -120,7 +120,8 @@ jobs:
           root: .
         # Must be relative path from root
           paths:
-            - build
+            - build/libs
+            - build/Dockerfile
 
       # Store reports as build artifacts.
       - store_artifacts:
