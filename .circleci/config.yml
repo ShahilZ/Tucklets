@@ -120,7 +120,7 @@ jobs:
           root: .
         # Must be relative path from root
           paths:
-            - build/libs
+            - build
 
       # Store reports as build artifacts.
       - store_artifacts:
