@@ -27,6 +27,7 @@ workflows:
                 - master
           requires:
             - build
+          path: build
           attach-workspace: true
           repo: ${PROJECT_NAME}-images
           tag: ${CIRCLE_SHA1}
