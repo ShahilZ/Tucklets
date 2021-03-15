@@ -16,7 +16,7 @@ services:
       - AWS_PROFILE=tucklets
       - AWS_REGION=us-west-2
     depends_on:
-      - database
+      - flyway
 
   database:
     container_name: postgres-docker
@@ -24,21 +24,21 @@ services:
     command: postgres
     restart: always
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_USER=master
       - POSTGRES_PASSWORD=master
       - POSTGRES_DB=tucklets
 
-#  flyway:
-#    image: "flyway/flyway"
-#    container_name: flyway-migration
-#    environment:
-#      - FLYWYAY_URL=jdbc:postgresql://database:5432/tucklets
-#      - FLYWAY_USER=master
-#      - FLYWAY_PASSWORD=master
-#    command: -locations=filesystem:/flyway/migrations -connectRetries=60 migrate
-#    volumes:
-#      - ${FLYWAY_MIGRATIONS_DIR}:flyway/migrations/
-#    depends_on:
-#      - database
+  flyway:
+    image: "flyway/flyway:7.5.4"
+    container_name: flyway-migration
+    environment:
+      - FLYWAY_URL=jdbc:postgresql://database:5432/tucklets
+      - FLYWAY_USER=master
+      - FLYWAY_PASSWORD=master
+    command: -locations=filesystem:/flyway/migrations -connectRetries=60 migrate
+    volumes:
+      - ${FLYWAY_MIGRATIONS_DIR}:/flyway/migrations/
+    depends_on:
+      - database

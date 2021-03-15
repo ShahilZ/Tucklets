@@ -11,16 +11,16 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Admin")
 public class Admin implements Serializable {
 
     @Id
-    @SequenceGenerator(name = "admin_generator", initialValue = 6000, allocationSize = 1)
-    @GeneratedValue(generator = "admin_generator")
+    @GeneratedValue(generator = "UUID")
     @Column(name = "admin_id", updatable = false, nullable = false)
-    private Long adminId;
+    private UUID adminId;
 
     @Column(name = "username", nullable = false)
     private String username;

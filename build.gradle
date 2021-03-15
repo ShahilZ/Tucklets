@@ -121,7 +121,7 @@ dockerCompose {
 
 	environment.put 'ENVIRONMENT', 'docker'
 	environment.put 'LOCAL_AWS_CREDS', "${System.properties['user.home']}/.aws/credentials"
-	environment.put 'FLYWAY_MIGRATIONS_DIR', "${projectDir}/src/main.resources/db/migration"
+	environment.put 'FLYWAY_MIGRATIONS_DIR', "${projectDir}/src/main/resources/db/migration"
 	environment.put 'BUILD_DIR', "${project.buildDir}"
 	environment.put 'DOCKER_ROOT', "${project.buildDir}"
 
