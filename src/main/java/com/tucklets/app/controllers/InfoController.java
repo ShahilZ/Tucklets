@@ -2,6 +2,7 @@ package com.tucklets.app.controllers;
 
 import com.google.gson.Gson;
 import com.tucklets.app.configs.AwsConfig;
+import com.tucklets.app.configs.SecretsConfig;
 import com.tucklets.app.containers.SponsorAChildContainer;
 import com.tucklets.app.entities.enums.DonationDuration;
 import com.tucklets.app.services.DonationService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -28,13 +30,16 @@ public class InfoController {
     AwsConfig awsConfig;
 
     @Autowired
-    NewsletterService newslettersService;
+    DonationService donationService;
 
     @Autowired
     ManageChildrenService manageChildrenService;
 
     @Autowired
-    DonationService donationService;
+    NewsletterService newslettersService;
+
+    @Autowired
+    SecretsConfig secretsConfig;
 
     @GetMapping("/fetchNewsletters")
     public String fetchNewsletters() {
@@ -58,5 +63,13 @@ public class InfoController {
         DonationDuration previousDuration = DonationDuration.of(prevDuration);
         BigDecimal currentAmount = BigDecimal.valueOf(Long.parseLong(donationAmount));
         return donationService.changeDonationDuration(newDuration, previousDuration, currentAmount);
+    }
+
+    @GetMapping("/fetchConfigs")
+    public Map<String, String> fetchConfigs() {
+        Map<String, String> configsResponse = new HashMap<>();
+        configsResponse.put("paypal_client_id", secretsConfig.getPayPalClientId());
+        configsResponse.put("braintree_client_id", secretsConfig.getBrainTreeClientId());
+        return configsResponse;
     }
 }
