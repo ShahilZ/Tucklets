@@ -5,6 +5,7 @@ import { PayPalButton } from 'react-paypal-button-v2';
 
 import ChildImageContainer from '../common/sponsorship/ChildImageContainer';
 import ConfirmationTable from '../common/sponsorship/ConfirmationTable';
+import BrainTreePaymentContainer from '../common/sponsorship/BrainTreePaymentContainer';
 
 import { PaymentMethod } from '../common/utils/enums.js';
 
@@ -117,6 +118,7 @@ class ConfirmationPage extends Component {
                     <br />
                     {paymentOptions}
                     {/* {this.renderSelectedChildren()} */}
+                    <BrainTreePaymentContainer i18n={this.props.i18n} amount={this.props.donation.amount}/>
                 </div>
             </div>
         )

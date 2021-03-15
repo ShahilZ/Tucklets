@@ -316,7 +316,7 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        axios.get('/fetchConfigs').then((response) => {
+        axios.get('/info/fetchConfigs').then((response) => {
             this.setState({ payPalClientId: response.data.paypal_client_id})
         });
     }
