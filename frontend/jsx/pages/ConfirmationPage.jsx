@@ -118,7 +118,7 @@ class ConfirmationPage extends Component {
                     <br />
                     {paymentOptions}
                     {/* {this.renderSelectedChildren()} */}
-                    <BrainTreePaymentContainer i18n={this.props.i18n} amount={this.props.donation.amount}/>
+                    <BrainTreePaymentContainer i18n={this.props.i18n} amount={this.props.donation.donationAmount}/>
                 </div>
             </div>
         )
