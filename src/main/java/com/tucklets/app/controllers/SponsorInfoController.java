@@ -1,7 +1,9 @@
 package com.tucklets.app.controllers;
 
+import com.braintreegateway.*;
 import com.google.gson.Gson;
 import com.tucklets.app.configs.AppConfig;
+import com.tucklets.app.containers.BrainTreePaymentContainer;
 import com.tucklets.app.containers.SponsorInfoContainer;
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Child;
@@ -11,14 +13,7 @@ import com.tucklets.app.entities.SponsorAddress;
 import com.tucklets.app.entities.enums.DonationDuration;
 import com.tucklets.app.entities.enums.SponsorInfoStatus;
 import com.tucklets.app.entities.enums.State;
-import com.tucklets.app.services.AmountService;
-import com.tucklets.app.services.ChildAndSponsorAssociationService;
-import com.tucklets.app.services.ChildService;
-import com.tucklets.app.services.DonationService;
-import com.tucklets.app.services.EmailService;
-import com.tucklets.app.services.ManageChildrenService;
-import com.tucklets.app.services.SponsorAndDonationAssociationService;
-import com.tucklets.app.services.SponsorService;
+import com.tucklets.app.services.*;
 import com.tucklets.app.utils.TextUtils;
 import com.tucklets.app.validations.DonationValidator;
 import com.tucklets.app.validations.SponsorValidator;
@@ -68,6 +63,9 @@ public class SponsorInfoController {
     @Autowired
     SponsorAndDonationAssociationService sponsorAndDonationAssociationService;
 
+    @Autowired
+    BrainTreePaymentService brainTreePaymentService;
+
     @GetMapping(value = "/")
     public String handleSponsorInfoLanding() {
         // Redirect to root page.
@@ -84,7 +82,7 @@ public class SponsorInfoController {
         var childrenDetailContainers = manageChildrenService.createChildDetailsContainers(selectedChildren);
         var totalDonationAmount = amountService.computeTotalDonationAmount(selectedChildren);
         Sponsor sponsor = new Sponsor();
-        // For now, force monthly payment frequencey.
+        // For now, force monthly payment frequency.
         Donation donation = new Donation(totalDonationAmount, DonationDuration.MONTHLY);
 
         SponsorInfoContainer sponsorInfoContainer = new SponsorInfoContainer(
@@ -140,6 +138,22 @@ public class SponsorInfoController {
         }
 
         return ResponseEntity.ok(GSON.toJson(sponsorStatus));
+    }
+
+    @PostMapping(value = "/payment")
+    @ResponseBody
+    public ResponseEntity<String> handlePayment(@RequestBody BrainTreePaymentContainer brainTreePaymentContainer) {
+
+        var nonce = brainTreePaymentContainer.getPaymentNonce();
+        //create transaction
+        Result<Transaction> result = brainTreePaymentService.processPayment(nonce, 100);
+        if (result.isSuccess()) {
+            result.getTarget();
+            return ResponseEntity.ok(result.getMessage());
+
+        } else {
+            return (ResponseEntity<String>) ResponseEntity.badRequest();
+        }
     }
 
     /**
