@@ -21,7 +21,7 @@ const validationSchema = Yup.object().shape({
         churchName: Yup.string(),
         phoneNumber: Yup.string(),
         address: Yup.object().shape({
-            streetAddress1: Yup.string(),
+            streetAddress: Yup.string(),
             city: Yup.string(),
             zipCode: Yup.string(),
             state: Yup.string(),

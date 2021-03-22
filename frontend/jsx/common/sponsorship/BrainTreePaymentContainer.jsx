@@ -38,10 +38,8 @@ class BrainTreePaymentContainer extends React.Component {
     async submitPayment() {
         // Request paymentNonce value. Await is necessary here since we want to block until we get the response back.
         const { nonce } = await this.instance.requestPaymentMethod();
-        console.log(nonce);
         // Post nonce + submit to server.
         this.props.onSubmitHandler(nonce, this.props.history)();
-
     }
 
     /**

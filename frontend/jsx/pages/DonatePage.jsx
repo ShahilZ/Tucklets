@@ -66,9 +66,9 @@ class DonatePage extends Component {
                             <input type="number" id="donation-amount" className={donationAmountClassName} value={this.state.donationAmount} onChange={this.handleDonationAmountChange}/>
                         </div>
                         <div className="btn-group duration-button-group">
-                            <button to="/sponsor-info/" className="col-md-6 btn btn-info donation-button" onClick={this.submitDonationHandler(this.state.donationAmount, DonationDuration.ONCE, this.props.history)}>{this.props.i18n.t("donate:donate-once")} </button>
+                            <button to="/sponsor/" className="col-md-6 btn btn-info donation-button" onClick={this.submitDonationHandler(this.state.donationAmount, DonationDuration.ONCE, this.props.history)}>{this.props.i18n.t("donate:donate-once")} </button>
                             <span className="donate-button-spacing" />
-                            <button to="/sponsor-info/" className="col-md-6 btn btn-info donation-button" onClick={this.submitDonationHandler(this.state.donationAmount, DonationDuration.MONTHLY, this.props.history)}>{this.props.i18n.t("donate:donate-monthly")}</button>
+                            <button to="/sponsor/" className="col-md-6 btn btn-info donation-button" onClick={this.submitDonationHandler(this.state.donationAmount, DonationDuration.MONTHLY, this.props.history)}>{this.props.i18n.t("donate:donate-monthly")}</button>
                         </div>
                         <br></br>
                         <br></br>

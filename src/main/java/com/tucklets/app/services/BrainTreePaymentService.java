@@ -32,10 +32,10 @@ public class BrainTreePaymentService {
      * Processes payment and submits for settlement.
      * @return Result<Transaction>
      */
-    public Result<Transaction> processPayment(String nonce, int amount ) {
+    public Result<Transaction> processPayment(String nonce, BigDecimal amount) {
         //create transaction
         TransactionRequest request = new TransactionRequest()
-                .amount(new BigDecimal(amount))
+                .amount(amount)
                 .paymentMethodNonce(nonce)
 //                .deviceData(deviceDataFromTheClient)
                 .options()
