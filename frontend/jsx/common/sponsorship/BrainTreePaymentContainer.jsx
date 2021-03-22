@@ -1,5 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import DropIn from 'braintree-web-drop-in-react';
 import axios from 'axios';
 
@@ -7,7 +8,9 @@ const props = {
     /** i18n object to help with translations.*/
     i18n: PropTypes.object.isRequired,
     /** Amount for payment. */
-    amount: PropTypes.number.isRequired
+    amount: PropTypes.number.isRequired,
+    /** Handler for the submission button */
+    onSubmitHandler: PropTypes.func.isRequired
 }
 
 class BrainTreePaymentContainer extends React.Component {
@@ -33,12 +36,11 @@ class BrainTreePaymentContainer extends React.Component {
   }
 
     async submitPayment() {
-        // Requence paymentNonce value. Await is necessary here since we want to block until we get the response back.
+        // Request paymentNonce value. Await is necessary here since we want to block until we get the response back.
         const { nonce } = await this.instance.requestPaymentMethod();
-        // Post nonce to server.
-        axios.post('/sponsor-info/payment', {
-            paymentNonce: nonce
-        });
+        console.log(nonce);
+        // Post nonce + submit to server.
+        //this.props.onSubmitHandler(nonce, this.props.history)();
 
     }
 
@@ -88,4 +90,4 @@ class BrainTreePaymentContainer extends React.Component {
 
 BrainTreePaymentContainer.props = props;
 
-export default BrainTreePaymentContainer;
+export default withRouter(BrainTreePaymentContainer);
