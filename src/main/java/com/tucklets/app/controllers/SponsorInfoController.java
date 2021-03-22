@@ -4,7 +4,7 @@ import com.braintreegateway.*;
 import com.google.gson.Gson;
 import com.tucklets.app.configs.AppConfig;
 import com.tucklets.app.containers.BrainTreePaymentContainer;
-import com.tucklets.app.containers.SponsorInfoContainer;
+import com.tucklets.app.containers.SponsorshipContainer;
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Donation;
@@ -85,14 +85,14 @@ public class SponsorInfoController {
         // For now, force monthly payment frequency.
         Donation donation = new Donation(totalDonationAmount, DonationDuration.MONTHLY);
 
-        SponsorInfoContainer sponsorInfoContainer = new SponsorInfoContainer(
-            donation, sponsor, childrenDetailContainers);
+        SponsorshipContainer sponsorInfoContainer = new SponsorshipContainer(
+            donation, sponsor, childrenDetailContainers, new BrainTreePaymentContainer());
         return GSON.toJson(sponsorInfoContainer);
     }
 
     @PostMapping(value = "/submit")
     @ResponseBody
-    public ResponseEntity<String> handleSponsorSubmission(@RequestBody SponsorInfoContainer sponsorInfoContainer) {
+    public ResponseEntity<String> handleSponsorSubmission(@RequestBody SponsorshipContainer sponsorInfoContainer) {
 
         Sponsor sponsor = sponsorInfoContainer.getSponsor();
         Donation donation = sponsorInfoContainer.getDonation();

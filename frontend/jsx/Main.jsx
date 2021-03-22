@@ -109,7 +109,7 @@ class Main extends Component {
     /**
      * Handler for the sponsor info submission button.
      */
-    handleSponsorshipSubmission(history) {
+    handleSponsorshipSubmission(nonce, history) {
         let self = this;
         return () => {
             let selectedChildIds = [];
@@ -117,7 +117,10 @@ class Main extends Component {
             axios.post('/sponsor-info/submit/', {
                 sponsor: self.state.sponsor,
                 donation: self.state.donation,
-                children: selectedChildIds
+                children: selectedChildIds,
+                brainTreePaymentContainer: {
+                    paymentNonce: nonce
+                }
     
             })
             .then(function (response) {
