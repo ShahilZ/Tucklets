@@ -118,7 +118,9 @@ class Main extends Component {
                 sponsor: self.state.sponsor,
                 donation: self.state.donation,
                 children: selectedChildIds,
-                brainTreePaymentContainer: nonce
+                brainTreePaymentContainer: {
+                    paymentNonce: nonce
+                }
     
             })
             .then(function (response) {

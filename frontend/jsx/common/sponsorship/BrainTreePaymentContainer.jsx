@@ -40,7 +40,7 @@ class BrainTreePaymentContainer extends React.Component {
         const { nonce } = await this.instance.requestPaymentMethod();
         console.log(nonce);
         // Post nonce + submit to server.
-        //this.props.onSubmitHandler(nonce, this.props.history)();
+        this.props.onSubmitHandler(nonce, this.props.history)();
 
     }
 
