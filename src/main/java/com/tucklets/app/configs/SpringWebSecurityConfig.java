@@ -60,7 +60,7 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/", "/css/**", "/js/**", "/images/**", "/**/favicon.ico", "/frontend/dist/**", "/frontend/static/img/**", "/static/img/**").permitAll()
-            .antMatchers("/sponsor-a-child/**", "/sponsor-info/**", "/health", "/info/**", "/thank-you/", "/unsubscribe/**").permitAll()
+            .antMatchers("/sponsor-a-child/**", "/sponsor-info/**", "/sponsor/**", "/health", "/info/**", "/thank-you/", "/unsubscribe/**").permitAll()
             .antMatchers("/admin/**").authenticated()
             .anyRequest().authenticated()
             .and()
