@@ -21,7 +21,7 @@ const validationSchema = Yup.object().shape({
         churchName: Yup.string(),
         phoneNumber: Yup.string(),
         address: Yup.object().shape({
-            streetAddress: Yup.string(),
+            streetAddress1: Yup.string(),
             city: Yup.string(),
             zipCode: Yup.string(),
             state: Yup.string(),
@@ -157,12 +157,12 @@ const SponsorForm = ({ i18n, sponsor, donation, sponsorFormClickHandler, handleD
                                     <h4>{i18n.t("sponsor_info:form_header_address")}</h4>
                                 </div>
                                 <Form.Row>
-                                    <Form.Group as={Col} controlId="streetAddress">
+                                    <Form.Group as={Col} controlId="streetAddress1">
                                         <Form.Label>{i18n.t("sponsor_info:form_street_address")}</Form.Label>
                                         <Form.Control 
                                             placeholder="Street name, number, P.O box, Apt #"
-                                            name="sponsor.address.streetAddress"
-                                            value={values.sponsor.address.streetAddress}
+                                            name="sponsor.address.streetAddress1"
+                                            value={values.sponsor.address.streetAddress1}
                                             onChange={handleChange}
                                         />
                                     </Form.Group>

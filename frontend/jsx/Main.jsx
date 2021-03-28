@@ -43,7 +43,8 @@ class Main extends Component {
                 lastName: "",
                 email: "",
                 address: { 
-                    streetAddress: "",
+                    streetAddress1: "",
+                    streetAddress2: "", 
                     city: "",
                     zipCode: "",
                     // TODO: Update
