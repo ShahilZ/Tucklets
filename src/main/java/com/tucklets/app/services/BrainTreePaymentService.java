@@ -2,7 +2,8 @@ package com.tucklets.app.services;
 
 import com.braintreegateway.*;
 import com.tucklets.app.configs.SecretsConfig;
-import com.tucklets.app.containers.BrainTreePaymentContainer;
+import com.tucklets.app.entities.Donation;
+import com.tucklets.app.entities.Sponsor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,17 @@ import java.math.BigDecimal;
 @Service
 public class BrainTreePaymentService {
 
+    private final SecretsConfig secretsConfig;
+    private final BraintreeGateway braintreeGateway;
+
     @Autowired
-    SecretsConfig secretsConfig;
+    BrainTreePaymentService(SecretsConfig secretsConfig) {
+        this.secretsConfig = secretsConfig;
+
+        // Initialize BrainTreeGateway once.
+        braintreeGateway = createBrainTreeGateway();
+
+    }
 
     /**
      * Creates a braintreeGateway object to be used when calling braintree methods
@@ -32,7 +42,7 @@ public class BrainTreePaymentService {
      * Processes payment and submits for settlement.
      * @return Result<Transaction>
      */
-    public Result<Transaction> processPayment(String nonce, BigDecimal amount) {
+    protected Result<Transaction> processPayment(String nonce, BigDecimal amount) {
         //create transaction
         TransactionRequest request = new TransactionRequest()
                 .amount(amount)
@@ -40,9 +50,40 @@ public class BrainTreePaymentService {
 //                .deviceData(deviceDataFromTheClient)
                 .options()
                 .submitForSettlement(true)
-                .done();
-        BraintreeGateway gateway = createBrainTreeGateway();
-        Result<Transaction> result = gateway.transaction().sale(request);
-        return result;
+                .done();;
+        return braintreeGateway.transaction().sale(request);
     }
+
+    /**
+     * Process subscription request for BrainTree based on donation duration.
+     */
+    protected Result<Subscription> processSubscription(Donation donation, Customer customer) {
+        SubscriptionRequest subscriptionRequest = new SubscriptionRequest()
+                .paymentMethodToken(customer.getPaymentMethods().get(0).getToken())
+                .planId(donation.getDonationDuration().getBrainTreePlanId())
+                .price(donation.getDonationAmount());
+        return braintreeGateway.subscription().create(subscriptionRequest);
+    }
+
+    /**
+     * Creates a customer based off of the given Sponsor object for BrainTree's consumption.
+     * Note: Assumes a valid sponsor object.
+     */
+    protected Customer createBrainTreeCustomer(Sponsor sponsor, String paymentMethodNonce) {
+        CustomerRequest customerRequest = new CustomerRequest()
+                .firstName(sponsor.getFirstName())
+                .lastName(sponsor.getLastName())
+                .email(sponsor.getEmail())
+                .customField("church", sponsor.getChurchName())
+                .phone(sponsor.getPhoneNumber())
+                .paymentMethodNonce(paymentMethodNonce);
+        Result<Customer> result = braintreeGateway.customer().create(customerRequest);
+
+        // TODO: Determine what to do if customer fails...
+        if (!result.isSuccess()) {
+            return null;
+        }
+        return result.getTarget();
+    }
+
 }
