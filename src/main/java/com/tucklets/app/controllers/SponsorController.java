@@ -71,6 +71,13 @@ public class SponsorController {
         Sponsor sponsor = sponsorshipContainer.getSponsor();
         Donation donation = sponsorshipContainer.getDonation();
         List<ChildDetailsContainer> childDetailsContainers = sponsorshipContainer.getChildren();
-        return sponsorService.processSponsorship(brainTreePaymentContainer, sponsor, donation, childDetailsContainers);
+        var result = sponsorService.processSponsorship(brainTreePaymentContainer, sponsor, donation, childDetailsContainers);
+        if (result.getStatus() != SponsorInfoStatus.SUCCESS) {
+            return ResponseEntity.badRequest().body(result.getErrors());
+        }
+        return ResponseEntity.ok(result.getStatus().toString());
+
+
+
     }
 }
