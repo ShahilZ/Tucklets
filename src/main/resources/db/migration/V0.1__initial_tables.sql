@@ -25,6 +25,8 @@ CREATE TABLE child
     PRIMARY KEY (child_id)
 );
 
+CREATE SEQUENCE child_generator
+
 CREATE TABLE sponsor
 (
     sponsor_id bigint NOT NULL,
@@ -45,8 +47,9 @@ CREATE TABLE sponsor
     deletion_date date,
     PRIMARY KEY (sponsor_id),
     CONSTRAINT uniqueemaileconstraint UNIQUE (email)
-
 );
+
+CREATE SEQUENCE sponsor_generator
 
 
 CREATE TABLE child_additional_detail
@@ -90,6 +93,8 @@ CREATE TABLE donation
     PRIMARY KEY (donation_id)
 );
 
+CREATE SEQUENCE donation_generator
+
 
 CREATE TABLE newsletter
 (
@@ -99,7 +104,6 @@ CREATE TABLE newsletter
     newsletter_location VARCHAR(255),
     PRIMARY KEY (newsletter_id)
 );
-
 
 
 
@@ -113,4 +117,6 @@ CREATE TABLE sponsor_donation_assoc
       FOREIGN KEY(sponsor_id)
 	  REFERENCES sponsor(sponsor_id)
 );
+
+CREATE SEQUENCE sponsor_donation_assoc_generator
 
