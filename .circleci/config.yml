@@ -27,6 +27,7 @@ workflows:
                 - master
           requires:
             - build
+            - integration-test
           path: build
           attach-workspace: true
           repo: ${PROJECT_NAME}-images
