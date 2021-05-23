@@ -75,7 +75,7 @@ public class SponsorController {
         if (result == SponsorInfoStatus.SUCCESS) {
             return ResponseEntity.ok(result.toString());
         }
-        return ResponseEntity.badRequest().body("There was an error processing sponsor submission.");
+        return ResponseEntity.badRequest().body("There was an error processing sponsor submission -> braintree payment, saving to db or sending email.");
 
 
 
