@@ -1,6 +1,7 @@
 package com.tucklets.app.services;
 
 import com.braintreegateway.*;
+import com.tucklets.app.configs.AppConfig;
 import com.tucklets.app.configs.SecretsConfig;
 import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Sponsor;
@@ -13,11 +14,13 @@ import java.math.BigDecimal;
 @Service
 public class BrainTreePaymentService {
 
+    private final AppConfig appConfig;
     private final SecretsConfig secretsConfig;
     private final BraintreeGateway braintreeGateway;
 
     @Autowired
-    BrainTreePaymentService(SecretsConfig secretsConfig) {
+    BrainTreePaymentService(AppConfig appConfig, SecretsConfig secretsConfig) {
+        this.appConfig = appConfig;
         this.secretsConfig = secretsConfig;
 
         // Initialize BrainTreeGateway once.
@@ -31,7 +34,7 @@ public class BrainTreePaymentService {
      */
     private BraintreeGateway createBrainTreeGateway() {
         return new BraintreeGateway(
-                Environment.SANDBOX, // Change this to production later
+                appConfig.getBrainTreeEnvironment().equals("PRODUCTION") ? Environment.PRODUCTION : Environment.SANDBOX,
                 secretsConfig.getBrainTreeMerchantId(),
                 secretsConfig.getBrainTreePublicKey(),
                 secretsConfig.getBrainTreePrivateKey()
