@@ -17,7 +17,7 @@ class NewslettersPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { newsletters: [1, 2, 3] }
+        this.state = { newsletters: [] }
     }
 
     
@@ -48,7 +48,7 @@ class NewslettersPage extends Component {
                                 </h3>
                                 <div className="row">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <a href={this.state.newsletters[0].newsletterLocation} target="_blank">
+                                        <a href={this.state.newsletters.length > 0 ? this.state.newsletters[0].newsletterLocation : null} target="_blank"> 
                                             <input type="button" className="btn btn-primary" value={`${this.props.i18n.t("newsletters:latest")}`} />
                                         </a>
                                     </div>
@@ -56,7 +56,7 @@ class NewslettersPage extends Component {
                             </div>
 
                             <ul className="newsletter-links-container">
-                                { this.state.newsletters.map((newsletter, index) => (
+                                {  this.state.newsletters.length > 0 && this.state.newsletters.map((newsletter, index) => (
                                     <li key={"newletter-" + index}>
                                         <a className="newsletter-links" href={newsletter.newsletterLocation} target="_blank">{this.props.i18n.t("newsletters:click") + newsletter.filename}</a>
                                     </li>
