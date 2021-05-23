@@ -7,7 +7,6 @@ import com.braintreegateway.Transaction;
 import com.google.gson.Gson;
 import com.tucklets.app.configs.AppConfig;
 import com.tucklets.app.containers.BrainTreePaymentContainer;
-import com.tucklets.app.containers.ResultContainer;
 import com.tucklets.app.containers.SponsorshipContainer;
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
 import com.tucklets.app.db.repositories.SponsorRepository;
@@ -164,14 +163,13 @@ public class SponsorService {
      * Braintree for processing payment
      * Calls helper method to save everything related to the sponsorship to database and send confirmation email
      */
-    public ResultContainer processSponsorship(
+    public SponsorInfoStatus processSponsorship(
             BrainTreePaymentContainer brainTreePaymentContainer,
             Sponsor sponsor,
             Donation donation,
             List<ChildDetailsContainer> childrenContainer)
     {
-        // Initialize the resultContainer object 
-        ResultContainer result = new ResultContainer();
+
 
         //Process brainTree payment transaction
         var nonce = brainTreePaymentContainer.getPaymentNonce();
@@ -183,8 +181,7 @@ public class SponsorService {
         boolean isValidDonation = DonationValidator.validateDonation(donation);
 
         if (!isValidDonation || sponsorStatus != SponsorInfoStatus.SUCCESS) {
-            result.setStatus(SponsorInfoStatus.ERROR);
-            return result;
+            return SponsorInfoStatus.ERROR;
         }
 
         // If donation is for one-time, then just process payment as usual.
@@ -192,10 +189,7 @@ public class SponsorService {
             Result<Transaction> paymentResult = brainTreePaymentService.processPayment(nonce, donationAmount);
             // Stop processing if the payment is unsuccessful
             if (!paymentResult.isSuccess()) {
-                //test this if getErrors displays GSON
-                result.setStatus(SponsorInfoStatus.ERROR);
-                result.setErrors(createResultErrorsJson(paymentResult));
-                return result;
+                return SponsorInfoStatus.ERROR;
             }
         }
         else {
@@ -205,9 +199,7 @@ public class SponsorService {
             // Stop processing if the payment is unsuccessful
             if (!subscriptionResult.isSuccess()) {
                 //test this if getErrors displays GSON
-                result.setStatus(SponsorInfoStatus.ERROR);
-                result.setErrors(createResultErrorsJson(subscriptionResult));
-                return result;
+                return SponsorInfoStatus.ERROR;
             }
         }
 
@@ -219,9 +211,7 @@ public class SponsorService {
             // TODO: Save info in new table that tracks customer + subscription ids.
         }
 
-        result.setStatus(sponsorInfoResult);
-        return result;
-
+        return sponsorInfoResult;
     }
 
     /**
