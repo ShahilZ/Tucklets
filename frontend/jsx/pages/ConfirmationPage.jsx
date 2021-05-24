@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { PayPalButton } from 'react-paypal-button-v2';
 
 import ChildImageContainer from '../common/sponsorship/ChildImageContainer';
 import ConfirmationTable from '../common/sponsorship/ConfirmationTable';
+import BrainTreePaymentContainer from '../common/sponsorship/BrainTreePaymentContainer';
 
 import { PaymentMethod } from '../common/utils/enums.js';
 
@@ -37,7 +37,7 @@ class ConfirmationPage extends Component {
         // Bind handlers here.
         this.renderSelectedChildren = this.renderSelectedChildren.bind(this);
         this.renderPayByCheckView = this.renderPayByCheckView.bind(this);
-        this.renderPayPalButtons = this.renderPayPalButtons.bind(this);
+        this.renderBrainTreePaymentContainer = this.renderBrainTreePaymentContainer.bind(this);
 
     }
 
@@ -78,7 +78,7 @@ class ConfirmationPage extends Component {
                         <p>{this.props.i18n.t("confirm:check_address_line_2")}</p>
                     </div>
                     <div className="confirmation-submission-button">
-                    <div className="btn btn-primary" onClick={this.props.submitButtonHandler(this.props.history)}>{this.props.i18n.t("confirm:check_submit")}</div>
+                    <div className="btn btn-primary" onClick={this.props.submitButtonHandler(null, this.props.history)}>{this.props.i18n.t("confirm:check_submit")}</div>
                 </div>
                 </div>
             </div>
@@ -88,22 +88,15 @@ class ConfirmationPage extends Component {
     /**
      * Renders the PayPal buttons for payment submission.
      */
-    renderPayPalButtons() {
+    renderBrainTreePaymentContainer() {
         return (
-            <PayPalButton
-            amount={this.props.donation.donationAmount}
-            shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-            onSuccess={() => console.log("Success")}
-            options={{
-                clientId: this.props.payPalClientId
-              }}
-        />
+            <BrainTreePaymentContainer i18n={this.props.i18n} amount={this.props.donation.donationAmount} onSubmitHandler={this.props.submitButtonHandler}/>
         )
     }
 
     render() {
         // TODO: user refreshes the page or somehow gets here without going through the flow, redirect to the main page.
-        let paymentOptions = this.props.donation.paymentMethod === PaymentMethod.CHECK ? this.renderPayByCheckView() :  this.renderPayPalButtons();
+        let paymentOptions = this.props.donation.paymentMethod === PaymentMethod.CHECK ? this.renderPayByCheckView() :  this.renderBrainTreePaymentContainer();
         return (
             <div id="confirmation" className="bg-light">
                 <div className="jumbotron jumbotron-fluid">

@@ -109,15 +109,18 @@ class Main extends Component {
     /**
      * Handler for the sponsor info submission button.
      */
-    handleSponsorshipSubmission(history) {
+    handleSponsorshipSubmission(nonce, history) {
         let self = this;
         return () => {
             let selectedChildIds = [];
             self.state.selectedChildren.map((childContainer) => selectedChildIds.push(childContainer.child.childId));
-            axios.post('/sponsor-info/submit/', {
+            axios.post('/sponsor/submit/', {
                 sponsor: self.state.sponsor,
                 donation: self.state.donation,
-                children: selectedChildIds
+                children: selectedChildIds,
+                brainTreePaymentContainer: {
+                    paymentNonce: nonce
+                }
     
             })
             .then(function (response) {
@@ -144,7 +147,7 @@ class Main extends Component {
                 }
             }
             let requestParams = selectedChildrenIds.join(',');
-            axios.get('/sponsor-info/selections/', {
+            axios.get('/sponsor/selections/', {
                 params: {
                     childIds: requestParams
                 }
@@ -156,7 +159,7 @@ class Main extends Component {
                     donationOrigin: DonationOrigin.SPONSORSHIP
                 });
                 // Manually change route after successful response from backend.
-                history.push("/sponsor-info/");
+                history.push("/sponsor/");
             })
             .catch(function (error) {
                 console.log(error);
@@ -179,7 +182,7 @@ class Main extends Component {
             donationOrigin: DonationOrigin.DONATE_PAGE
         }));
         // Manually change route after successful validation.
-        history.push("/sponsor-info/");
+        history.push("/sponsor/");
     }
 
     /***
@@ -261,7 +264,7 @@ class Main extends Component {
             <div className="tucklets-main tucklets-nav-padding">
                 <BrowserRouter>
                     <TuckletsNavBar handleSelectedLocaleChange={this.handleSelectedLocaleChange} i18n={i18n} selectedLocale={this.state.selectedLocale} />
-                    <Route exact path="/sponsor-info/">
+                    <Route exact path="/sponsor/">
                         <SponsorInfoPage 
                             selectedChildren={this.state.selectedChildren} 
                             donation={this.state.donation}
@@ -276,7 +279,7 @@ class Main extends Component {
                             handleDonationAmountChange={this.donationAmountChangeHandler}
                         />
                     </Route>
-                    <Route exact path="/sponsor-info/confirm/">
+                    <Route exact path="/sponsor/confirm/">
                         <ConfirmationPage 
                             selectedChildren={this.state.selectedChildren} 
                             donation={this.state.donation}
@@ -316,7 +319,7 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        axios.get('/fetchConfigs').then((response) => {
+        axios.get('/info/fetchConfigs').then((response) => {
             this.setState({ payPalClientId: response.data.paypal_client_id})
         });
     }

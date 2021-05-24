@@ -22,5 +22,7 @@
   "donate-yearly-text": "One-time annual",
   "donate-yearly_recurring-text": "Recurring annual",
   "donate-check-text": "Check",
-  "donate-paypal-text": "PayPal"
+  "donate-paypal-text": "PayPal",
+  "donate-submit-text": "Submit"
+
 }

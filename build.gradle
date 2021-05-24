@@ -63,7 +63,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.session/spring-session-jdbc
 	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.4.2'
 
-	
+	//Braintree Java Client Library
+	// https://mvnrepository.com/artifact/com.braintreepayments.gateway/braintree-java
+	implementation group: 'com.braintreepayments.gateway', name: 'braintree-java', version: '3.6.0'
+
 	// Integration Test
 	integrationTestCompile 'org.assertj:assertj-core:3.18.1'
 	integrationTestCompile 'org.springframework.boot:spring-boot-starter-test'
