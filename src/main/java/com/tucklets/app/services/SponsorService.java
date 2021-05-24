@@ -21,7 +21,6 @@ import com.tucklets.app.utils.TextUtils;
 import com.tucklets.app.validations.DonationValidator;
 import com.tucklets.app.validations.SponsorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -164,12 +163,13 @@ public class SponsorService {
      * Braintree for processing payment
      * Calls helper method to save everything related to the sponsorship to database and send confirmation email
      */
-    public ResponseEntity<String> processSponsorship(
+    public SponsorInfoStatus processSponsorship(
             BrainTreePaymentContainer brainTreePaymentContainer,
             Sponsor sponsor,
             Donation donation,
             List<ChildDetailsContainer> childrenContainer)
     {
+
 
         //Process brainTree payment transaction
         var nonce = brainTreePaymentContainer.getPaymentNonce();
@@ -181,7 +181,7 @@ public class SponsorService {
         boolean isValidDonation = DonationValidator.validateDonation(donation);
 
         if (!isValidDonation || sponsorStatus != SponsorInfoStatus.SUCCESS) {
-            return ResponseEntity.badRequest().body(GSON.toJson(SponsorInfoStatus.ERROR));
+            return SponsorInfoStatus.ERROR;
         }
 
         // If donation is for one-time, then just process payment as usual.
@@ -189,8 +189,7 @@ public class SponsorService {
             Result<Transaction> paymentResult = brainTreePaymentService.processPayment(nonce, donationAmount);
             // Stop processing if the payment is unsuccessful
             if (!paymentResult.isSuccess()) {
-                //test this if getErrors displays GSON
-                return ResponseEntity.badRequest().body(GSON.toJson(paymentResult.getErrors()));
+                return SponsorInfoStatus.ERROR;
             }
         }
         else {
@@ -200,12 +199,12 @@ public class SponsorService {
             // Stop processing if the payment is unsuccessful
             if (!subscriptionResult.isSuccess()) {
                 //test this if getErrors displays GSON
-                return ResponseEntity.badRequest().body(createResultErrorsJson(subscriptionResult));
+                return SponsorInfoStatus.ERROR;
             }
         }
 
         // if payment successful, proceed with saving information to database
-        ResponseEntity<String> sponsorInfoResult = processSponsorInformation(sponsor, donation, childrenContainer);
+        SponsorInfoStatus sponsorInfoResult = processSponsorInformation(sponsor, donation, childrenContainer);
 
         // Create association with Customer/Subscription info if customer was created.
         if (brainTreeCustomer != null) {
@@ -213,15 +212,14 @@ public class SponsorService {
         }
 
         return sponsorInfoResult;
-
     }
 
     /**
      * Helper method that does the following:
      * Saves sponsorship information to database - Sponsor's personal information, child's association, and donation information.
-     * Sends confirmation email to sponsor and the president
+     * Calls another helper method to send confirmation email to sponsor and the president
      */
-    private ResponseEntity<String> processSponsorInformation(Sponsor sponsor, Donation donation, List<ChildDetailsContainer> childrenContainer ) {
+    private SponsorInfoStatus processSponsorInformation(Sponsor sponsor, Donation donation, List<ChildDetailsContainer> childrenContainer ) {
 
         donation.setDonationDuration(donation.getDonationDuration());
 
@@ -230,7 +228,7 @@ public class SponsorService {
         boolean isValidDonation = DonationValidator.validateDonation(donation);
 
         if (!isValidDonation || sponsorStatus != SponsorInfoStatus.SUCCESS) {
-            return ResponseEntity.badRequest().body(GSON.toJson(SponsorInfoStatus.ERROR));
+            return SponsorInfoStatus.ERROR;
         }
 
         // Add donation info.
@@ -260,7 +258,7 @@ public class SponsorService {
             emailService.sendGenericConfirmationEmail(sponsor, donation, sponsor.getEmail());
             emailService.sendGenericConfirmationEmail(sponsor, donation, appConfig.getPresidentEmail());
         }
-        return ResponseEntity.ok(GSON.toJson(sponsorStatus));
+        return SponsorInfoStatus.SUCCESS;
     }
 
     /**

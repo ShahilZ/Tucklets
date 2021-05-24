@@ -71,6 +71,13 @@ public class SponsorController {
         Sponsor sponsor = sponsorshipContainer.getSponsor();
         Donation donation = sponsorshipContainer.getDonation();
         List<ChildDetailsContainer> childDetailsContainers = sponsorshipContainer.getChildren();
-        return sponsorService.processSponsorship(brainTreePaymentContainer, sponsor, donation, childDetailsContainers);
+        var result = sponsorService.processSponsorship(brainTreePaymentContainer, sponsor, donation, childDetailsContainers);
+        if (result == SponsorInfoStatus.SUCCESS) {
+            return ResponseEntity.ok(result.toString());
+        }
+        return ResponseEntity.badRequest().body("There was an error processing sponsor submission -> braintree payment, saving to db or sending email.");
+
+
+
     }
 }
