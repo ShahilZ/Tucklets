@@ -69,6 +69,7 @@ public class InfoController {
     public Map<String, String> fetchConfigs() {
         Map<String, String> configsResponse = new HashMap<>();
         configsResponse.put("paypal_client_id", secretsConfig.getPayPalClientId());
+        configsResponse.put("braintree_client_id", secretsConfig.getBrainTreeClientId());
         return configsResponse;
     }
 }

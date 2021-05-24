@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class SecretsConfig {
 
     private final String payPalClientId;
+    private final String brainTreeClientId;
     private final String brainTreeMerchantId;
     private final String brainTreePublicKey;
     private final String brainTreePrivateKey;
@@ -15,11 +16,13 @@ public class SecretsConfig {
     /* These are the variables stored in AWS Secrets Manager */
     public SecretsConfig(
             @Value("${paypal_client_id}") String payPalClientId,
+            @Value("${braintree_client_id}") String brainTreeClientId,
             @Value("${braintree_merchant_id}") String brainTreeMerchantId,
             @Value("${braintree_public_key}") String brainTreePublicKey,
             @Value("${braintree_private_key}") String brainTreePrivateKey )
     {
         this.payPalClientId = payPalClientId;
+        this.brainTreeClientId = brainTreeClientId;
         this.brainTreeMerchantId = brainTreeMerchantId;
         this.brainTreePublicKey = brainTreePublicKey;
         this.brainTreePrivateKey = brainTreePrivateKey;
@@ -27,6 +30,10 @@ public class SecretsConfig {
 
     public String getPayPalClientId() {
         return payPalClientId;
+    }
+
+    public String getBrainTreeClientId() {
+        return brainTreeClientId;
     }
 
     public String getBrainTreeMerchantId() {  return brainTreeMerchantId; }
