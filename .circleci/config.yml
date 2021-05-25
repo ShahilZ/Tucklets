@@ -183,6 +183,7 @@ jobs:
             cd deployment/fargate-terraform
             terraform init -backend-config="access_key=${DEV_ACCESS_KEY_ID}" -backend-config="secret_key=${DEV_SECRET_ACCESS_KEY}"
             source setup_env.sh
+            terraform validate
             terraform plan -var-file="prod.tfvars" -var "version_tag=${CIRCLE_SHA1}"
 
 
