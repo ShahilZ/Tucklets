@@ -8,7 +8,7 @@ resource "aws_ses_email_identity" "no_reply"{
   email = "no-reply@${aws_ses_domain_identity.tucklets.domain}"
 }
 
-resource "aws_route53_record" "service_amazonses_verification_record" {
+resource "aws_route53_record" "service_amazon_ses_verification_record" {
   zone_id = aws_route53_zone.tucklets_public_zone.id
   name    = "_amazonses.${var.domain_name}"
   type    = "TXT"
@@ -28,7 +28,7 @@ resource "aws_route53_record" "service_ses_domain_mail_from_mx" {
   name    = aws_ses_domain_mail_from.service_domain_from.mail_from_domain
   type    = "MX"
   ttl     = "300"
-  records = ["10 feedback-smtp.${var.aws_region}.amazonses.com"] # Change to the region in which `aws_ses_domain_identity.example` is created
+  records = ["10 feedback-smtp.${var.aws_region}.amazonses.com"]
 }
 
 # Route53 TXT record for SPF (prevents emails from going to spam)
