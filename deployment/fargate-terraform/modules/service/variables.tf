@@ -19,11 +19,6 @@ variable "service_task_memory" {
   description = "Memory size for task"
 }
 
-variable "ecr_url" {
-  description = "Repository url for ECR"
-  type        = string
-}
-
 // Routing variables
 variable "domain_name" {
   description = "Name of the service's domain"
@@ -41,4 +36,10 @@ variable "app_name" {
 
 variable "version_tag" {
   description = "Version tag of the built image (passed in via pipeline)"
+}
+
+variable "aws_region" {
+  type = string
+  description = "AWS Region"
+  default = "us-west-2"
 }

@@ -41,7 +41,7 @@ data "template_file" "container_image" {
   template = file("task-definitions/service.json")
   vars = {
     image_name             = var.app_name
-    ecr_repo               = var.ecr_url
+    ecr_repo               = aws_ecr_repository.tucklets_ecr.repository_url
     version_tag            = var.version_tag
   }
 }
