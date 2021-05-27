@@ -26,7 +26,7 @@ public class Newsletter {
     @Temporal(TemporalType.TIMESTAMP)
     private Date uploadDate;
 
-    @Column(name = "newletter_location")
+    @Column(name = "newsletter_location")
     private String newsletterLocation;
 
     public Newsletter() {};
