@@ -333,7 +333,7 @@ public class SponsorService {
             // Cancel all subscriptions associated with the provided email address.
             Sponsor sponsor = sponsorOptional.get();
             Optional<SponsorBrainTreeDetail> sponsorBrainTreeDetailOptional =
-                sponsorBrainTreeDetailRepository.findById(sponsor.getSponsorId());
+                sponsorBrainTreeDetailRepository.findBySponsorId(sponsor.getSponsorId());
             if (sponsorBrainTreeDetailOptional.isPresent()) {
                 SponsorBrainTreeDetail sponsorBrainTreeDetail = sponsorBrainTreeDetailOptional.get();
                 isUnsubscribeSuccessful = brainTreePaymentService
