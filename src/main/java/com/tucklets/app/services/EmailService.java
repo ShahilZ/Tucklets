@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -38,20 +39,22 @@ public class EmailService {
     /**
      * Generic thank you email for donors.
      */
+    @Async
     public void sendGenericConfirmationEmail(Sponsor sponsor, Donation donation, String toEmailAddress) {
-        // from recipient is defined in application.properties
         MimeMessagePreparator messagePreparator = message -> {
             MimeMessageHelper helper = createGenericConfirmationMessageHelper(message, sponsor, donation);
+            helper.setFrom(appConfig.getTransactionalEmailsFromAddress());
             helper.setTo(toEmailAddress);
         };
         javaMailSender.send(messagePreparator);
     }
 
+    @Async
     public void sendConfirmationEmail(Sponsor sponsor, List<Child> children, Donation donation, String toEmailAddress) {
-        // from recipient is defined in application.properties
         MimeMessagePreparator messagePreparator = message -> {
             MimeMessageHelper helper = createChildrenConfirmationMessageHelper(message, sponsor, children, donation);
             helper.setTo(toEmailAddress);
+            helper.setFrom(appConfig.getTransactionalEmailsFromAddress());
 
         };
         javaMailSender.send(messagePreparator);
@@ -90,6 +93,7 @@ public class EmailService {
             MimeMessagePreparator messagePreparator = message -> {
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
                 helper.setTo(sponsor.getEmail());
+                helper.setTo(appConfig.getTransactionalEmailsFromAddress());
                 helper.setSubject("Tucklets - Please check out our new newsletter! ");
                 String emailContent = buildNewsletterEmail(sponsor, newsletterLink, unsubscribeLink);
                 helper.setText(emailContent, true);
