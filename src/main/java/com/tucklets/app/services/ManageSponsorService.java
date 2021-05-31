@@ -1,5 +1,6 @@
 package com.tucklets.app.services;
 
+import com.tucklets.app.db.repositories.SponsorRepository;
 import com.tucklets.app.entities.Sponsor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,17 +12,17 @@ import java.util.Optional;
 public class ManageSponsorService {
 
     @Autowired
-    SponsorService sponsorService;
+    SponsorRepository sponsorRepository;
 
     /**
      * Handles the updates to the given sponsor object.
      */
     public void updateSponsor(Sponsor sponsor) {
-        Optional<Sponsor> existingSponsorOptional = sponsorService.fetchSponsorByEmail(sponsor.getEmail());
+        Optional<Sponsor> existingSponsorOptional = sponsorRepository.fetchSponsorByEmail(sponsor.getEmail());
         // if existingSponsor is not null, then we are updating
         existingSponsorOptional.ifPresent(value -> this.addExistingFieldsToSponsor(sponsor, value));
         //update the sponsor
-        sponsorService.addSponsor(sponsor);
+        sponsorRepository.save(sponsor);
     }
 
     /**
