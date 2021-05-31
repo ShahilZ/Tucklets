@@ -33,39 +33,43 @@ public class SponsorService {
 
     private static final Gson GSON = new Gson();
 
-    @Autowired
-    AppConfig appConfig;
+    private final AppConfig appConfig;
+    private final SponsorRepository sponsorRepository;
+    private final ManageSponsorService manageSponsorService;
+    private final EmailService emailService;
+    private final DonationService donationService;
+    private final SponsorAndDonationAssociationService sponsorAndDonationAssociationService;
+    private final ChildService childService;
+    private final BrainTreePaymentService brainTreePaymentService;
+    private final ChildAndSponsorAssociationService childAndSponsorAssociationService;
+    private final ManageChildrenService manageChildrenService;
+    private final AmountService amountService;
 
     @Autowired
-    SponsorRepository sponsorRepository;
-
-    @Autowired
-    ManageSponsorService manageSponsorService;
-
-    @Autowired
-    EmailService emailService;
-
-    @Autowired
-    DonationService donationService;
-
-    @Autowired
-    SponsorAndDonationAssociationService sponsorAndDonationAssociationService;
-
-    @Autowired
-    ChildService childService;
-
-    @Autowired
-    BrainTreePaymentService brainTreePaymentService;
-
-    @Autowired
-    ChildAndSponsorAssociationService childAndSponsorAssociationService;
-
-    @Autowired
-    ManageChildrenService manageChildrenService;
-
-    @Autowired
-    AmountService amountService;
-
+    SponsorService(
+        AppConfig appConfig,
+        SponsorRepository sponsorRepository,
+        ManageSponsorService manageSponsorService,
+        EmailService emailService,
+        DonationService donationService,
+        SponsorAndDonationAssociationService sponsorAndDonationAssociationService,
+        ChildService childService, BrainTreePaymentService brainTreePaymentService,
+        ChildAndSponsorAssociationService childAndSponsorAssociationService,
+        ManageChildrenService manageChildrenService,
+        AmountService amountService)
+    {
+        this.appConfig = appConfig;
+        this.sponsorRepository = sponsorRepository;
+        this.manageSponsorService = manageSponsorService;
+        this.emailService = emailService;
+        this.donationService = donationService;
+        this.sponsorAndDonationAssociationService = sponsorAndDonationAssociationService;
+        this.childService = childService;
+        this.brainTreePaymentService = brainTreePaymentService;
+        this.childAndSponsorAssociationService = childAndSponsorAssociationService;
+        this.manageChildrenService = manageChildrenService;
+        this.amountService = amountService;
+    }
 
     /**
      * Fetches all active sponsors
@@ -120,7 +124,7 @@ public class SponsorService {
     }
 
     /**
-     * Set subscribed column to false. Should be called with another method to validate sponosr.
+     * Set subscribed column to false. Should be called with another method to validate sponsor.
      */
     private void unsubscribeSponsorNewsletter(Sponsor sponsor) {
         sponsor.setSubscribed(false);
@@ -161,7 +165,7 @@ public class SponsorService {
 
     /**
      * Processes the whole submission flow.
-     * Braintree for processing payment
+     * BrainTree for processing payment
      * Calls helper method to save everything related to the sponsorship to database and send confirmation email
      */
     public SponsorInfoStatus processSponsorship(
@@ -307,6 +311,19 @@ public class SponsorService {
         String country = TextUtils.cleanString(address.getCountry());
 
         return new SponsorAddress(streetAddress1, streetAddress2, city, state, zipCode, country);
+    }
+
+    /**
+     * Unsubscribes all subscriptions associated with the given user.
+     */
+    protected void unsubscribeSubscription(String emailAddress) {
+        // TODO: Validate input?
+        Optional<Sponsor> sponsorOptional = sponsorRepository.fetchSponsorByEmail(emailAddress);
+        if (sponsorOptional.isPresent()) {
+            // Cancel all subscriptions associated with the provided email address.
+
+
+        }
     }
 }
 

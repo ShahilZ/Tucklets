@@ -1,6 +1,14 @@
 package com.tucklets.app.services;
 
-import com.braintreegateway.*;
+import com.braintreegateway.BraintreeGateway;
+import com.braintreegateway.Customer;
+import com.braintreegateway.CustomerRequest;
+import com.braintreegateway.Environment;
+import com.braintreegateway.Result;
+import com.braintreegateway.Subscription;
+import com.braintreegateway.SubscriptionRequest;
+import com.braintreegateway.Transaction;
+import com.braintreegateway.TransactionRequest;
 import com.tucklets.app.configs.AppConfig;
 import com.tucklets.app.configs.SecretsConfig;
 import com.tucklets.app.db.repositories.SponsorBrainTreeDetailRepository;
@@ -18,15 +26,18 @@ public class BrainTreePaymentService {
 
     private final AppConfig appConfig;
     private final SecretsConfig secretsConfig;
+    private final SponsorBrainTreeDetailRepository sponsorBrainTreeDetailRepository;
     private final BraintreeGateway braintreeGateway;
 
     @Autowired
-    SponsorBrainTreeDetailRepository sponsorBrainTreeDetailRepository;
-
-    @Autowired
-    BrainTreePaymentService(AppConfig appConfig, SecretsConfig secretsConfig) {
+    BrainTreePaymentService(
+        AppConfig appConfig,
+        SecretsConfig secretsConfig,
+        SponsorBrainTreeDetailRepository sponsorBrainTreeDetailRepository)
+    {
         this.appConfig = appConfig;
         this.secretsConfig = secretsConfig;
+        this.sponsorBrainTreeDetailRepository = sponsorBrainTreeDetailRepository;
 
         // Initialize BrainTreeGateway once.
         braintreeGateway = createBrainTreeGateway();
@@ -98,9 +109,11 @@ public class BrainTreePaymentService {
      * Saving brainTree information such as the customerId and subscriptionId
      * Note: Assumes a valid sponsor and Customer object.
      */
-    protected void addSubscription(Customer brainTreeCustomer,
-                                   Subscription brainTreeSubscription,
-                                   Sponsor sponsor) {
+    protected void addSubscription(
+        Customer brainTreeCustomer,
+        Subscription brainTreeSubscription,
+        Sponsor sponsor)
+    {
         SponsorBrainTreeDetail sponsorBrainTreeDetail = new SponsorBrainTreeDetail();
         sponsorBrainTreeDetail.setBrainTreeCustomerId(brainTreeCustomer.getId());
         sponsorBrainTreeDetail.setBrainTreeSubscriptionId(brainTreeSubscription.getId());
@@ -108,6 +121,12 @@ public class BrainTreePaymentService {
         sponsorBrainTreeDetailRepository.save(sponsorBrainTreeDetail);
     }
 
-
+    /**
+     * Given the subscriptionId, cancel the BrainTree subscription.
+     */
+    protected boolean cancelSubscription(String subscriptionId) {
+        Result<Subscription> cancellationResult = braintreeGateway.subscription().cancel(subscriptionId);
+        return cancellationResult.isSuccess();
+    }
 
 }
