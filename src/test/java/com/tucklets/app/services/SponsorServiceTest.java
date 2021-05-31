@@ -1,6 +1,7 @@
 package com.tucklets.app.services;
 
 import com.tucklets.app.configs.AppConfig;
+import com.tucklets.app.db.repositories.SponsorBrainTreeDetailRepository;
 import com.tucklets.app.db.repositories.SponsorRepository;
 import com.tucklets.app.entities.Sponsor;
 import org.junit.jupiter.api.Assertions;
@@ -38,6 +39,8 @@ public class SponsorServiceTest {
     ManageChildrenService manageChildrenService;
     @Mock
     AmountService amountService;
+    @Mock
+    SponsorBrainTreeDetailRepository sponsorBrainTreeDetailRepository;
 
     SponsorService sponsorService;
 
@@ -55,7 +58,8 @@ public class SponsorServiceTest {
             brainTreePaymentService,
             childAndSponsorAssociationService,
             manageChildrenService,
-            amountService);
+            amountService,
+            sponsorBrainTreeDetailRepository);
     }
 
     @Test

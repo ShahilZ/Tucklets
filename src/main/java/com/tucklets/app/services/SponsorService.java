@@ -9,17 +9,21 @@ import com.tucklets.app.configs.AppConfig;
 import com.tucklets.app.containers.BrainTreePaymentContainer;
 import com.tucklets.app.containers.SponsorshipContainer;
 import com.tucklets.app.containers.admin.ChildDetailsContainer;
+import com.tucklets.app.db.repositories.SponsorBrainTreeDetailRepository;
 import com.tucklets.app.db.repositories.SponsorRepository;
 import com.tucklets.app.entities.Child;
 import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Sponsor;
 import com.tucklets.app.entities.SponsorAddress;
+import com.tucklets.app.entities.SponsorBrainTreeDetail;
 import com.tucklets.app.entities.enums.DonationDuration;
 import com.tucklets.app.entities.enums.SponsorInfoStatus;
 import com.tucklets.app.entities.enums.State;
 import com.tucklets.app.utils.TextUtils;
 import com.tucklets.app.validations.DonationValidator;
 import com.tucklets.app.validations.SponsorValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +36,8 @@ import java.util.Optional;
 public class SponsorService {
 
     private static final Gson GSON = new Gson();
+    private static final Logger LOGGER = LoggerFactory.getLogger(SponsorService.class);
+
 
     private final AppConfig appConfig;
     private final SponsorRepository sponsorRepository;
@@ -44,6 +50,7 @@ public class SponsorService {
     private final ChildAndSponsorAssociationService childAndSponsorAssociationService;
     private final ManageChildrenService manageChildrenService;
     private final AmountService amountService;
+    private final SponsorBrainTreeDetailRepository sponsorBrainTreeDetailRepository;
 
     @Autowired
     SponsorService(
@@ -56,7 +63,8 @@ public class SponsorService {
         ChildService childService, BrainTreePaymentService brainTreePaymentService,
         ChildAndSponsorAssociationService childAndSponsorAssociationService,
         ManageChildrenService manageChildrenService,
-        AmountService amountService)
+        AmountService amountService,
+        SponsorBrainTreeDetailRepository sponsorBrainTreeDetailRepository)
     {
         this.appConfig = appConfig;
         this.sponsorRepository = sponsorRepository;
@@ -69,6 +77,7 @@ public class SponsorService {
         this.childAndSponsorAssociationService = childAndSponsorAssociationService;
         this.manageChildrenService = manageChildrenService;
         this.amountService = amountService;
+        this.sponsorBrainTreeDetailRepository = sponsorBrainTreeDetailRepository;
     }
 
     /**
@@ -316,14 +325,30 @@ public class SponsorService {
     /**
      * Unsubscribes all subscriptions associated with the given user.
      */
-    protected void unsubscribeSubscription(String emailAddress) {
+    protected boolean cancelSubscription(String emailAddress) {
         // TODO: Validate input?
+        boolean isUnsubscribeSuccessful = false;
         Optional<Sponsor> sponsorOptional = sponsorRepository.fetchSponsorByEmail(emailAddress);
         if (sponsorOptional.isPresent()) {
             // Cancel all subscriptions associated with the provided email address.
-
-
+            Sponsor sponsor = sponsorOptional.get();
+            Optional<SponsorBrainTreeDetail> sponsorBrainTreeDetailOptional =
+                sponsorBrainTreeDetailRepository.findById(sponsor.getSponsorId());
+            if (sponsorBrainTreeDetailOptional.isPresent()) {
+                SponsorBrainTreeDetail sponsorBrainTreeDetail = sponsorBrainTreeDetailOptional.get();
+                isUnsubscribeSuccessful = brainTreePaymentService
+                    .cancelSubscription(sponsorBrainTreeDetail.getBrainTreeSubscriptionId());
+            }
+            else {
+                // Missing SponsorBrainTreeDetail for some reason.
+                LOGGER.warn("Missing SponsorBrainTreeDetail for sponsorId: {}", sponsor.getSponsorId());
+            }
         }
+         else {
+             LOGGER.info("Unsubscribe request failed: Unable to locate user's email address in the db.");
+        }
+         // TODO: Return general class that has status + error messages.
+         return isUnsubscribeSuccessful;
     }
 }
 

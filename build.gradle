@@ -59,6 +59,9 @@ dependencies {
 	// Integration with AWS Secrets Manager
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws-secrets-manager-config', version: '2.2.5.RELEASE'
 
+	// https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+	implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+
 	// Spring Session
 	// https://mvnrepository.com/artifact/org.springframework.session/spring-session-jdbc
 	compile group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.4.2'
