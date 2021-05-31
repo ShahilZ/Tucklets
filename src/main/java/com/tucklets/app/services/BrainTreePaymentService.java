@@ -86,7 +86,7 @@ public class BrainTreePaymentService {
     /**
      * Process subscription request for BrainTree based on donation duration.
      */
-    protected Result<com.braintreegateway.Subscription> processSubscription(Donation donation, Customer customer) {
+    protected Result<Subscription> processSubscription(Donation donation, Customer customer) {
         SubscriptionRequest subscriptionRequest = new SubscriptionRequest()
                 .paymentMethodToken(customer.getPaymentMethods().get(0).getToken())
                 .planId(donation.getDonationDuration().getBrainTreePlanId())

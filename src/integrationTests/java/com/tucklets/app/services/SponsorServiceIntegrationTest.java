@@ -1,6 +1,5 @@
-package com.tucklets.app.configs.service;
+package com.tucklets.app.services;
 
-import com.tucklets.app.services.SponsorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

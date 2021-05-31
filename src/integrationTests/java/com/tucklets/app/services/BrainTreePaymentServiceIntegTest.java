@@ -1,4 +1,4 @@
-package com.tucklets.app.configs.service;
+package com.tucklets.app.services;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
