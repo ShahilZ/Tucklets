@@ -43,7 +43,7 @@ public class EmailService {
     public void sendGenericConfirmationEmail(Sponsor sponsor, Donation donation, String toEmailAddress) {
         MimeMessagePreparator messagePreparator = message -> {
             MimeMessageHelper helper = createGenericConfirmationMessageHelper(message, sponsor, donation);
-            helper.setFrom(appConfig.getTransactionalEmailsFromAddress());
+            helper.setFrom(appConfig.getFromAddressForTransactionalEmails());
             helper.setTo(toEmailAddress);
         };
         javaMailSender.send(messagePreparator);
@@ -54,7 +54,7 @@ public class EmailService {
         MimeMessagePreparator messagePreparator = message -> {
             MimeMessageHelper helper = createChildrenConfirmationMessageHelper(message, sponsor, children, donation);
             helper.setTo(toEmailAddress);
-            helper.setFrom(appConfig.getTransactionalEmailsFromAddress());
+            helper.setFrom(appConfig.getFromAddressForTransactionalEmails());
 
         };
         javaMailSender.send(messagePreparator);
@@ -93,7 +93,7 @@ public class EmailService {
             MimeMessagePreparator messagePreparator = message -> {
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
                 helper.setTo(sponsor.getEmail());
-                helper.setTo(appConfig.getTransactionalEmailsFromAddress());
+                helper.setTo(appConfig.getFromAddressForTransactionalEmails());
                 helper.setSubject("Tucklets - Please check out our new newsletter! ");
                 String emailContent = buildNewsletterEmail(sponsor, newsletterLink, unsubscribeLink);
                 helper.setText(emailContent, true);

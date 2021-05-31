@@ -11,19 +11,19 @@ public class AppConfig {
     private final String baseUrl;
     private final String presidentEmail;
     private final String brainTreeEnvironment;
-    private final String transactionalEmailsFromAddress;
+    private final String fromAddressForTransactionalEmails;
 
     /* These are the variables stored in application.properties*/
     public AppConfig(
             @Value("${tucklets.base.url}") String baseUrl,
             @Value("${tucklets.president.email}") String presidentEmail,
             @Value("${brainTree.environment}") String brainTreeEnvironment,
-            @Value("${transactional.emails.from.address}") String transactionalEmailsFromAddress)
+            @Value("${emails.transactional.from.address}") String fromAddressForTransactionalEmails)
     {
         this.baseUrl = baseUrl;
         this.presidentEmail = presidentEmail;
         this.brainTreeEnvironment = brainTreeEnvironment;
-        this.transactionalEmailsFromAddress = transactionalEmailsFromAddress;
+        this.fromAddressForTransactionalEmails = fromAddressForTransactionalEmails;
     }
 
     public String getTuckletsBaseUrl() {
@@ -38,7 +38,7 @@ public class AppConfig {
         return brainTreeEnvironment;
     }
 
-    public String getTransactionalEmailsFromAddress() {
-        return transactionalEmailsFromAddress;
+    public String getFromAddressForTransactionalEmails() {
+        return fromAddressForTransactionalEmails;
     }
 }
