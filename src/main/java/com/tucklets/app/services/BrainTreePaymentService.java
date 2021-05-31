@@ -3,15 +3,14 @@ package com.tucklets.app.services;
 import com.braintreegateway.*;
 import com.tucklets.app.configs.AppConfig;
 import com.tucklets.app.configs.SecretsConfig;
-import com.tucklets.app.db.repositories.SubscriptionRepository;
+import com.tucklets.app.db.repositories.SponsorBrainTreeDetailRepository;
 import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Sponsor;
-import com.tucklets.app.entities.Subscription;
+import com.tucklets.app.entities.SponsorBrainTreeDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 
 @Service
@@ -22,7 +21,7 @@ public class BrainTreePaymentService {
     private final BraintreeGateway braintreeGateway;
 
     @Autowired
-    SubscriptionRepository subscriptionRepository;
+    SponsorBrainTreeDetailRepository sponsorBrainTreeDetailRepository;
 
     @Autowired
     BrainTreePaymentService(AppConfig appConfig, SecretsConfig secretsConfig) {
@@ -100,13 +99,13 @@ public class BrainTreePaymentService {
      * Note: Assumes a valid sponsor and Customer object.
      */
     protected void addSubscription(Customer brainTreeCustomer,
-                                   com.braintreegateway.Subscription brainTreeSubscription,
+                                   Subscription brainTreeSubscription,
                                    Sponsor sponsor) {
-        Subscription subscription = new Subscription();
-        subscription.setBrainTreeCustomerId(brainTreeCustomer.getId());
-        subscription.setBrainTreeSubscriptionId(brainTreeSubscription.getId());
-        subscription.setSponsorId(sponsor.getSponsorId());
-        subscriptionRepository.save(subscription);
+        SponsorBrainTreeDetail sponsorBrainTreeDetail = new SponsorBrainTreeDetail();
+        sponsorBrainTreeDetail.setBrainTreeCustomerId(brainTreeCustomer.getId());
+        sponsorBrainTreeDetail.setBrainTreeSubscriptionId(brainTreeSubscription.getId());
+        sponsorBrainTreeDetail.setSponsorId(sponsor.getSponsorId());
+        sponsorBrainTreeDetailRepository.save(sponsorBrainTreeDetail);
     }
 
 

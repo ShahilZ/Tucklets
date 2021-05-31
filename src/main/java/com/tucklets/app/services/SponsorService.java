@@ -207,7 +207,7 @@ public class SponsorService {
 
         // if payment successful, proceed with saving information to database and send confirmation email
         SponsorInfoStatus sponsorInfoResult = processSponsorInformation(sponsor, donation, childrenContainer,
-                brainTreeCustomer, subscriptionResult.getTarget());
+                brainTreeCustomer, subscriptionResult);
 
         return sponsorInfoResult;
     }
@@ -218,7 +218,7 @@ public class SponsorService {
      * Calls another helper method to send confirmation email to sponsor and the president
      */
     private SponsorInfoStatus processSponsorInformation(Sponsor sponsor, Donation donation, List<ChildDetailsContainer> childrenContainer,
-                                                        Customer brainTreeCustomer, com.braintreegateway.Subscription brainTreeSubscription) {
+                                                        Customer brainTreeCustomer, Result<Subscription> subscriptionResult) {
 
         donation.setDonationDuration(donation.getDonationDuration());
 
@@ -238,10 +238,10 @@ public class SponsorService {
         Sponsor savedSponsor = addSponsor(sponsor);
 
         // Add brainTree subscription information
-        if (brainTreeCustomer != null && brainTreeSubscription != null) {
+        if (brainTreeCustomer != null && subscriptionResult != null) {
             brainTreePaymentService.addSubscription(
                     brainTreeCustomer,
-                    brainTreeSubscription,
+                    subscriptionResult.getTarget(),
                     savedSponsor);
         }
 

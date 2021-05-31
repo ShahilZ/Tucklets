@@ -5,16 +5,16 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Subscription")
+@Table(name = "sponsor_braintree_detail")
 /**
  * Table representing brainTree customerIds and subscription id.
  */
-public class Subscription {
+public class SponsorBrainTreeDetail {
     @Id
-    @SequenceGenerator(name = "subscription_generator", initialValue = 1000, allocationSize = 1)
-    @GeneratedValue(generator = "subscription_generator")
-    @Column(name = "subscription_id", updatable = false, nullable = false)
-    private Long subscriptionId;
+    @SequenceGenerator(name = "sponsor_braintree_detail_generator", initialValue = 1000, allocationSize = 1)
+    @GeneratedValue(generator = "sponsor_braintree_detail_generator")
+    @Column(name = "sponsor_braintree_detail_id", updatable = false, nullable = false)
+    private Long sponsorBrainTreeDetailId;
 
     @Column(name = "sponsor_id", nullable = false)
     private Long sponsorId;
@@ -29,14 +29,14 @@ public class Subscription {
     @Temporal(TemporalType.TIMESTAMP)
     private Date archiveDate;
 
-    public Subscription() {};
+    public SponsorBrainTreeDetail() {};
 
-    public Long getSubscriptionId() {
-        return subscriptionId;
+    public Long getSponsorBrainTreeDetailId() {
+        return sponsorBrainTreeDetailId;
     }
 
-    public void setSubscriptionId(Long subscriptionId) {
-        this.subscriptionId = subscriptionId;
+    public void setSponsorBrainTreeDetailId(Long sponsorBrainTreeDetailId) {
+        this.sponsorBrainTreeDetailId = sponsorBrainTreeDetailId;
     }
 
     public Long getSponsorId() { return sponsorId; }
