@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.sql.DataSource;
 
@@ -21,9 +20,6 @@ public class SpringWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
-
-    @Autowired
-    private WebApplicationContext applicationContext;
 
     @Autowired
     private AdminUserDetailsService userDetailsService;
