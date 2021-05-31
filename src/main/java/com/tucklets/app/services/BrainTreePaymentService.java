@@ -3,12 +3,15 @@ package com.tucklets.app.services;
 import com.braintreegateway.*;
 import com.tucklets.app.configs.AppConfig;
 import com.tucklets.app.configs.SecretsConfig;
+import com.tucklets.app.db.repositories.SubscriptionRepository;
 import com.tucklets.app.entities.Donation;
 import com.tucklets.app.entities.Sponsor;
+import com.tucklets.app.entities.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 @Service
@@ -17,6 +20,9 @@ public class BrainTreePaymentService {
     private final AppConfig appConfig;
     private final SecretsConfig secretsConfig;
     private final BraintreeGateway braintreeGateway;
+
+    @Autowired
+    SubscriptionRepository subscriptionRepository;
 
     @Autowired
     BrainTreePaymentService(AppConfig appConfig, SecretsConfig secretsConfig) {
@@ -60,7 +66,7 @@ public class BrainTreePaymentService {
     /**
      * Process subscription request for BrainTree based on donation duration.
      */
-    protected Result<Subscription> processSubscription(Donation donation, Customer customer) {
+    protected Result<com.braintreegateway.Subscription> processSubscription(Donation donation, Customer customer) {
         SubscriptionRequest subscriptionRequest = new SubscriptionRequest()
                 .paymentMethodToken(customer.getPaymentMethods().get(0).getToken())
                 .planId(donation.getDonationDuration().getBrainTreePlanId())
@@ -88,5 +94,21 @@ public class BrainTreePaymentService {
         }
         return result.getTarget();
     }
+
+    /**
+     * Saving brainTree information such as the customerId and subscriptionId
+     * Note: Assumes a valid sponsor and Customer object.
+     */
+    protected void addSubscription(Customer brainTreeCustomer,
+                                   com.braintreegateway.Subscription brainTreeSubscription,
+                                   Sponsor sponsor) {
+        Subscription subscription = new Subscription();
+        subscription.setBrainTreeCustomerId(brainTreeCustomer.getId());
+        subscription.setBrainTreeSubscriptionId(brainTreeSubscription.getId());
+        subscription.setSponsorId(sponsor.getSponsorId());
+        subscriptionRepository.save(subscription);
+    }
+
+
 
 }

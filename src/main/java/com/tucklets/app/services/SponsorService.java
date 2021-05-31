@@ -93,7 +93,7 @@ public class SponsorService {
         return sponsorRepository.fetchSponsorByEmail(email);
     }
 
-    public void addSponsor(Sponsor sponsor) {
+    public Sponsor addSponsor(Sponsor sponsor) {
         Date today = new Date();
         sponsor.setLastUpdateDate(today);
         Optional<Sponsor> existingSponsorOptional = sponsorRepository.fetchSponsorByEmail(sponsor.getEmail());
@@ -106,7 +106,8 @@ public class SponsorService {
             manageSponsorService.addExistingFieldsToSponsor(sponsor, existingSponsorOptional.get());
         }
         // Create/update sponsor.
-        sponsorRepository.save(sponsor);
+        Sponsor savedSponsor = sponsorRepository.save(sponsor);
+        return savedSponsor;
     }
 
     /**
@@ -175,6 +176,7 @@ public class SponsorService {
         var nonce = brainTreePaymentContainer.getPaymentNonce();
         var donationAmount =  donation.getDonationAmount();
         Customer brainTreeCustomer = null;
+        Result<Subscription> subscriptionResult = null;
 
         // Validation for sponsor + donation.
         SponsorInfoStatus sponsorStatus = SponsorValidator.validateSponsor(sponsor);
@@ -192,9 +194,9 @@ public class SponsorService {
                 return SponsorInfoStatus.ERROR;
             }
         }
-        else {
+        else { // a monthly or yearly subscription
             brainTreeCustomer = brainTreePaymentService.createBrainTreeCustomer(sponsor, nonce);
-            Result<Subscription> subscriptionResult =
+            subscriptionResult =
                     brainTreePaymentService.processSubscription(donation, brainTreeCustomer);
             // Stop processing if the payment is unsuccessful
             if (!subscriptionResult.isSuccess()) {
@@ -203,13 +205,9 @@ public class SponsorService {
             }
         }
 
-        // if payment successful, proceed with saving information to database
-        SponsorInfoStatus sponsorInfoResult = processSponsorInformation(sponsor, donation, childrenContainer);
-
-        // Create association with Customer/Subscription info if customer was created.
-        if (brainTreeCustomer != null) {
-            // TODO: Save info in new table that tracks customer + subscription ids.
-        }
+        // if payment successful, proceed with saving information to database and send confirmation email
+        SponsorInfoStatus sponsorInfoResult = processSponsorInformation(sponsor, donation, childrenContainer,
+                brainTreeCustomer, subscriptionResult.getTarget());
 
         return sponsorInfoResult;
     }
@@ -219,7 +217,8 @@ public class SponsorService {
      * Saves sponsorship information to database - Sponsor's personal information, child's association, and donation information.
      * Calls another helper method to send confirmation email to sponsor and the president
      */
-    private SponsorInfoStatus processSponsorInformation(Sponsor sponsor, Donation donation, List<ChildDetailsContainer> childrenContainer ) {
+    private SponsorInfoStatus processSponsorInformation(Sponsor sponsor, Donation donation, List<ChildDetailsContainer> childrenContainer,
+                                                        Customer brainTreeCustomer, com.braintreegateway.Subscription brainTreeSubscription) {
 
         donation.setDonationDuration(donation.getDonationDuration());
 
@@ -236,7 +235,15 @@ public class SponsorService {
 
         // Add sponsor info.
         sponsor = copyAndCleanSponsor(sponsor);
-        addSponsor(sponsor);
+        Sponsor savedSponsor = addSponsor(sponsor);
+
+        // Add brainTree subscription information
+        if (brainTreeCustomer != null && brainTreeSubscription != null) {
+            brainTreePaymentService.addSubscription(
+                    brainTreeCustomer,
+                    brainTreeSubscription,
+                    savedSponsor);
+        }
 
         sponsorAndDonationAssociationService.createAssociation(sponsor, donation);
 
