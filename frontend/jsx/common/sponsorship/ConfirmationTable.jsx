@@ -7,12 +7,10 @@ import '../../../static/scss/confirmation';
  */
 const ConfirmationTable = ({ i18n, sponsor, donation }) => {
     // Create our number formatter.
-    console.log(i18n.language);
     let currencyFormatter = new Intl.NumberFormat(i18n.language, {
         style: 'currency',
         currency: 'USD',
     });
-    console.log(sponsor.address)
     return (
         <div className="confirmation-summary">
             <h4 className="confirmation-header">{i18n.t("confirm:personal")}</h4>
