@@ -8,7 +8,7 @@ export const DonationDuration = {
 
 export const PaymentMethod = {
     CHECK: {value: "CHECK", i18nKey: "check"},
-    PAYPAL: {value: "PAYPAL", i18nKey: "paypal"}
+    OTHER: {value: "OTHER", i18nKey: "other"}
 };
 
 export const DonationOrigin = {

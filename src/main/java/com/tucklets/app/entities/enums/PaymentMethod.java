@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public enum PaymentMethod
 {
-    CHECK("CHECK"), PAYPAL("PAYPAL");
+    CHECK("CHECK"), OTHER("OTHER");
 
     private String paymentMethodText;
 

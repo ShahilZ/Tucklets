@@ -59,7 +59,7 @@ const DonationForm = ({ i18n, donation, handleDonationDurationChange, handlePaym
                                         i18n={i18n}
                                         donation={donation}
                                         donationField="paymentMethod"
-                                        options={[PaymentMethod.PAYPAL, PaymentMethod.CHECK]}
+                                        options={[PaymentMethod.OTHER, PaymentMethod.CHECK]}
                                         onClickHandler={handlePaymentMethodChange}
                                     />
                                 </Form.Group>
