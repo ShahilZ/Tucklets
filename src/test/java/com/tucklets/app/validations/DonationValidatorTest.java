@@ -35,7 +35,7 @@ public class DonationValidatorTest {
         Donation validDonation = new Donation();
         validDonation.setDonationAmount(BigDecimal.TEN);
         validDonation.setDonationDuration(DonationDuration.MONTHLY);
-        validDonation.setPaymentMethod(PaymentMethod.PAYPAL);
+        validDonation.setPaymentMethod(PaymentMethod.OTHER);
 
         Assert.isTrue(
                 DonationValidator.validateDonation(validDonation),

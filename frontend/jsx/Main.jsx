@@ -58,7 +58,7 @@ class Main extends Component {
             donation: {
                 donationAmount: 0, 
                 donationDuration: DonationDuration.MONTHLY,
-                paymentMethod: PaymentMethod.PAYPAL }, // default payment method is Paypal. Other options include Check
+                paymentMethod: PaymentMethod.OTHER }, // default payment method is OTHER(credit card/PayPal). Other options include 'check'.
             payPalClientId: "",
             donationOrigin: DonationOrigin.DONATE_PAGE
         };

@@ -6,6 +6,13 @@ import '../../../static/scss/confirmation';
  * Component used to generate the confirmation div/table.
  */
 const ConfirmationTable = ({ i18n, sponsor, donation }) => {
+    // Create our number formatter.
+    console.log(i18n.language);
+    let currencyFormatter = new Intl.NumberFormat(i18n.language, {
+        style: 'currency',
+        currency: 'USD',
+    });
+    console.log(sponsor.address)
     return (
         <div className="confirmation-summary">
             <h4 className="confirmation-header">{i18n.t("confirm:personal")}</h4>
@@ -35,9 +42,9 @@ const ConfirmationTable = ({ i18n, sponsor, donation }) => {
                                 <span>{sponsor.email}</span>
                             </td>
                             <td>
-                                { sponsor.address.streetAddress == "" && <span>{i18n.t("confirm:not_provided")}</span>}
+                                { sponsor.address.streetAddress1 === "" && <span>{i18n.t("confirm:not_provided")}</span>}
 
-                                { sponsor.address.streetAddress != "" && 
+                                { sponsor.address.streetAddress1 !== "" && 
                                     <div><span>{sponsor.address.streetAddress} </span><br />
                                     <span>{sponsor.address.city}, {sponsor.address.state} {sponsor.address.zip}</span> <br />
                                     <span>{sponsor.address.country}</span></div> }
@@ -64,7 +71,7 @@ const ConfirmationTable = ({ i18n, sponsor, donation }) => {
                             <span>{i18n.t(`confirm:${donation.donationDuration.value.toLowerCase()}`)}</span>
                             </td>
                             <td>
-                                <span>{donation.donationAmount}</span>
+                                <span>{currencyFormatter.format(donation.donationAmount)}</span>
                             </td>
                         </tr>
                     </tbody>
