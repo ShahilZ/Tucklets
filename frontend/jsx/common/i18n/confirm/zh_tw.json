@@ -1,7 +1,7 @@
 {
     "title": "確認資料",
     "subtitle": "請在付款前確認以下信息。",
-    "personal": "個人信息",
+    "personal": "個人資料",
     "name": "您的姓名",
     "email": "您的電郵地址",
     "address": "您的住址",
@@ -12,12 +12,12 @@
     "monthly": "每月一次",
     "once": "單次（今日）",
 
-    "check_header": "Check Instructions:",
-    "check_directions": "Setup recurring or one-time payment from your bank or send a check to:",
+    "check_header": "支票內容說明:",
+    "check_directions": "從您的銀行設置定期付款或一次性付款或郵寄支票至以下地址:",
     "check_org": "TUCKLETS",
     "check_address_line_1": "9921 Carmel Mountain Road, Suite 777",
     "check_address_line_2": "San Diego, CA 92129",
-    "check_submit": "Okay, will do!",
+    "check_submit": "好的，我知道了!",
 
     "not_provided": "未提供信息"
 }
