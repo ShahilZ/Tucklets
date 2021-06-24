@@ -1,6 +1,6 @@
 {
-    "title": "Unsubscribe",
-    "email_heading" : "We're sorry to see you go! Please enter your email to unsubscribe from all Tucklets newsletters.",
-    "unsubscribe": "Unsubscribe",
-    "successfully_unsubscribed": "Unsubscribed successfully!"
+    "title": "取消訂閱",
+    "email_heading" : "很遺憾看到你的離開！請輸入您的電子郵件以取消訂閱所有 Tucklets 的電子報",
+    "unsubscribe": "取消訂閱",
+    "successfully_unsubscribed": "已成功取消訂閱!"
 }
